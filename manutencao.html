@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estamos Quase Prontos!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4; /* Cinza bem claro */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative; /* Para posicionar as partículas */
+        }
+
+        .maintenance-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            z-index: 10; /* Para ficar acima das partículas */
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #333; /* Cinza escuro */
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #777; /* Cinza médio */
+            margin-bottom: 30px;
+        }
+
+        .spinner-container {
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .spinner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid #ddd; /* Cinza claro */
+            border-top-color: #007bff; /* Azul discreto */
+            animation: rotate 1.2s linear infinite;
+        }
+
+        .dots-animation {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #007bff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulseDot 1.5s infinite alternate;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(0, 123, 255, 0.1); /* Azul suave e transparente */
+            animation: floatParticle 4s infinite linear;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseDot {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translate(var(--x), var(--y)) scale(var(--scale));
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(var(--scale));
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 10 + 5; // Tamanho entre 5 e 15px
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            const dx = (Math.random() - 0.5) * 30; // Deslocamento horizontal
+            const dy = (Math.random() - 0.5) * 30; // Deslocamento vertical
+            const scale = Math.random() * 0.5 + 0.5; // Escala entre 0.5 e 1
+
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.setProperty('--x', `${x}px`);
+            particle.style.setProperty('--y', `${y}px`);
+            particle.style.setProperty('--dx', `${dx}px`);
+            particle.style.setProperty('--dy', `${dy}px`);
+            particle.style.setProperty('--scale', scale);
+            particle.style.animationDuration = `${Math.random() * 3 + 3}s`; // Duração entre 3 e 6 segundos
+
+            document.body.appendChild(particle);
+
+            // Remover a partícula após a animação terminar
+            setTimeout(() => {
+                particle.remove();
+            }, parseFloat(particle.style.animationDuration) * 1000);
+        }
+
+        // Criar partículas periodicamente
+        setInterval(createParticle, 300); // Cria uma nova partícula a cada 300ms
+    </script>
+</head>
+<body>
+    <div class="maintenance-container">
+        <h1>Estamos Realizando Melhorias...</h1>
+        <p>Aguarde um instante, voltaremos com tudo pronto.</p>
+        <div class="spinner-container">
+            <div class="spinner"></div>
+        </div>
+        <div class="dots-animation">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+</body>
+</html>
