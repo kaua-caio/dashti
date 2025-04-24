@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal DashdoTI | Gestão de Equipamentos</title>
+    <link rel="shortcut icon" href="dash.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50; /* Verde mais suave */
+            --primary-light: #E8F5E9;
+            --primary-dark: #388E3C;
+            --secondary: #81C784; /* Verde mais claro */
+            --accent: #A5D6A7;
+            --text: #333333;
+            --text-light: #757575;
+            --background: #FAFAFA;
+            --surface: #FFFFFF;
+            --error: #E53935;
+            --online: #4CAF50;
+            --offline: #F44336;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .background-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(at 20% 30%, rgba(76, 175, 80, 0.05) 0%, transparent 40%),
+                radial-gradient(at 80% 70%, rgba(129, 199, 132, 0.05) 0%, transparent 45%);
+            z-index: -1;
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .title h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.2;
+        }
+
+        .title h1 span {
+            color: var(--secondary);
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .service-status {
+            background-color: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-on {
+            background-color: var(--online);
+        }
+
+        .status-off {
+            background-color: var(--offline);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .user-greeting {
+            text-align: center;
+            margin: 2rem 0 3rem;
+            position: relative;
+        }
+
+        .greeting {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .greeting-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .card:hover .icon {
+            color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .card span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .reports {
+            background-color: rgba(76, 175, 80, 0.05);
+            border: 1px dashed var(--secondary);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--surface);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-dark);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .modal-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.2rem 0.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            background: var(--primary-light);
+        }
+
+        .modal-card:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-card:hover i {
+            color: white;
+        }
+
+        .modal-card i {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .modal-card span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--primary-dark);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .glass-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .branding {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effect"></div>
+    
+    <header class="glass-header">
+        <div class="branding">
+            <div class="title">
+                <h1>Dashdo<span>TI</span></h1>
+                <p class="subtitle">UM EQUIPAMENTO POR VEZ</p>
+            </div>
+        </div>
+        <div class="service-status" id="serviceStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="statusText">Chamados: </span>
+        </div>
+    </header>
+
+    <main>
+        <section class="user-greeting">
+            <div id="greeting" class="greeting"></div>
+            <div class="greeting-line"></div>
+        </section>
+
+        <nav class="dashboard-grid">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="card" target="_blank">
+                <div class="icon"><i class="fa-solid fa-laptop-file"></i></div>
+                <span>Entrega de Equipamentos</span>
+            </a>
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-undo-alt"></i></div>
+                <span>Devolução de Equipamentos</span>
+            </a>
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-people-arrows"></i></div>
+                <span>Transferência de Equipamento</span>
+            </a>
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-times-circle"></i></div>
+                <span>Equipamento Danificado</span>
+            </a>
+            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-headset"></i></div>
+                <span>Task de Suportes</span>
+            </a>
+            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-key"></i></div>
+                <span>Controle de Acesso</span>
+            </a>
+            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-boxes"></i></div>
+                <span>Estoques</span>
+            </a>
+            <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-user-plus"></i></div>
+                <span>Onboard</span>
+            </a>
+            <button class="card reports" id="reportsBtn">
+                <div class="icon"><i class="fas fa-chart-pie"></i></div>
+                <span>Boletins</span>
+            </button>
+        </nav>
+    </main>
+
+    <div class="modal" id="reportsModal">
+        <div class="modal-content">
+            <button class="close" id="closeModal">&times;</button>
+            <h2>Relatórios e Boletins</h2>
+            <div class="modal-grid">
+                <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Boletim de Entrega de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-tools"></i>
+                    <span>Boletim de Devolução de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Boletim de Transferência de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Boletim de Equipamento Danificado</span>
+                </a>
+                <a href="#" class="modal-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Indicadores de Segurança</span>
+                </a>
+                <a href="#" class="modal-card">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Status da Rede</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar horário de atendimento
+            function checkServiceHours() {
+                const now = new Date();
+                const hour = now.getHours();
+                const day = now.getDay(); // 0 = Domingo, 6 = Sábado
+                
+                // Verificar se é dia útil (segunda a sexta)
+                const isWeekday = day >= 1 && day <= 5;
+                
+                // Verificar horário comercial (8h-11:30h e 13:30h-18h)
+                const isServiceTime = 
+                    (hour >= 8 && hour < 11) || 
+                    (hour === 11 && now.getMinutes() <= 30) ||
+                    (hour >= 13 && hour < 18) ||
+                    (hour === 13 && now.getMinutes() >= 30);
+                
+                const statusElement = document.getElementById('statusText');
+                const indicator = document.getElementById('statusIndicator');
+                
+                if (isWeekday && isServiceTime) {
+                    statusElement.textContent = "Chamados: ON ";
+                    indicator.className = "status-indicator status-on";
+                } else {
+                    statusElement.textContent = "Chamados: OFF ";
+                    indicator.className = "status-indicator status-off";
+                }
+            }
+            
+            // Saudação personalizada
+            function updateGreeting() {
+                const hour = new Date().getHours();
+                let greeting;
+                
+                if (hour >= 5 && hour < 12) {
+                    greeting = "Bom dia";
+                } else if (hour >= 12 && hour < 18) {
+                    greeting = "Boa tarde";
+                } else {
+                    greeting = "Boa noite";
+                }
+                
+                document.getElementById('greeting').textContent = greeting;
+            }
+            
+            // Modal de relatórios
+            const modal = document.getElementById('reportsModal');
+            const btn = document.getElementById('reportsBtn');
+            const closeBtn = document.getElementById('closeModal');
+            
+            btn.addEventListener('click', () => {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Inicialização
+            checkServiceHours();
+            updateGreeting();
+            
+            // Atualizar status a cada minuto
+            setInterval(checkServiceHours, 60000);
+        });
+    </script>
+</body>
+</html>

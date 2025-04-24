@@ -1,93 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>DashdoTI</title>
-    <link rel="shortcut icon" type="image/jpg" href="dash.png"/>
-
-    <!-- CSS externo -->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- Font Awesome e Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal DashdoTI </title>
+    <link rel="shortcut icon" href="dash.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        
-        <div class="header-decoration decoration-1"></div>
-        <div class="header-decoration decoration-2"></div>
-        
-        <div class="title-container">
-            <div class="check-animation">
-                <svg viewBox="0 0 30 30" width="24" height="24">
-                    <path class="check-path" d="M5,15 L12,22 L25,8" />
-                </svg>
+    <div class="background-effect"></div>
+    
+    <header class="glass-header">
+        <div class="branding">
+            <div class="title">
+                <h1>Dashdo<span>TI</span></h1>
+                <p class="subtitle">UM EQUIPAMENTO POR VEZ</p>
             </div>
-            <h1>
-                <span class="dashdo">Dashdo</span>
-                <span class="ti">TI</span>
-            </h1>
         </div>
-        
-        <div class="tech-icons">
-            <i class="fas fa-server"></i>
-            <i class="fas fa-network-wired"></i>
-            <i class="fas fa-database"></i>
-            <i class="fas fa-shield-alt"></i>
-            <i class="fas fa-cloud"></i>
-            <i class="fas fa-code"></i>
+        <div class="service-status" id="serviceStatus">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="statusText">Chamados: </span>
         </div>
     </header>
-    
-    <div class="greeting-container">
-        <div class="greeting" id="greeting"></div>
-    </div>
 
-    <div class="maintenance-warning">
-        <i class="fas fa-exclamation-triangle"></i>
-        Estamos realizando trabalhos de manutenção. Algumas funcionalidades podem apresentar instabilidade.
-    </div>
-    
     <main>
-        <div class="buttons-container">
-            <a href="manutencao.html" class="btn" target="_blank">
-                <i class="fas fa-exchange-alt"></i>
-                Movimentações Internas
+        <section class="user-greeting">
+            <div id="greeting" class="greeting"></div>
+            <div class="greeting-line"></div>
+        </section>
+
+        <nav class="dashboard-grid">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="card" target="_blank">
+                <div class="icon"><i class="fa-solid fa-laptop-file"></i></div>
+                <span>Entrega de Equipamentos</span>
             </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="btn" target="_blank">
-                <i class="fas fa-exchange-alt"></i>
-                Entrega de Equipamentos
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-undo-alt"></i></div>
+                <span>Devolução de Equipamentos</span>
             </a>
-            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="btn" target="_blank">
-                <i class="fas fa-exchange-alt"></i>
-                Devolução de Equipamentos 
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-people-arrows"></i></div>
+                <span>Transferência de Equipamento</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="btn" target="_blank">
-                <i class="fas fa-headset"></i>
-                Task de Suportes
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-times-circle"></i></div>
+                <span>Equipamento Danificado</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="btn" target="_blank">
-                <i class="fas fa-key"></i>
-                Controle de Acesso
+            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-headset"></i></div>
+                <span>Task de Suportes</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="btn" target="_blank">
-                <i class="fas fa-boxes"></i>
-                Estoques
+            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-key"></i></div>
+                <span>Controle de Acesso</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="btn" target="_blank">
-                <i class="fas fa-user-plus"></i>
-                Onboard
+            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-boxes"></i></div>
+                <span>Estoques</span>
             </a>
-        </div>
+            <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="card" target="_blank">
+                <div class="icon"><i class="fas fa-user-plus"></i></div>
+                <span>Onboard</span>
+            </a>
+            <button class="card reports" id="reportsBtn">
+                <div class="icon"><i class="fas fa-chart-pie"></i></div>
+                <span>Boletins</span>
+            </button>
+        </nav>
     </main>
 
-    <footer>
-        &copy; 2025 TimedeTI. Todos os direitos reservados.
-    </footer>
+    <div class="modal" id="reportsModal">
+        <div class="modal-content">
+            <button class="close" id="closeModal">&times;</button>
+            <h2>Relatórios e Boletins</h2>
+            <div class="modal-grid">
+                <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Boletim de Entrega de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-tools"></i>
+                    <span>Boletim de Devolução de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Boletim de Transferência de Equipamentos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="modal-card" target="_blank">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Boletim de Equipamento Danificado</span>
+                </a>
+                <a href="#" class="modal-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Em Breve !</span>
+                </a>
+                <a href="#" class="modal-card">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Em Breve !</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <!-- JS externo -->
     <script src="main.js"></script>
 </body>
 </html>
