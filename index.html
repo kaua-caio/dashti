@@ -3,81 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal DashdoTI </title>
+    <title>Portal DashdoTI</title>
     <link rel="shortcut icon" href="dash.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-effect"></div>
-
-    <div class="loading-banner">
-        Acelerando o Futuro... Novidades em Breve! <i class="fas fa-rocket"></i>
-    </div>
-
-    
-    <header class="glass-header">
-        <div class="branding">
-            <div class="title">
-                <h1>Dashdo<span>TI</span></h1>
-                <p class="subtitle">UM EQUIPAMENTO POR VEZ</p>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>DashdoTI</h1>
+                <p>UM EQUIPAMENTO POR VEZ</p>
             </div>
-        </div>
-        <div class="service-status" id="serviceStatus">
-            <span class="status-indicator" id="statusIndicator"></span>
-            <span id="statusText">Chamados: </span>
-        </div>
-    </header>
+            <div class="status">
+                <span class="status-indicator"></span>
+                <span id="statusText">Sistema Operacional</span>
+            </div>
+        </header>
 
-    <main>
-        <section class="user-greeting">
-            <div id="greeting" class="greeting"></div>
-            <div class="greeting-line"></div>
+        <p id="tech-banner" class="tech-message">
+            Um novo visual chegou. Agora somos mais <span class="highlight-tech">TECH</span>.
+        </p>
+        
+        <section class="greeting">
+            <h2 id="greeting">Bom dia,</h2>
+            <p>Selecione o serviço necessário no painel de controle abaixo</p>
         </section>
-
-    
-
-        <nav class="dashboard-grid">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="card" target="_blank">
-                <div class="icon"><i class="fa-solid fa-laptop-file"></i></div>
+        
+        <div class="services-grid">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="service-card" target="_blank">
+                <i class="fa-solid fa-laptop-file"></i>
                 <span>Entrega de Equipamentos</span>
             </a>
-            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-undo-alt"></i></div>
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="service-card" target="_blank">
+                <i class="fas fa-undo-alt"></i>
                 <span>Devolução de Equipamentos</span>
             </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-people-arrows"></i></div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="service-card" target="_blank">
+                <i class="fas fa-people-arrows"></i>
                 <span>Transferência de Equipamento</span>
             </a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-times-circle"></i></div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="service-card" target="_blank">
+                <i class="fas fa-times-circle"></i>
                 <span>Equipamento Danificado</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-headset"></i></div>
+            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="service-card" target="_blank">
+                <i class="fas fa-headset"></i>
                 <span>Task de Suportes</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-key"></i></div>
+            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="service-card" target="_blank">
+                <i class="fas fa-key"></i>
                 <span>Controle de Acesso</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-boxes"></i></div>
+            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="service-card" target="_blank">
+                <i class="fas fa-boxes"></i>
                 <span>Estoques</span>
             </a>
-            <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="card" target="_blank">
-                <div class="icon"><i class="fas fa-user-plus"></i></div>
+            <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="service-card" target="_blank">
+                <i class="fas fa-user-plus"></i>
                 <span>Onboard</span>
             </a>
-            <button class="card reports" id="reportsBtn">
-                <div class="icon"><i class="fas fa-chart-pie"></i></div>
+            <button class="service-card" id="reportsBtn">
+                <i class="fas fa-chart-pie"></i>
                 <span>Boletins</span>
             </button>
-        </nav>
-    </main>
-
+        </div>
+    </div>
+    
     <div class="modal" id="reportsModal">
         <div class="modal-content">
             <button class="close" id="closeModal">&times;</button>
@@ -101,17 +94,15 @@
                 </a>
                 <a href="#" class="modal-card">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Em Breve !</span>
+                    <span>Em Breve</span>
                 </a>
                 <a href="#" class="modal-card">
                     <i class="fas fa-network-wired"></i>
-                    <span>Em Breve !</span>
+                    <span>Em Breve</span>
                 </a>
             </div>
         </div>
     </div>
-
-
 
     <script src="main.js"></script>
 </body>
