@@ -33,11 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let greeting;
         
         if (hour >= 5 && hour < 12) {
-            greeting = "Bom dia";
+            greeting = "Bom dia Ti";
         } else if (hour >= 12 && hour < 18) {
-            greeting = "Boa tarde";
+            greeting = "Boa tarde Ti";
         } else {
-            greeting = "Boa noite";
+            greeting = "Boa noite Ti";
         }
         
         document.getElementById('greeting').textContent = greeting;
