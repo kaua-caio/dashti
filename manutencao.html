@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Novidades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
       background: #000;
-      color: white;
+      overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       text-align: center;
+      color: #ffffff;
     }
 
     #particles-js {
@@ -26,32 +27,41 @@
       z-index: -1;
     }
 
-    .conteudo {
-      z-index: 1;
-      padding: 30px;
-      backdrop-filter: blur(6px);
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #00ffcc55;
-      border-radius: 20px;
-      animation: flutuar 5s ease-in-out infinite;
-    }
-
-    .titulo {
-      font-size: 2.4em;
-      margin-bottom: 20px;
-      color: #00ffc3;
-      text-shadow: 0 0 10px #00ffc3aa;
-    }
-
     .frase {
-      font-size: 1.4em;
-      font-style: italic;
-      max-width: 600px;
+      font-size: 1.5em;
+      background: linear-gradient(90deg, #00ffc3, #00bcd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 8px #00ffc360;
+      margin: 10px 0;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
     }
 
-    @keyframes flutuar {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .frase:nth-child(2) { animation-delay: 1s; }
+    .frase:nth-child(3) { animation-delay: 2s; }
+    .frase.final {
+      font-weight: 600;
+      font-size: 2.2em;
+      animation-delay: 3s;
+      letter-spacing: 1px;
+    }
+
+    .autor {
+      font-size: 1em;
+      margin-top: 20px;
+      color: #aaaaaa;
+      opacity: 0;
+      animation: fadeIn 2s ease 4s forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
   </style>
 </head>
@@ -59,53 +69,45 @@
 
   <div id="particles-js"></div>
 
-  <div class="conteudo">
-    <div class="titulo">O Futuro Está Próximo...</div>
-    <div class="frase">
-        “Mudar é difícil no começo, confuso no meio e lindo no fim.”<br> — Robin Sharma
-    </div>
-  </div>
+  <div class="frase">Um equipamento por vez</div>
+  <div class="frase">Estamos conectando os pontos. Prepare-se para enxergar o todo.</div>
+  <div class="frase final">Time de TI 3.0</div>
+  <div class="autor">“Qualquer tecnologia suficientemente avançada é indistinguível da magia.” — Arthur C. Clarke</div>
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
     particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 60 },
-        "color": { "value": "#00ffcc" },
-        "shape": { "type": "circle" },
-        "opacity": {
-          "value": 0.5,
-          "random": true
+      particles: {
+        number: { value: 60 },
+        color: { value: "#00ffc3" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true,
+          distance: 120,
+          color: "#00ffc3",
+          opacity: 0.4,
+          width: 1
         },
-        "size": {
-          "value": 3,
-          "random": true
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 120,
-          "color": "#00ffcc",
-          "opacity": 0.4,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 1,
-          "direction": "none",
-          "out_mode": "bounce"
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          out_mode: "bounce"
         }
       },
-      "interactivity": {
-        "events": {
-          "onhover": { "enable": true, "mode": "grab" },
-          "onclick": { "enable": true, "mode": "push" }
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" }
         },
-        "modes": {
-          "grab": { "distance": 140, "line_linked": { "opacity": 1 } },
-          "push": { "particles_nb": 4 }
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 1 } },
+          push: { particles_nb: 4 }
         }
       },
-      "retina_detect": true
+      retina_detect: true
     });
   </script>
 

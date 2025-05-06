@@ -61,4 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleTheme() {
     document.body.classList.toggle('light-mode');
   }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.getElementById('novidade-card').style.display = 'block';
+    }, 2000); // Aparece após 2 segundos
+  });
+
+  function fecharCard() {
+    document.getElementById('novidade-card').style.display = 'none';
+  }s
   

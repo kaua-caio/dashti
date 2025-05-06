@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de TI - Interface de Acesso</title>
+    <title>Painel de TI - Versão Temática</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -18,6 +20,8 @@
             --club: #7209b7;
             --grenn: #38b000;
             --gdigital: #f3722c;
+            --paper: #f5f5f0;
+            --ink: #333;
         }
         
         * {
@@ -30,397 +34,539 @@
         body {
             background-color: #f5f7fa;
             color: #333;
+            overflow-x: hidden;
         }
         
-        .dashboard {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
+        /* Estilos base (sidebar, header, etc) mantidos iguais */
+        /* ... (manter todos os estilos anteriores do sidebar e estrutura básica) ... */
+
+        /* ==================== */
+        /* ESTILOS TEMÁTICOS */
+        /* ==================== */
+
+        /* SEÇÃO PLAYBOOKS - ESTILO LIVROS */
+        #playbooks .swiper-slide {
+            background: linear-gradient(145deg, #f5f5f0 0%, #e8e8e3 100%);
+            border-radius: 2px 8px 8px 2px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            padding: 25px;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            border-left: 8px solid var(--primary);
+            min-height: 200px;
         }
-        
-        /* Sidebar */
-        .sidebar {
-            background: var(--dark);
-            color: white;
-            padding: 20px 0;
+
+        #playbooks .swiper-slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 15px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #ddd,
+                #ddd 1px,
+                #fff 1px,
+                #fff 3px
+            );
+            border-radius: 0 5px 5px 0;
         }
-        
-        .logo {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 30px;
-        }
-        
-        .logo h2 {
-            font-size: 1.5rem;
-            font-weight: 500;
-        }
-        
-        .nav-menu {
-            list-style: none;
-        }
-        
-        .nav-item {
-            margin-bottom: 5px;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-        
-        .nav-link i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        /* Main Content */
-        .main-content {
-            padding: 30px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-title h1 {
-            font-size: 2rem;
+
+        #playbooks .swiper-slide h3 {
+            font-family: 'Times New Roman', serif;
             color: var(--dark);
-        }
-        
-        .user-profile {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        
-        /* Dashboard Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .card-icon.documents {
-            background: var(--primary);
-        }
-        
-        .card-icon.playbook {
-            background: var(--success);
-        }
-        
-        .card-icon.boletim {
-            background: var(--warning);
-        }
-        
-        .card-icon.estoque {
-            background: var(--danger);
-        }
-        
-        .card-icon.club {
-            background: var(--club);
-        }
-        
-        .card-icon.grenn {
-            background: var(--grenn);
-        }
-        
-        .card-icon.gdigital {
-            background: var(--gdigital);
-        }
-        
-        .card-icon.aws {
-            background: #FF9900;
-        }
-        
-        .card-body {
-            margin-bottom: 15px;
-        }
-        
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .btn {
-            padding: 8px 16px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: var(--secondary);
-        }
-        
-        /* Quick Actions */
-        .quick-actions {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        
-        .action-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 10px;
-            background: rgba(67, 97, 238, 0.1);
-            border-radius: 8px;
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .action-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .action-btn i {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
         }
-        
-        .action-btn span {
-            font-size: 0.9rem;
-            text-align: center;
+
+        #playbooks .swiper-slide p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
         }
-        
-        /* Sistema Links */
-        .sistema-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+
+        #playbooks .swiper-slide:hover {
+            transform: translateY(-5px) rotateZ(1deg);
+            box-shadow: 8px 10px 20px rgba(0,0,0,0.15);
         }
-        
-        .sistema-link {
-            display: flex;
-            align-items: center;
-            padding: 15px;
+
+        /* SEÇÃO DOCUMENTOS - ESTILO ARQUIVO */
+        #documentos .action-btn {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: var(--dark);
+            border: 1px solid #ddd;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
+            padding-top: 30px;
             transition: all 0.3s;
         }
-        
-        .sistema-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+
+        #documentos .action-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--primary);
         }
-        
-        .sistema-link.club {
-            border-left: 4px solid var(--club);
+
+        #documentos .action-btn i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
         }
-        
-        .sistema-link.grenn {
-            border-left: 4px solid var(--grenn);
+
+        #documentos .action-btn span {
+            font-weight: 500;
+            color: var(--dark);
         }
-        
-        .sistema-link.gdigital {
-            border-left: 4px solid var(--gdigital);
+
+        #documentos .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
-        
-        .sistema-link.aws {
-            border-left: 4px solid #FF9900;
+
+        /* SEÇÃO BOLETINS - ESTILO ESCRITÓRIO */
+        #boletins .action-btn {
+            background: var(--paper);
+            border: 1px solid #d1d1d1;
+            border-radius: 0;
+            box-shadow: 3px 3px 0 #d1d1d1;
+            transition: all 0.2s;
+            position: relative;
+            padding-left: 50px;
         }
-        
-        .sistema-link i {
+
+        #boletins .action-btn i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 1.5rem;
-            margin-right: 10px;
+            color: var(--ink);
         }
-        
-        .sistema-link.club i {
-            color: var(--club);
+
+        #boletins .action-btn span {
+            text-align: left;
+            font-weight: 500;
+            color: var(--ink);
         }
-        
-        .sistema-link.grenn i {
-            color: var(--grenn);
+
+        #boletins .action-btn:hover {
+            transform: translate(3px, 3px);
+            box-shadow: none;
+            background: #e8e8e3;
         }
-        
-        .sistema-link.gdigital i {
-            color: var(--gdigital);
+
+        /* SEÇÃO FORMULÁRIOS - ESTILO DIVERTIDO */
+        #formularios .action-btn {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .sistema-link.aws i {
-            color: #FF9900;
+
+        #formularios .action-btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(67, 97, 238, 0.1) 0%,
+                rgba(67, 97, 238, 0) 50%,
+                rgba(67, 97, 238, 0.1) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+
+        #formularios .action-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        #formularios .action-btn:hover::before {
+            transform: rotate(30deg) translateX(50px);
+        }
+
+        #formularios .action-btn i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        #formularios .action-btn:hover i {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* SEÇÃO ESTOQUE - ESTILO ETIQUETAS */
+        #estoque .action-btn {
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            position: relative;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        #estoque .action-btn::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            border: 1px solid #eee;
+        }
+
+        #estoque .action-btn:hover {
+            border-color: var(--primary);
+            background: #f8f8ff;
+            transform: rotate(-1deg) scale(1.02);
+        }
+
+        #estoque .action-btn i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        /* SEÇÃO MÓDULOS - ESTILO PASTAS */
+        #modulos .card {
+            background: white;
+            border-radius: 0 5px 5px 0;
+            position: relative;
+            border-left: 8px solid var(--primary);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        #modulos .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: rgba(0,0,0,0.03);
+        }
+
+        #modulos .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.15);
+        }
+
+        #modulos .card-header {
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        /* ANIMAÇÕES ESPECIAIS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .animated-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            /* Ajustes para mobile */
+            #playbooks .swiper-slide {
+                min-height: 180px;
+                padding: 15px;
+            }
+            
+            #formularios .action-btn, 
+            #documentos .action-btn,
+            #boletins .action-btn,
+            #estoque .action-btn {
+                padding: 15px 5px;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-                <h2>Painel de TI</h2>
+    <!-- Tela de Boas-Vindas -->
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-message">
+          <h1>Bem-vindo ao Painel de TI</h1>
+          <p>O que você busca hoje? Aqui você encontra todas as ferramentas e recursos necessários para gerenciar a infraestrutura de TI.</p>
+          <button class="start-btn" id="startBtn">Iniciar Dashboard</button>
+      </div>
+  </div>
+  
+  <!-- Overlay para mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  
+  <div class="dashboard-container" id="dashboardContainer">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+          <span class="close-sidebar" id="closeSidebar">&times;</span>
+          <div class="logo">
+              <h2>Painel de TI</h2>
+          </div>
+          <ul class="nav-menu">
+              <li class="nav-item">
+                  <a href="#" class="nav-link active" data-section="dashboard">
+                      <i class="fas fa-tachometer-alt"></i>
+                      <span>Dashboard</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="custos">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>Custos</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="modulos">
+                      <i class="fas fa-cubes"></i>
+                      <span>Módulos</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="formularios">
+                      <i class="fas fa-clipboard-list"></i>
+                      <span>Formulários</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="acesso-detalhado">
+                      <i class="fas fa-search"></i>
+                      <span>Acesso Detalhado</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="documentos">
+                      <i class="fas fa-file-alt"></i>
+                      <span>Documentos</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="playbooks">
+                      <i class="fas fa-book"></i>
+                      <span>Playbooks</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="boletins">
+                      <i class="fas fa-file-invoice"></i>
+                      <span>Boletins</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="#" class="nav-link" data-section="estoque">
+                      <i class="fas fa-boxes"></i>
+                      <span>Estoque</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="main-content">
+          <div class="header">
+              <div class="menu-toggle" id="menuToggle">
+                  <i class="fas fa-bars"></i>
+              </div>
+              <div class="page-title">
+                  <h1>Dashboard Administrativo</h1>
+                  <p>Interface de acesso às planilhas e sistemas</p>
+              </div>
+              <div class="user-profile">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                  <span>Admin</span>
+              </div>
+          </div>
+    
+    <!-- Seção Playbooks (Livros) -->
+    <section id="playbooks" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Playbooks <i class="fas fa-book-open animated-float" style="color: var(--primary);"></i></h2>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <h3>Redes Corporativas</h3>
+                        <p>Protocolos completos para configuração e troubleshooting de redes.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Abrir Playbook</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <h3>Segurança</h3>
+                        <p>Diretrizes de segurança e resposta a incidentes.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Abrir Playbook</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <h3>Cloud AWS</h3>
+                        <p>Procedimentos para deploy e manutenção na AWS.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Abrir Playbook</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <h3>Backup & Recovery</h3>
+                        <p>Políticas e procedimentos para backup de dados.</p>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Abrir Playbook</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>Custos</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-book"></i>
-                        <span>Playbooks</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-file-invoice"></i>
-                        <span>Boletins</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-boxes"></i>
-                        <span>Estoque</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Documentos</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-clipboard-list"></i>
-                        <span>Formulários</span>
-                    </a>
-                </li>
-            </ul>
         </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <div class="page-title">
-                    <h1>Dashboard Administrativo</h1>
-                    <p>Interface de acesso às planilhas e sistemas</p>
-                </div>
-                <div class="user-profile">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
-                    <span>Admin</span>
-                </div>
+    </section>
+
+    <!-- Seção Documentos (Arquivo) -->
+    <section id="documentos" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Documentos <i class="fas fa-folder-open" style="color: var(--warning);"></i></h2>
+            <div class="action-buttons">
+                <a href="#" class="action-btn">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Manuais Técnicos</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-file-contract"></i>
+                    <span>Contratos</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-file-excel"></i>
+                    <span>Relatórios Mensais</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-file-powerpoint"></i>
+                    <span>Apresentações</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-file-code"></i>
+                    <span>Documentação de Sistemas</span>
+                </a>
             </div>
-            
-            <!-- Seção de Custos -->
-            <div class="quick-actions">
-                <h2 class="section-title">Acesso Rápido - Custos</h2>
-                <div class="sistema-links">
-                    <a href="LINK_PLANILHA_CLUB" class="sistema-link club" target="_blank">
-                        <i class="fas fa-circle"></i>
-                        <span>Planilha Club</span>
-                    </a>
-                    <a href="LINK_PLANILHA_GRENN" class="sistema-link grenn" target="_blank">
-                        <i class="fas fa-circle"></i>
-                        <span>Planilha Grenn</span>
-                    </a>
-                    <a href="LINK_PLANILHA_GDIGITAL" class="sistema-link gdigital" target="_blank">
-                        <i class="fas fa-circle"></i>
-                        <span>Planilha G Digital</span>
-                    </a>
-                    <a href="LINK_PLANILHA_AWS" class="sistema-link aws" target="_blank">
-                        <i class="fab fa-aws"></i>
-                        <span>Planilha AWS</span>
-                    </a>
-                </div>
+        </div>
+    </section>
+
+    <!-- Seção Boletins (Escritório) -->
+    <section id="boletins" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Boletins <i class="fas fa-clipboard-list" style="color: var(--danger);"></i></h2>
+            <div class="action-buttons">
+                <a href="#" class="action-btn">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Desempenho Mensal</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-bug"></i>
+                    <span>Relatório de Incidentes</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-tasks"></i>
+                    <span>Atividades Realizadas</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Métricas de SLA</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Planejamento Trimestral</span>
+                </a>
             </div>
-            
-            <!-- Seção de Módulos -->
+        </div>
+    </section>
+
+    <!-- Seção Formulários (Dinâmico) -->
+    <section id="formularios" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Formulários <i class="fas fa-edit animated-float" style="color: var(--success);"></i></h2>
+            <div class="action-buttons">
+                <a href="#" class="action-btn">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Abertura de Ticket</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-laptop"></i>
+                    <span>Solicitar Equipamento</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-key"></i>
+                    <span>Acesso a Sistemas</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Upload de Documento</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Solicitar Férias</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-tools"></i>
+                    <span>Manutenção Preventiva</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Estoque (Etiquetas) -->
+    <section id="estoque" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Estoque <i class="fas fa-boxes" style="color: var(--gdigital);"></i></h2>
+            <div class="action-buttons">
+                <a href="#" class="action-btn">
+                    <i class="fas fa-desktop"></i>
+                    <span>Computadores</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-laptop"></i>
+                    <span>Notebooks</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-print"></i>
+                    <span>Impressoras</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Dispositivos Móveis</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Redes</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <i class="fas fa-hdd"></i>
+                    <span>Armazenamento</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Módulos (Pastas) -->
+    <section id="modulos" class="section">
+        <div class="quick-actions">
+            <h2 class="section-title">Módulos <i class="fas fa-folder" style="color: var(--club);"></i></h2>
             <div class="card-grid">
                 <div class="card">
                     <div class="card-header">
@@ -433,7 +579,7 @@
                         <p>Procedimentos operacionais padrão e guias de resolução de problemas.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="LINK_PLAYBOOKS" class="btn btn-primary" target="_blank">Acessar Playbooks</a>
+                        <a href="#" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
                 
@@ -448,7 +594,7 @@
                         <p>Relatórios mensais de desempenho e incidentes.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="LINK_BOLETINS" class="btn btn-primary" target="_blank">Acessar Boletins</a>
+                        <a href="#" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
                 
@@ -463,7 +609,7 @@
                         <p>Gestão de ativos de TI e inventário.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="LINK_ESTOQUE" class="btn btn-primary" target="_blank">Acessar Estoque</a>
+                        <a href="#" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
                 
@@ -478,61 +624,146 @@
                         <p>Documentação técnica e manuais.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="LINK_DOCUMENTOS" class="btn btn-primary" target="_blank">Acessar Documentos</a>
+                        <a href="#" class="btn btn-primary">Acessar</a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Formulários -->
-            <div class="quick-actions">
-                <h2 class="section-title">Formulários</h2>
-                <div class="action-buttons">
-                    <a href="LINK_TICKET" class="action-btn" target="_blank">
-                        <i class="fas fa-ticket-alt"></i>
-                        <span>Abertura de Ticket</span>
-                    </a>
-                    <a href="LINK_EQUIPAMENTO" class="action-btn" target="_blank">
-                        <i class="fas fa-laptop"></i>
-                        <span>Solicitar Equipamento</span>
-                    </a>
-                    <a href="LINK_ACESSO" class="action-btn" target="_blank">
-                        <i class="fas fa-key"></i>
-                        <span>Acesso a Sistemas</span>
-                    </a>
-                    <a href="LINK_UPLOAD" class="action-btn" target="_blank">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Upload de Documento</span>
-                    </a>
-                    <a href="LINK_FERIAS" class="action-btn" target="_blank">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Solicitar Férias</span>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Acesso Detalhado -->
-            <div class="quick-actions">
-                <h2 class="section-title">Acesso Detalhado</h2>
-                <div class="action-buttons">
-                    <a href="LINK_CUSTOS_MENSAL" class="action-btn" target="_blank">
-                        <i class="fas fa-calendar"></i>
-                        <span>Custos Mensais</span>
-                    </a>
-                    <a href="LINK_CUSTOS_ANUAL" class="action-btn" target="_blank">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Custos Anuais</span>
-                    </a>
-                    <a href="LINK_HISTORICO" class="action-btn" target="_blank">
-                        <i class="fas fa-history"></i>
-                        <span>Histórico Completo</span>
-                    </a>
-                    <a href="LINK_COMPARATIVO" class="action-btn" target="_blank">
-                        <i class="fas fa-balance-scale"></i>
-                        <span>Comparativo de Custos</span>
-                    </a>
-                </div>
-            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Scripts (manter os mesmos scripts anteriores) -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+            // Elementos principais
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const startBtn = document.getElementById('startBtn');
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menuToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const dashboardContainer = document.getElementById('dashboardContainer');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Tela de boas-vindas
+            startBtn.addEventListener('click', function() {
+                welcomeScreen.classList.add('hidden');
+                showSection('dashboard');
+                
+                // Mostra o sidebar apenas em desktop
+                if (window.innerWidth > 992) {
+                    sidebar.classList.add('active');
+                    dashboardContainer.classList.add('sidebar-active');
+                }
+            });
+            
+            // Controle do sidebar
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.add('active');
+                sidebarOverlay.classList.add('active');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+            
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+            
+            // Navegação por seções
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Fecha o sidebar em dispositivos móveis
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('active');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    
+                    // Ativa a seção correspondente
+                    showSection(sectionId);
+                    
+                    // Atualiza o link ativo
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Função para mostrar uma seção específica
+            function showSection(sectionId) {
+                const sections = document.querySelectorAll('.section');
+                
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                const activeSection = document.getElementById(sectionId);
+                if (activeSection) {
+                    activeSection.classList.add('active');
+                    
+                    // Rolagem suave para o topo
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            
+            // Inicializa os carrosséis
+            const swipers = document.querySelectorAll('.swiper');
+            swipers.forEach(swiperEl => {
+                new Swiper(swiperEl, {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    breakpoints: {
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        992: {
+                            slidesPerView: 3,
+                        }
+                    }
+                });
+            });
+            
+            // Verifica se deve mostrar a tela de boas-vindas
+            const shouldShowWelcome = !sessionStorage.getItem('welcomeShown');
+            
+            if (!shouldShowWelcome) {
+                welcomeScreen.classList.add('hidden');
+                showSection('dashboard');
+                
+                // Mostra o sidebar apenas em desktop
+                if (window.innerWidth > 992) {
+                    sidebar.classList.add('active');
+                    dashboardContainer.classList.add('sidebar-active');
+                }
+            } else {
+                sessionStorage.setItem('welcomeShown', 'true');
+            }
+            
+            // Ajusta o layout quando a janela é redimensionada
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
