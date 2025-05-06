@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área do TI - Greenn</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">🧠 TI Greenn</h2>
+      <nav class="nav">
+        <a href="#">Dashboard</a>
+        <a href="#">Chamados</a>
+        <a href="#">Estoque</a>
+        <a href="#">Requisições</a>
+        <a href="documentos/index.html">Documentação</a>
+      </nav>
+      <div class="theme-toggle">
+        <input type="checkbox" id="toggleTheme" />
+        <label for="toggleTheme">🌙</label>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <header class="page-header">
+        <h1>Área do TI</h1>
+        <p>Bem-vindo à central de processos e suporte do setor de TI.</p>
+      </header>
+
+      <!-- Cards -->
+      <section class="ti-processes">
+        <div class="process-card">
+          <h2>Chamados</h2>
+          <p>Visualize e acompanhe os chamados em aberto.</p>
+        </div>
+        <div class="process-card">
+          <h2>Requisições</h2>
+          <p>Solicitação e controle de equipamentos.</p>
+        </div>
+        <div class="process-card">
+          <h2>Estoque</h2>
+          <p>Status e movimentações de itens de TI.</p>
+        </div>
+        <div class="process-card">
+        <a href="documentos/index.html"><h2>Documentação</h2></a> 
+          <p>Guias e manuais internos da equipe.</p>
+        </div>
+      </section>
+
+      <!-- Novidades -->
+      <section class="ti-updates">
+        <h2>📢 Novidades</h2>
+        <ul>
+          <li>Nova política de requisições implementada.</li>
+          <li>Atualização na plataforma de chamados.</li>
+          <li>Documentação de configuração padronizada.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('toggleTheme');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('light-mode');
+    });
+  </script>
+</body>
+</html>

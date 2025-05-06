@@ -340,54 +340,41 @@ header {
 
 
 
-.switch {
-  position: fixed; /* Fixa o elemento na tela */
-  bottom: 20px; /* Distância da parte inferior */
-  right: 20px; /* Distância da parte direita */
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-  z-index: 1000; /* Garante que ele fique sobre outros elementos */
+.novidade-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
+.botao-misterioso {
+  padding: 14px 32px;
+  font-size: 1.2em;
+  font-family: 'Segoe UI', sans-serif;
+  color: #00ffc3;
+  background: transparent;
+  border: 2px solid #00ffc3;
+  border-radius: 50px;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 10px #00ffc355;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(4px);
+  animation: pulsar 2.5s infinite ease-in-out;
 }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
+.botao-misterioso:hover {
+  background: #00ffc320;
+  box-shadow: 0 0 20px #00ffc3cc;
+  transform: scale(1.05);
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  transform: translateX(20px);
+@keyframes pulsar {
+  0%, 100% {
+    box-shadow: 0 0 10px #00ffc355, 0 0 20px #00ffc355;
+  }
+  50% {
+    box-shadow: 0 0 25px #00ffc3aa, 0 0 40px #00ffc3aa;
+  }
 }
