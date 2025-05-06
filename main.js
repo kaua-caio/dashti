@@ -57,3 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
         typeWriter("Chamados Ativos", document.getElementById('statusText'), 100);
     }, 1000);
 });
+
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+  }
+  
