@@ -1,114 +1,248 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Novidades</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHORTI - Lançamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
       height: 100%;
-      font-family: 'Poppins', sans-serif;
-      background: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0a0a0a;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #ffffff;
+      color: white;
     }
 
-    #particles-js {
+    .intro, .middle, .main {
       position: absolute;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      transition: opacity 1.5s ease, transform 1.5s ease;
+      padding: 2rem;
+      z-index: 2;
     }
 
-    .frase {
-      font-size: 1.5em;
-      background: linear-gradient(90deg, #00ffc3, #00bcd4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 8px #00ffc360;
-      margin: 10px 0;
+    .intro {
+      background: linear-gradient(45deg, #0f0, #0af, #70f);
+      background-size: 300% 300%;
+      animation: bgFlow 8s ease-in-out infinite;
+    }
+
+    .intro p {
+      font-size: 2rem;
+      max-width: 700px;
+      color: white;
+      animation: fadeInText 2s ease-out;
+      line-height: 1.6;
+    }
+
+    .middle, .main {
       opacity: 0;
-      animation: fadeInUp 1s ease forwards;
+      transform: translateY(30px);
     }
 
-    .frase:nth-child(2) { animation-delay: 1s; }
-    .frase:nth-child(3) { animation-delay: 2s; }
-    .frase.final {
+    .middle.show, .main.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .middle p {
+      font-size: 2.5rem;
       font-weight: 600;
-      font-size: 2.2em;
-      animation-delay: 3s;
-      letter-spacing: 1px;
+      color: #00ffd5;
+      animation: fadeInText 1.8s ease-out;
     }
 
-    .autor {
-      font-size: 1em;
-      margin-top: 20px;
-      color: #aaaaaa;
-      opacity: 0;
-      animation: fadeIn 2s ease 4s forwards;
+    @keyframes bgFlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
-    @keyframes fadeInUp {
+    @keyframes fadeInText {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    h1 {
+      font-size: 4.8rem;
+      font-weight: 700;
+      background: linear-gradient(270deg, #00ffd5, #008cff, #00ffd5);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 10s ease infinite, fadeInTitle 2s ease 0.5s forwards;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .tagline {
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 1.2rem;
+      animation: fadeInTag 2s ease 1.5s forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    @keyframes fadeInTitle {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInTag {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    strong {
+      color: #00ffd5;
+    }
+
+    .bg-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .aurora {
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  background: 
+    radial-gradient(ellipse at 25% 35%, rgba(0,255,180,0.12), transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(0,140,255,0.1), transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(0,255,255,0.05), transparent 70%);
+  animation: auroraFlow 30s ease-in-out infinite alternate;
+  filter: blur(100px) saturate(120%);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+
+@keyframes auroraFlow {
+  0% {
+    transform: translate(-10%, -10%) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(5%, 10%) scale(1.05) rotate(10deg);
+  }
+  100% {
+    transform: translate(-5%, -5%) scale(1) rotate(-5deg);
+  }
+}
+
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100vh); }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+      .intro p {
+        font-size: 1.3rem;
+      }
+      .middle p {
+        font-size: 1.8rem;
+      }
+      .tagline {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="particles-js"></div>
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <p>Pra que complicar<br>se em breve você pode facilitar com o que você já tem.</p>
+  </div>
 
-  <div class="frase">Um equipamento por vez</div>
-  <div class="frase">Estamos conectando os pontos. Prepare-se para enxergar o todo.</div>
-  <div class="frase final">Time de TI 3.0</div>
-  <div class="autor">“Qualquer tecnologia suficientemente avançada é indistinguível da magia.” — Arthur C. Clarke</div>
+  <!-- MIDDLE PHRASE -->
+  <div class="middle" id="middle">
+    <p>Saia do comum.</p>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <h1>SHORTI</h1>
+    <p class="tagline">A revolução começa quando você decide <strong>simplificar</strong></p>
+  </div>
+
+  <!-- BACKGROUND EFFECTS -->
+  <div class="bg-layer">
+    <div class="aurora"></div>
+    <div class="particles" id="particles"></div>
+  </div>
+
   <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 60 },
-        color: { value: "#00ffc3" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 120,
-          color: "#00ffc3",
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 1,
-          direction: "none",
-          out_mode: "bounce"
-        }
-      },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "grab" },
-          onclick: { enable: true, mode: "push" }
-        },
-        modes: {
-          grab: { distance: 140, line_linked: { opacity: 1 } },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
+    // Partículas
+    const particles = document.getElementById('particles');
+    const total = 60;
+
+    for (let i = 0; i < total; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 2 + 1;
+      const duration = Math.random() * 20 + 10;
+      const delay = Math.random() * -30;
+
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.top = `${Math.random() * 100}%`;
+      p.style.animationDuration = `${duration}s`;
+      p.style.animationDelay = `${delay}s`;
+
+      particles.appendChild(p);
+    }
+
+    // Transições entre seções
+    setTimeout(() => {
+      document.getElementById('intro').style.opacity = 0;
+      document.getElementById('intro').style.transform = 'translateY(-30px)';
+      document.getElementById('middle').classList.add('show');
+    }, 4000);
+
+    setTimeout(() => {
+      document.getElementById('middle').style.opacity = 0;
+      document.getElementById('middle').style.transform = 'translateY(-30px)';
+      document.getElementById('main').classList.add('show');
+    }, 7500);
   </script>
 
 </body>

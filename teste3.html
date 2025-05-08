@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHORTI /// Sistema de Organização de Alto Nível</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Space+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --primary: #0a0a0a;
+            --secondary: #1a1a1a;
+            --accent: #2a2a2a;
+            --text: #e0e0e0;
+            --highlight: #707070;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--primary);
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        .main-title {
+            font-size: 5rem;
+            font-weight: 400;
+            margin: 0;
+            color: var(--text);
+            position: relative;
+            z-index: 2;
+            letter-spacing: 5px;
+            font-family: 'Major Mono Display', monospace;
+            text-shadow: 0 0 10px rgba(224, 224, 224, 0.1);
+            opacity: 0.9;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            margin: 30px 0 0 0;
+            color: var(--highlight);
+            position: relative;
+            z-index: 2;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            max-width: 600px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 0.7; }
+        }
+        
+        .terminal {
+            margin-top: 50px;
+            background-color: var(--secondary);
+            border: 1px solid var(--highlight);
+            width: 600px;
+            height: 200px;
+            padding: 20px;
+            text-align: left;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s forwards 2s;
+        }
+        
+        .terminal-line {
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typewriter 4s steps(40) forwards;
+            opacity: 0;
+        }
+        
+        .terminal-line:nth-child(1) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 3.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 4.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 5.5s; }
+        
+        @keyframes typewriter {
+            0% { width: 0; opacity: 0; }
+            1% { opacity: 1; }
+            100% { width: 100%; opacity: 1; }
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 15px;
+            background-color: var(--highlight);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .prompt {
+            color: var(--highlight);
+        }
+        
+        .command {
+            color: var(--text);
+        }
+        
+        .response {
+            color: var(--highlight);
+        }
+        
+        .access-denied {
+            color: #600;
+        }
+        
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(112, 112, 112, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(112, 112, 112, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+        
+        .corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-color: var(--highlight);
+            border-style: solid;
+            border-width: 0;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-top-width: 1px;
+            border-left-width: 1px;
+        }
+        
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-top-width: 1px;
+            border-right-width: 1px;
+        }
+        
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-bottom-width: 1px;
+            border-left-width: 1px;
+        }
+        
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-bottom-width: 1px;
+            border-right-width: 1px;
+        }
+        
+        .hidden-text {
+            position: absolute;
+            color: rgba(224, 224, 224, 0.02);
+            font-size: 0.7rem;
+            z-index: 0;
+            user-select: none;
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 4px;
+            }
+            
+            .terminal {
+                width: 90%;
+                height: 150px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid"></div>
+    
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    
+    <div class="container">
+        <h1 class="main-title">SHORTI</h1>
+        <p class="subtitle">TRANSFORMANDO CAOS EM EFICIÊNCIA</p>
+        
+        <div class="terminal">
+            <div class="terminal-line">
+                <span class="prompt">></span> <span class="command">init SHORTI.exe</span><span class="cursor"></span>
+            </div>
+            <div class="terminal-line">
+                <span class="response">Sistema de organização de alto nível inicializado</span><span class="cursor"></span>
+            </div>
+            <div class="terminal-line">
+                <span class="prompt">></span> <span class="command">access --level=corporate</span><span class="cursor"></span>
+            </div>
+            <div class="terminal-line">
+                <span class="access-denied">Acesso restrito. Solicite credenciais.</span><span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Textos ocultos para efeito misterioso -->
+    <div class="hidden-text" style="top: 10%; left: 15%;">Enro gadavids de a tom à ne viesicds</div>
+    <div class="hidden-text" style="bottom: 20%; right: 15%;">Piran eriandso meio errepós. quis eliersterts.</div>
+    <div class="hidden-text" style="top: 50%; left: 5%;">01010011 01001000 01001111 01010010 01010100 01001001</div>
+    <div class="hidden-text" style="bottom: 40%; right: 5%;">Nível de segurança: 5</div>
+
+    <script>
+        // Efeito de digitação no terminal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efeito de cursor piscando nos elementos do terminal
+            const cursorElements = document.querySelectorAll('.cursor');
+            
+            setInterval(() => {
+                cursorElements.forEach(cursor => {
+                    cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+                });
+            }, 500);
+            
+            // Efeito de digitação adicional (opcional)
+            setTimeout(() => {
+                const terminal = document.querySelector('.terminal');
+                const newLine = document.createElement('div');
+                newLine.className = 'terminal-line';
+                newLine.innerHTML = '<span class="prompt">></span> <span class="command" style="width:0;overflow:hidden;display:inline-block;"></span><span class="cursor"></span>';
+                terminal.appendChild(newLine);
+                
+                const commandText = 'contact --request=credentials';
+                const commandSpan = newLine.querySelector('.command');
+                
+                let i = 0;
+                const typing = setInterval(() => {
+                    if (i < commandText.length) {
+                        commandSpan.style.width = (i * 7) + 'px';
+                        commandSpan.textContent = commandText.substring(0, i+1);
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                        
+                        // Adiciona resposta após digitação
+                        setTimeout(() => {
+                            const responseLine = document.createElement('div');
+                            responseLine.className = 'terminal-line';
+                            responseLine.innerHTML = '<span class="response">Redirecionando para portal seguro...</span><span class="cursor"></span>';
+                            terminal.appendChild(responseLine);
+                            terminal.scrollTop = terminal.scrollHeight;
+                        }, 1000);
+                    }
+                }, 100);
+                
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 7000);
+            
+            // Efeito de glitch no título (opcional)
+            const title = document.querySelector('.main-title');
+            let glitchInterval;
+            
+            title.addEventListener('mouseenter', () => {
+                let count = 0;
+                glitchInterval = setInterval(() => {
+                    if (count < 5) {
+                        title.style.textShadow = `0 0 ${Math.random()*10}px rgba(224, 224, 224, ${Math.random()*0.5})`;
+                        title.style.transform = `translate(${Math.random()*5-2.5}px, ${Math.random()*5-2.5}px)`;
+                        count++;
+                    } else {
+                        clearInterval(glitchInterval);
+                        title.style.textShadow = '0 0 10px rgba(224, 224, 224, 0.1)';
+                        title.style.transform = 'translate(0, 0)';
+                    }
+                }, 100);
+            });
+            
+            // Revelar texto oculto ao passar o mouse (efeito easter egg)
+            const hiddenTexts = document.querySelectorAll('.hidden-text');
+            hiddenTexts.forEach(text => {
+                text.addEventListener('mouseenter', () => {
+                    text.style.color = 'rgba(224, 224, 224, 0.2)';
+                    setTimeout(() => {
+                        text.style.color = 'rgba(224, 224, 224, 0.02)';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

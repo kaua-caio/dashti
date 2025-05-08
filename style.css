@@ -435,34 +435,4 @@ input:checked + .slider::before {
 }
 
 
-.mensagem-animada {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: transparent;
-  color: #00ffc3;
-  font-size: 1.4em;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  padding: 20px;
-  animation: aparecerDesaparecer 6s ease-in-out forwards;
-  pointer-events: none;
-  z-index: 999;
-}
 
-/* Animação */
-@keyframes aparecerDesaparecer {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-  10%, 80% {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-}
