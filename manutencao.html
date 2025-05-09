@@ -24,20 +24,22 @@
       background-color: var(--space-dark);
       color: #fff;
       font-family: 'Inter', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
     }
 
-    .container {
-      text-align: center;
-      max-width: 800px;
-      padding: 2rem;
-      z-index: 10;
+    /* Primeira tela */
+    .main-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       position: relative;
+      z-index: 10;
+      padding: 2rem;
+      text-align: center;
     }
 
     h1 {
@@ -70,9 +72,32 @@
       line-height: 1.6;
     }
 
+    /* Seta para baixo */
+    .scroll-down {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      z-index: 20;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-down svg {
+      width: 30px;
+      height: 30px;
+      fill: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .scroll-down:hover svg {
+      fill: white;
+      transform: scale(1.1);
+    }
+
     /* Efeito Espacial Minimalista */
     .space-background {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -134,6 +159,83 @@
       animation: loading 2.5s infinite ease-in-out;
     }
 
+    /* Segunda tela - Manifesto */
+    .manifesto-screen {
+      position: relative;
+      min-height: 100vh;
+      background: var(--space-dark);
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all 0.8s ease;
+      z-index: 5;
+    }
+
+    .manifesto-screen.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .manifesto-content {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .manifesto-content h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+    .manifesto-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 12px 20px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     /* Animations */
     @keyframes loading {
       0% { transform: translateX(-100%); }
@@ -150,6 +252,12 @@
       100% { transform: translate(-50%, -50%); }
     }
 
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-15px);}
+      60% {transform: translateY(-7px);}
+    }
+
     /* Responsivo */
     @media (max-width: 768px) {
       h1 {
@@ -163,6 +271,14 @@
       .loading-bar {
         width: 150px;
       }
+
+      .manifesto-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .manifesto-content h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -172,7 +288,8 @@
     <!-- Partículas serão adicionadas via JS -->
   </div>
   
-  <div class="container">
+  <!-- Primeira Tela -->
+  <div class="main-screen">
     <h1>SHORTI</h1>
     <p class="slogan">O futuro é simples, não complique</p>
     
@@ -182,6 +299,35 @@
       </div>
       <div class="loading-text">Em desenvolvimento</div>
     </div>
+
+    <div class="scroll-down" id="scrollDown">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Segunda Tela - Manifesto -->
+  <div class="manifesto-screen" id="manifestoScreen">
+    <div class="manifesto-content">
+      <h2>📜 Manifesto da SHORTI</h2>
+      <p>O futuro é simples. Não complique.</p>
+      <p>Vivemos em um mundo sobrecarregado. De dados. De ruídos. De distrações. Mas no meio do excesso, nasce a SHORTI. Não para somar mais uma camada de complexidade. Mas para descomplicar o que o futuro tem de melhor.</p>
+      <p>Acreditamos na tecnologia que serve — não que confunde. No design que facilita — não que impressiona sem propósito. Na inovação que aproxima — não que afasta.</p>
+      <p>A SHORTI nasceu com um propósito claro: tornar o mundo mais simples, mais inteligente e mais acessível. Não queremos reinventar a roda. Queremos fazer ela girar com menos esforço, mais velocidade e melhor direção.</p>
+      <p>Somos o ponto de equilíbrio entre o essencial e o brilhante. Entre o que resolve e o que encanta. Entre o futuro e o agora.</p>
+      <p>Não seguimos fórmulas prontas. Não criamos para parecer modernos. Criamos para ser úteis, diretos, humanos.</p>
+      <p>Se você quer complicação, há muitos caminhos. Se você quer clareza, agilidade e leveza, bem-vindo à SHORTI.</p>
+      <p>O futuro chegou. E ele é simples.</p>
+    </div>
+  </div>
+
+  <!-- Botão para voltar ao topo -->
+  <div class="back-to-top" id="backToTop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+    Voltar ao topo
   </div>
 
   <script>
@@ -213,7 +359,6 @@
     // Frases alternadas
     const frases = [
       "O futuro é simples. Não complique.",
-
     ];
 
     const slogan = document.querySelector('.slogan');
@@ -234,6 +379,40 @@
       changeSlogan();
       setInterval(changeSlogan, 6000);
     }, 8000);
+
+    // Controle do manifesto
+    const scrollDown = document.getElementById('scrollDown');
+    const manifestoScreen = document.getElementById('manifestoScreen');
+    const backToTop = document.getElementById('backToTop');
+
+    scrollDown.addEventListener('click', () => {
+      manifestoScreen.classList.add('active');
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
+      setTimeout(() => {
+        backToTop.classList.add('visible');
+      }, 1000);
+    });
+
+    backToTop.addEventListener('click', () => {
+      manifestoScreen.classList.remove('active');
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      backToTop.classList.remove('visible');
+    });
+
+    // Mostrar/ocultar botão de voltar baseado no scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight / 2) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
   </script>
 </body>
 </html>
