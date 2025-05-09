@@ -72,3 +72,25 @@ function toggleTheme() {
     document.getElementById('novidade-card').style.display = 'none';
   }s
   
+  document.addEventListener('DOMContentLoaded', function() {
+    const notificacao = document.getElementById('notificacao-catolica');
+    const botaoFechar = document.getElementById('fechar-notificacao-catolica');
+    const tempoExibicao = 5000; // 5 segundos
+
+    function mostrarNotificacao() {
+      notificacao.classList.add('mostrar');
+    }
+
+    function esconderNotificacao() {
+      notificacao.classList.remove('mostrar');
+    }
+
+    // Mostrar a notificação após um pequeno delay
+    setTimeout(mostrarNotificacao, 1500);
+
+    // Esconder automaticamente
+    setTimeout(esconderNotificacao, tempoExibicao + 1500);
+
+    // Esconder ao clicar no botão
+    botaoFechar.addEventListener('click', esconderNotificacao);
+  });
