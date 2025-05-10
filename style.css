@@ -164,3 +164,81 @@ body {
       font-size: 0.9rem;
   }
 }
+
+
+
+
+.shorti-intro {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.shorti-title {
+  font-size: 5rem;
+  background: linear-gradient(90deg, #7b2ff7, #00c3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientFlow 4s ease infinite, fadeInUp 2s ease forwards;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Resto do CSS de antes permanece igual */
+.fusion-transition {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.fusion-inner {
+  text-align: center;
+  animation: fadeInUp 2s ease forwards;
+}
+
+.fusion-phrase {
+  font-size: 2rem;
+  color: #333030;
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.shorti-gradient {
+  background: linear-gradient(90deg, #7b2ff7, #00c3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.fusion-sub {
+  font-size: 1.2rem;
+  color: #222222;
+  margin-top: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

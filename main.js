@@ -32,7 +32,19 @@ window.addEventListener('click', (e) => {
     }
 });
 
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    updateGreeting();
-});
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      document.getElementById("shorti-intro").style.display = "none";
+      
+      const fusion = document.getElementById("fusion-transition");
+      fusion.style.display = "flex";
+      fusion.style.opacity = "1"; // mostra com fade-in
+    }, 3000);
+  
+    setTimeout(() => {
+      document.getElementById("fusion-transition").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    }, 8000);
+  });
+  
