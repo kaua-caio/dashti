@@ -1,359 +1,538 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHORTI | Em Desenvolvimento</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-gradient: linear-gradient(135deg, #8A2BE2 0%, #00BFFF 100%);
-      --text-gradient: linear-gradient(90deg, #FFFFFF 0%, #E0E0E0 100%);
-      --accent-color: rgba(138, 43, 226, 0.8);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashdoTI e SHORTI - Juntos no Futuro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dashdoti-blue: #2563eb;
+            --shorti-purple: #4f46e5;
+            --future-cyan: #06b6d4;
+            --white: #ffffff;
+            --light-bg: #f8fafc;
+            --dark-text: #1e293b;
+            --gray-text: #64748b;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
-    body {
-      background-color: #050510;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    .container {
-      text-align: center;
-      max-width: 900px;
-      padding: 2rem;
-      z-index: 10;
-      position: relative;
-    }
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--dashdoti-blue) 0%, var(--shorti-purple) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
 
-    h1 {
-      font-size: 5rem;
-      font-weight: 700;
-      background: var(--primary-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1.5rem;
-      animation: fadeInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      position: relative;
-      display: inline-block;
-    }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3QgZmlsbD0idXJsKCNwYXR0ZXJuKSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIvPjwvc3ZnPg==');
+            opacity: 0.3;
+        }
 
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: var(--primary-gradient);
-      border-radius: 3px;
-    }
+        .fusion-animation {
+            margin-bottom: 2rem;
+            position: relative;
+            width: 300px;
+            height: 150px;
+        }
 
-    p.slogan {
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 3rem;
-      animation: fadeInUp 2s cubic-bezier(0.16, 1, 0.3, 1) both;
-      line-height: 1.6;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+        .logo-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .quote-container {
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2rem 0;
-    }
+        .dashdoti-logo, .shorti-logo {
+            font-size: 3rem;
+            font-weight: 700;
+            position: absolute;
+            opacity: 0;
+            transition: all 1s ease;
+        }
 
-    .quote {
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.7);
-      animation: textFlow 12s infinite;
-      position: relative;
-      padding: 0 2rem;
-      max-width: 700px;
-      line-height: 1.6;
-    }
+        .dashdoti-logo {
+            color: var(--white);
+            animation: fadeInOut 8s infinite;
+        }
 
-    /* Loading Animation */
-    .loading-container {
-      margin: 3rem 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
+        .shorti-logo {
+            color: var(--white);
+            animation: fadeInOut 8s infinite 4s;
+        }
 
-    .loading-text {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.6);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); }
+        }
 
-    .loading {
-      width: 80px;
-      height: 80px;
-      position: relative;
-    }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-    .loading-circle {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 3px solid transparent;
-      border-top-color: #8A2BE2;
-      border-radius: 50%;
-      animation: spin 1.5s linear infinite;
-    }
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
 
-    .loading-circle:nth-child(2) {
-      border-top-color: #00BFFF;
-      width: 70%;
-      height: 70%;
-      top: 15%;
-      left: 15%;
-      animation: spinReverse 2s linear infinite;
-    }
+        .cta-button {
+            background-color: var(--white);
+            color: var(--shorti-purple);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .loading-circle:nth-child(3) {
-      border-top-color: #FFFFFF;
-      width: 50%;
-      height: 50%;
-      top: 25%;
-      left: 25%;
-      animation: spin 2.5s linear infinite;
-    }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
 
-    /* Modern Background */
-    .background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      overflow: hidden;
-    }
+        .cta-button i {
+            transition: transform 0.3s ease;
+        }
 
-    .background-pulse {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at center, 
-        rgba(138, 43, 226, 0.05) 0%, 
-        rgba(0, 191, 255, 0.03) 30%, 
-        transparent 70%);
-      animation: pulse 15s infinite alternate;
-      top: -50%;
-      left: -50%;
-    }
+        .cta-button:hover i {
+            transform: translateX(3px);
+        }
 
-    .background-grid {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
-      opacity: 0.3;
-    }
+        /* Timeline Section */
+        .timeline-section {
+            padding: 4rem 2rem;
+            background-color: var(--white);
+            position: relative;
+        }
 
-    .background-shapes {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
 
-    .shape {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(40px);
-      opacity: 0.15;
-    }
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-    .shape-1 {
-      width: 300px;
-      height: 300px;
-      background: #8A2BE2;
-      top: 20%;
-      left: 10%;
-      animation: float 15s infinite ease-in-out;
-    }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--dashdoti-blue), var(--shorti-purple));
+        }
 
-    .shape-2 {
-      width: 400px;
-      height: 400px;
-      background: #00BFFF;
-      bottom: 10%;
-      right: 10%;
-      animation: float 18s infinite ease-in-out 2s;
-    }
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
 
-    /* Animations */
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 0.5;
-      }
-      100% {
-        transform: scale(1.2);
-        opacity: 0.8;
-      }
-    }
+        .timeline-point {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--shorti-purple);
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px var(--shorti-purple);
+            z-index: 1;
+        }
 
-    @keyframes float {
-      0%, 100% {
-        transform: translate(0, 0);
-      }
-      50% {
-        transform: translate(50px, 50px);
-      }
-    }
+        .timeline-past, .timeline-future {
+            width: 45%;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
 
-    @keyframes textFlow {
-      0%, 20% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      30%, 70% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      80%, 100% {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-    }
+        .timeline-past {
+            background-color: var(--dashdoti-blue);
+            color: var(--white);
+            text-align: right;
+        }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        .timeline-present {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--future-cyan);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 2;
+            white-space: nowrap;
+        }
 
-    @keyframes spinReverse {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(-360deg); }
-    }
+        .timeline-future {
+            background-color: var(--shorti-purple);
+            color: var(--white);
+        }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 3rem;
-      }
-      
-      p.slogan {
-        font-size: 1.4rem;
-      }
-      
-      .quote {
-        font-size: 1rem;
-        padding: 0 1rem;
-      }
-      
-      .loading {
-        width: 60px;
-        height: 60px;
-      }
-    }
-  </style>
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            padding: 4rem 2rem;
+            background-color: var(--light-bg);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .benefit-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--shorti-purple);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+        }
+
+        .benefit-card p {
+            color: var(--gray-text);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--shorti-purple) 0%, var(--future-cyan) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-past, .timeline-future {
+                width: 100%;
+                text-align: left;
+                margin-bottom: 1rem;
+            }
+            
+            .timeline-past {
+                order: 1;
+            }
+            
+            .timeline-present {
+                order: 2;
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 1rem auto;
+            }
+            
+            .timeline-future {
+                order: 3;
+            }
+            
+            .timeline-point {
+                left: 20px;
+            }
+            
+            .final-cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="background">
-    <div class="background-pulse"></div>
-    <div class="background-grid"></div>
-    <div class="background-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-    </div>
-  </div>
-  
-  <div class="container">
-    <h1>SHORTI</h1>
-    <p class="slogan">O futuro é simples, não complique</p>
-    
-    <div class="quote-container">
-      <p class="quote" id="frase"></p>
-    </div>
-    
-    <div class="loading-container">
-      <div class="loading">
-        <div class="loading-circle"></div>
-        <div class="loading-circle"></div>
-        <div class="loading-circle"></div>
-      </div>
-      <div class="loading-text">Em desenvolvimento</div>
-    </div>
-  </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="fusion-animation">
+            <div class="logo-container">
+                <div class="dashdoti-logo">DashdoTI</div>
+                <div class="shorti-logo">SHORTI</div>
+            </div>
+        </div>
+        <h1>Uma nova era começa</h1>
+        <p>O DashdoTI agora é <strong>SHORTI</strong>: mais poder, mais velocidade, mais futuro.</p>
+        <button class="cta-button" id="exploreBtn">
+            Explore a Nova Plataforma <i class="fas fa-arrow-right"></i>
+        </button>
+        
+        <!-- Particles -->
+        <div id="particles"></div>
+    </section>
 
-  <script>
-    const frases = [
-      "Algo incrível está sendo criado...",
-      "Preparando uma experiência simples e poderosa",
-      "Inovação em progresso",
-      "Simplificando o futuro",
-      "Carregando a próxima geração",
-      "Boa coisa vem para quem espera"
-    ];
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <h2 class="section-title">Nossa Jornada de Evolução</h2>
+        <div class="timeline">
+            <div class="timeline-item" id="timelineItem">
+                <div class="timeline-past">
+                    <div class="timeline-content">
+                        <h3>DashdoTI</h3>
+                        <p>A plataforma que revolucionou a gestão de TI, oferecendo controle total sobre equipamentos e processos.</p>
+                    </div>
+                </div>
+                <div class="timeline-present">Fusão</div>
+                <div class="timeline-point"></div>
+                <div class="timeline-future">
+                    <div class="timeline-content">
+                        <h3>SHORTI</h3>
+                        <p>A evolução natural, integrando todos os sistemas em uma única plataforma poderosa e unificada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    let index = 0;
-    const fraseElement = document.getElementById('frase');
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <h2 class="section-title">O que essa fusão traz para você</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card" id="benefit1">
+                <i class="fas fa-bolt"></i>
+                <h3>Velocidade Redefinida</h3>
+                <p>Todos os processos agora são mais ágeis, com integração perfeita entre os sistemas.</p>
+            </div>
+            <div class="benefit-card" id="benefit2">
+                <i class="fas fa-infinity"></i>
+                <h3>Experiência Unificada</h3>
+                <p>Um único ecossistema para todas as suas necessidades de gestão e controle.</p>
+            </div>
+            <div class="benefit-card" id="benefit3">
+                <i class="fas fa-rocket"></i>
+                <h3>Inovação Contínua</h3>
+                <p>Agora com mais recursos e atualizações constantes para atender suas demandas.</p>
+            </div>
+        </div>
+    </section>
 
-    function updateFrase() {
-      fraseElement.style.animation = 'none';
-      void fraseElement.offsetWidth; // Trigger reflow
-      fraseElement.style.animation = 'textFlow 12s infinite';
-      
-      setTimeout(() => {
-        fraseElement.textContent = frases[index];
-        index = (index + 1) % frases.length;
-      }, 600);
-    }
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>O futuro já começou</h2>
+        <p>Junte-se a nós nessa jornada de transformação e descubra todo o potencial da nova SHORTI.</p>
+        <button class="cta-button" id="finalCtaBtn">
+            Acesse a SHORTI Agora <i class="fas fa-external-link-alt"></i>
+        </button>
+    </section>
 
-    // Initialize first quote
-    fraseElement.textContent = frases[0];
-    index = 1;
-    
-    // Change quote every 6 seconds
-    setInterval(updateFrase, 6000);
-  </script>
+    <script>
+        // Animação de scroll para os elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observador de elementos para animações
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Elementos a serem observados
+            const elementsToAnimate = [
+                document.getElementById('timelineItem'),
+                document.getElementById('benefit1'),
+                document.getElementById('benefit2'),
+                document.getElementById('benefit3')
+            ];
+
+            elementsToAnimate.forEach(el => {
+                if (el) observer.observe(el);
+            });
+
+            // Criar partículas
+            createParticles();
+
+            // Botões CTA
+            document.getElementById('exploreBtn')?.addEventListener('click', () => {
+                smoothScrollTo(document.querySelector('.timeline-section'));
+            });
+
+            document.getElementById('finalCtaBtn')?.addEventListener('click', () => {
+                alert('Redirecionando para a SHORTI...');
+                // window.location.href = 'https://shorti.platform';
+            });
+        });
+
+        // Função para animação suave de scroll
+        function smoothScrollTo(element) {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: element.offsetTop - 20
+            });
+        }
+
+        // Criar partículas animadas
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = window.innerWidth < 768 ? 20 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamanho aleatório entre 2px e 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posição inicial aleatória
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                container.appendChild(particle);
+                
+                // Animar partícula
+                animateParticle(particle);
+            }
+        }
+
+        function animateParticle(particle) {
+            const duration = Math.random() * 20 + 10;
+            const delay = Math.random() * 5;
+            const xMovement = (Math.random() - 0.5) * 100;
+            const yMovement = (Math.random() - 0.5) * 100;
+            
+            particle.style.transition = `all ${duration}s linear ${delay}s`;
+            particle.style.transform = `translate(${xMovement}px, ${yMovement}px)`;
+            particle.style.opacity = '0';
+            
+            // Resetar a animação quando terminar
+            setTimeout(() => {
+                particle.style.transition = 'none';
+                particle.style.transform = 'translate(0, 0)';
+                particle.style.opacity = '0.3';
+                setTimeout(() => animateParticle(particle), 50);
+            }, duration * 1000);
+        }
+    </script>
 </body>
 </html>
