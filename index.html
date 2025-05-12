@@ -10,145 +10,134 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="shorti-intro" class="shorti-intro">
-        <h1 class="shorti-title">SHORTI</h1>
-      </div>
-      
-      <div id="fusion-transition" class="fusion-transition" style="display: none;">
-        <div class="fusion-inner">
-          <p class="fusion-phrase">DashdoTI agora é <span class="shorti-gradient">SHORTI</span></p>
-          <p class="fusion-sub">Porque o futuro é simples.</p>
-        </div>
-      </div>
-      
-      <div id="main-content" style="display: none;">
-        <!-- Conteúdo da dashboard aqui -->
-      </div>
-      
-      
-
-    <div id="dashdoti" class="content-page">
-        <div class="container">
-            <div class="greeting">
-                <h2 id="greeting">Bom dia,</h2>
-                <p>Selecione o serviço necessário no painel abaixo</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+          <div class="greeting">
+            <h1 id="dynamic-greeting">Bom dia,</h1>
+            <p>Selecione o serviço necessário no painel abaixo</p>
+          </div>
+          
+          <div class="user-profile">
+            <div class="user-avatar" id="user-avatar">
+              TI
             </div>
-            
-            <!-- Botão de manifesto como card -->
-            <div class="services-grid">
-               
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="service-card" target="_blank">
-                    <div class="card-icon delivery">
-                        <i class="fa-solid fa-laptop-file"></i>
-                    </div>
-                    <h3 class="card-title">Entrega de Equipamentos</h3>
-                    <p class="card-description">Formulário para entrega de equipamentos</p>
-                </a>
-                
-                <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="service-card" target="_blank">
-                    <div class="card-icon return">
-                        <i class="fas fa-undo-alt"></i>
-                    </div>
-                    <h3 class="card-title">Devolução de Equipamentos</h3>
-                    <p class="card-description">Formulario de devolução de equipamentos</p>
-                </a>
-                
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="service-card" target="_blank">
-                    <div class="card-icon transfer">
-                        <i class="fas fa-people-arrows"></i>
-                    </div>
-                    <h3 class="card-title">Transferência</h3>
-                    <p class="card-description">Formulario de transferência entre Unidades</p>
-                </a>
-                
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="service-card" target="_blank">
-                    <div class="card-icon damaged">
-                        <i class="fas fa-times-circle"></i>
-                    </div>
-                    <h3 class="card-title">Equipamento Danificado</h3>
-                    <p class="card-description">Reportar equipamento com defeito</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="service-card" target="_blank">
-                    <div class="card-icon support">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 class="card-title">Task de Suporte</h3>
-                    <p class="card-description">Verificar Tasks de Suporte</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="service-card" target="_blank">
-                    <div class="card-icon access">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3 class="card-title">Controle de Acesso</h3>
-                    <p class="card-description">Gerenciar acessos e permissões</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="service-card" target="_blank">
-                    <div class="card-icon stock">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                    <h3 class="card-title">Estoque</h3>
-                    <p class="card-description">Verificar inventário disponível</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="service-card" target="_blank">
-                    <div class="card-icon onboard">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <h3 class="card-title">Onboarding</h3>
-                    <p class="card-description">Processos de integração</p>
-                </a>
-                
-                <div class="service-card" id="reportsBtn">
-                    <div class="card-icon report">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <h3 class="card-title">Relatórios</h3>
-                    <p class="card-description">Boletins</p>
-                </div>
-            </div>
-        </div>
+          </div>
+        </header>
         
-        <!-- Modal de Relatórios -->
-        <div class="modal" id="reportsModal">
-            <div class="modal-content">
-                <button class="close-modal" id="closeModal">&times;</button>
-                <h2>Relatórios e Boletins</h2>
-                <div class="modal-grid">
-                    <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=drive_link" class="service-card" target="_blank">
-                        <div class="card-icon delivery">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="card-title">Entregas</h3>
-                        <p class="card-description">Relatório de entregas</p>
-                    </a>
-                    <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="service-card" target="_blank">
-                        <div class="card-icon return">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3 class="card-title">Devoluções</h3>
-                        <p class="card-description">Relatório de devoluções</p>
-                    </a>
-                    <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="service-card" target="_blank">
-                        <div class="card-icon transfer">
-                            <i class="fas fa-exchange-alt"></i>
-                        </div>
-                        <h3 class="card-title">Transferências</h3>
-                        <p class="card-description">Relatório de transferências</p>
-                    </a>
-                    <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="service-card" target="_blank">
-                        <div class="card-icon damaged">
-                            <i class="fas fa-times-circle"></i>
-                        </div>
-                        <h3 class="card-title">Danificados</h3>
-                        <p class="card-description">Relatório de equipamentos danificados</p>
-                    </a>
-                </div>
+        <!-- Grid de Atalhos -->
+        <main class="shortcuts-grid">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fa-solid fa-laptop-file"></i>
             </div>
+            <h3 class="shortcut-title">Entrega de Equipamentos</h3>
+            <p class="shortcut-desc">Formulário para entrega de equipamentos</p>
+          </a>
+          
+          <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-undo-alt"></i>
+            </div>
+            <h3 class="shortcut-title">Devolução de Equipamentos</h3>
+            <p class="shortcut-desc">Formulário de devolução de equipamentos</p>
+          </a>
+          
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-people-arrows"></i>
+            </div>
+            <h3 class="shortcut-title">Transferência</h3>
+            <p class="shortcut-desc">Formulário de transferência entre Unidades</p>
+          </a>
+          
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <h3 class="shortcut-title">Equipamento Danificado</h3>
+            <p class="shortcut-desc">Reportar equipamento com defeito</p>
+          </a>
+          
+          <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3 class="shortcut-title">Task de Suporte</h3>
+            <p class="shortcut-desc">Verificar Tasks de Suporte</p>
+          </a>
+          
+          <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-key"></i>
+            </div>
+            <h3 class="shortcut-title">Controle de Acesso</h3>
+            <p class="shortcut-desc">Gerenciar acessos e permissões</p>
+          </a>
+          
+          <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-boxes"></i>
+            </div>
+            <h3 class="shortcut-title">Estoque</h3>
+            <p class="shortcut-desc">Verificar inventário disponível</p>
+          </a>
+          
+          <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="shortcut-card" target="_blank">
+            <div class="shortcut-icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <h3 class="shortcut-title">Onboarding</h3>
+            <p class="shortcut-desc">Processos de integração</p>
+          </a>
+          
+          <div class="shortcut-card" id="reportsBtn">
+            <div class="shortcut-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3 class="shortcut-title">Relatórios</h3>
+            <p class="shortcut-desc">Boletins</p>
+          </div>
+        </main>
+      </div>
+      
+      <!-- Modal de Relatórios -->
+      <div class="modal" id="reportsModal">
+        <div class="modal-content">
+          <button class="close-modal" id="closeModal">&times;</button>
+          <h2>Relatórios e Boletins</h2>
+          <div class="modal-grid">
+            <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=drive_link" class="shortcut-card" target="_blank">
+              <div class="shortcut-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h3 class="shortcut-title">Entregas</h3>
+              <p class="shortcut-desc">Relatório de entregas</p>
+            </a>
+            <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="shortcut-card" target="_blank">
+              <div class="shortcut-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3 class="shortcut-title">Devoluções</h3>
+              <p class="shortcut-desc">Relatório de devoluções</p>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="shortcut-card" target="_blank">
+              <div class="shortcut-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <h3 class="shortcut-title">Transferências</h3>
+              <p class="shortcut-desc">Relatório de transferências</p>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="shortcut-card" target="_blank">
+              <div class="shortcut-icon">
+                <i class="fas fa-times-circle"></i>
+              </div>
+              <h3 class="shortcut-title">Danificados</h3>
+              <p class="shortcut-desc">Relatório de equipamentos danificados</p>
+            </a>
+          </div>
         </div>
-    </div>
+      </div>
     <script src="main.js"></script>
 </body>
 </html>
