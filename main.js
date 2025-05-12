@@ -28,4 +28,20 @@ function updateGreeting() {
     }
   });
   
- 
+
+
+  window.onload = () => {
+    const notificacao = document.querySelector('.notificacao-politica');
+
+    if (!localStorage.getItem("politicaEstoqueLida")) {
+      notificacao.style.display = 'flex';
+      document.body.classList.add('tem-notificacao');
+    } else {
+      notificacao.style.display = 'none';
+    }
+  };
+
+   function fecharNotificacao() {
+    document.getElementById("notificacao-politica").style.display = "none";
+  }
+
