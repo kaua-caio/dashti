@@ -25,7 +25,7 @@
 
  .app-container {
   max-width: 1200px;
-  margin: 85px auto 40px; /* Aumentei a margem superior para dar mais espaço */
+  margin: 50px auto 10px; /* Aumentei a margem superior para dar mais espaço */
   padding: 2rem 1.5rem;
   min-height: 100vh;
  }
@@ -185,44 +185,3 @@
  }
 
  /* Notification Bar Style */
- .notification-bar {
-  background-color: var(--notification-bg);
-  color: var(--notification-text);
-  padding: 1rem;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9rem;
- }
-
- .notification-bar p {
-  margin: 0 0.5rem 0 0;
-  font-weight: bold;
- }
-
- .notification-bar a {
-  color: var(--notification-text);
-  text-decoration: underline;
-  white-space: nowrap;
- }
-
- @media (max-width: 480px) { /* Tornando a media query mais restrita para celulares menores */
-  .notification-bar {
-  font-size: 0.7rem; /* Reduzindo ainda mais a fonte */
-  padding: 0.5rem; /* Reduzindo o padding */
-  flex-direction: column;
-  align-items: center;
- }
-
-  .notification-bar p {
-  margin-bottom: 0.2rem;
-  margin-right: 0;
- }
- }
