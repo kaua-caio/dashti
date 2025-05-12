@@ -223,3 +223,37 @@ body {
   from { transform: translateY(-20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+/* Garantir que o ícone do foguete apareça corretamente */
+/* Estilos existentes... */
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.user-avatar .desktop-icon {
+  display: none;
+  font-size: 1.2rem;
+}
+
+.user-avatar .mobile-text {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .user-avatar .desktop-icon {
+    display: block;
+  }
+  
+  .user-avatar .mobile-text {
+    display: none;
+  }
+}

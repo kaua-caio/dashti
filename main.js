@@ -1,12 +1,31 @@
 // Saudação dinâmica
+// Atualizar saudação conforme horário
 function updateGreeting() {
-    const hour = new Date().getHours();
-    let greeting = "Bom dia,";
-    if (hour >= 12 && hour < 18) greeting = "Boa tarde,";
-    if (hour >= 18) greeting = "Boa noite,";
-    
-    document.getElementById('dynamic-greeting').textContent = greeting;
+  const now = new Date();
+  const hour = now.getHours();
+  const greetingElement = document.getElementById('dynamic-greeting');
+  
+  if (hour >= 5 && hour < 12) {
+    greetingElement.textContent = 'Bom dia,';
+  } else if (hour >= 12 && hour < 18) {
+    greetingElement.textContent = 'Boa tarde,';
+  } else {
+    greetingElement.textContent = 'Boa noite,';
   }
+}
+
+// Chamar a função quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+  updateGreeting();
+  
+  // Verificar se o Font Awesome está carregado (para o ícone do foguete)
+  if(typeof window.FontAwesome !== 'undefined') {
+    document.getElementById('user-avatar').classList.add('fa-loaded');
+  }
+});
+
+// Atualizar a cada minuto para garantir precisão
+setInterval(updateGreeting, 60000);
   
   // Modal de Relatórios
   const reportsBtn = document.getElementById('reportsBtn');
