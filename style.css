@@ -6,57 +6,65 @@
   --primary-hover: #2563eb;
   --muted: #64748b;
   --border: #e2e8f0;
-}
+  --notification-bg: #2ecc71; /* Verde para a notificação */
+  --notification-text: #ffffff;
+ }
 
-* {
+ * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+ }
 
-body {
+ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
-}
+ }
 
-.app-container {
+ .app-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 85px auto 40px; /* Aumentei a margem superior para dar mais espaço */
   padding: 2rem 1.5rem;
   min-height: 100vh;
-}
+ }
 
-/* Header */
-.header {
+ @media (max-width: 480px) {
+  .app-container {
+  margin-top: 85px auto 20px; /* Aumentando ainda mais a margem em telas menores (ajuste conforme necessário) */
+ }
+ }
+
+ /* Header */
+ .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
-}
+ }
 
-.greeting h1 {
+ .greeting h1 {
   font-weight: 500;
   font-size: 1.75rem;
   color: var(--text);
-}
+ }
 
-.greeting p {
+ .greeting p {
   color: var(--muted);
   font-size: 0.95rem;
   margin-top: 0.25rem;
-}
+ }
 
-.user-profile {
+ .user-profile {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
+ }
 
-.user-avatar {
+ .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -67,16 +75,16 @@ body {
   color: white;
   font-weight: 500;
   font-size: 0.9rem;
-}
+ }
 
-/* Main Grid */
-.shortcuts-grid {
+ /* Main Grid */
+ .shortcuts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
-}
+ }
 
-.shortcut-card {
+ .shortcut-card {
   background: var(--card);
   border-radius: 12px;
   padding: 1.5rem;
@@ -86,15 +94,15 @@ body {
   text-decoration: none;
   color: inherit;
   display: block;
-}
+ }
 
-.shortcut-card:hover {
+ .shortcut-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   border-color: var(--primary);
-}
+ }
 
-.shortcut-icon {
+ .shortcut-icon {
   width: 48px;
   height: 48px;
   margin: 0 auto 1rem;
@@ -105,21 +113,21 @@ body {
   justify-content: center;
   color: var(--primary);
   font-size: 1.5rem;
-}
+ }
 
-.shortcut-title {
+ .shortcut-title {
   font-weight: 500;
   font-size: 1rem;
   margin-bottom: 0.25rem;
-}
+ }
 
-.shortcut-desc {
+ .shortcut-desc {
   font-size: 0.8rem;
   color: var(--muted);
-}
+ }
 
-/* Modal */
-.modal {
+ /* Modal */
+ .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -130,9 +138,9 @@ body {
   z-index: 1000;
   align-items: center;
   justify-content: center;
-}
+ }
 
-.modal-content {
+ .modal-content {
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -141,9 +149,9 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-}
+ }
 
-.close-modal {
+ .close-modal {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -152,26 +160,69 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--muted);
-}
+ }
 
-.modal-grid {
+ .modal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
-}
+ }
 
-/* Responsivo */
-@media (max-width: 768px) {
+ /* Responsivo */
+ @media (max-width: 768px) {
   .shortcuts-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
-  
+
   .greeting h1 {
     font-size: 1.5rem;
   }
-  
+
   .modal-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
-}
+ }
+
+ /* Notification Bar Style */
+ .notification-bar {
+  background-color: var(--notification-bg);
+  color: var(--notification-text);
+  padding: 1rem;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+ }
+
+ .notification-bar p {
+  margin: 0 0.5rem 0 0;
+  font-weight: bold;
+ }
+
+ .notification-bar a {
+  color: var(--notification-text);
+  text-decoration: underline;
+  white-space: nowrap;
+ }
+
+ @media (max-width: 480px) { /* Tornando a media query mais restrita para celulares menores */
+  .notification-bar {
+  font-size: 0.7rem; /* Reduzindo ainda mais a fonte */
+  padding: 0.5rem; /* Reduzindo o padding */
+  flex-direction: column;
+  align-items: center;
+ }
+
+  .notification-bar p {
+  margin-bottom: 0.2rem;
+  margin-right: 0;
+ }
+ }

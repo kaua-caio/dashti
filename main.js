@@ -30,3 +30,23 @@ function updateGreeting() {
   
   // Inicialização
   updateGreeting();
+  document.addEventListener('DOMContentLoaded', function() {
+    const modalAviso = document.getElementById('modalAvisoEstoque');
+    const overlay = document.getElementById('overlayModal');
+    const botaoFechar = document.getElementById('fecharModal');
+  
+    function mostrarModal() {
+    modalAviso.style.display = 'block';
+    overlay.style.display = 'block';
+    }
+  
+    function fecharModal() {
+    modalAviso.style.display = 'none';
+    overlay.style.display = 'none';
+    }
+  
+    // Exibir o modal após um breve período (opcional)
+    setTimeout(mostrarModal, 1500);
+  
+    botaoFechar.addEventListener('click', fecharModal);
+    });
