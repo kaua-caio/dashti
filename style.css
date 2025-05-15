@@ -343,3 +343,81 @@ body {
 .rgb-border-card:hover .shortcut-desc {
   color: #444;
 }
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  animation: slideDown 0.3s ease;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: #d9534f;
+}
+
+.modal-content p {
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 16px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+#cancelBtn {
+  background-color: #ccc;
+  color: #333;
+}
+
+#cancelBtn:hover {
+  background-color: #bbb;
+}
+
+#confirmBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+#confirmBtn:hover {
+  background-color: #0056b3;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

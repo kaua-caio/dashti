@@ -64,3 +64,29 @@ setInterval(updateGreeting, 60000);
     document.getElementById("notificacao-politica").style.display = "none";
   }
 
+
+  const link = document.getElementById('desligamento-link');
+  const modal = document.getElementById('confirmModal');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.style.display = 'flex';
+  });
+
+  cancelBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  confirmBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+    window.open(link.href, '_blank');
+  });
+
+  // Fecha modal ao clicar fora
+  window.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
