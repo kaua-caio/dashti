@@ -257,3 +257,89 @@ body {
     display: none;
   }
 }
+
+/* ESTILO EXCLUSIVO PARA O CARD DE NOVIDADES */
+.rgb-border-card {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.rgb-border-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+              #00ff88, 
+              #00ccff, 
+              #0099ff, 
+              #00ffaa,
+              #00ff88);
+  background-size: 300% 300%;
+  border-radius: 12px;
+  animation: rgbBorderFlow 8s ease infinite;
+}
+
+.rgb-border-card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.rgb-border-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.rgb-border-card:hover::before {
+  animation: rgbBorderFlow 4s ease infinite;
+  filter: brightness(1.1);
+}
+
+.rgb-border-card .shortcut-icon {
+  color: #0099ff; /* Azul moderno para combinar */
+  transition: color 0.3s ease;
+}
+
+.rgb-border-card:hover .shortcut-icon {
+  color: #00cc88; /* Verde ao passar o mouse */
+}
+
+@keyframes rgbBorderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* MELHORIAS PARA DESTAQUE DO CARD */
+.rgb-border-card .shortcut-title {
+  background: linear-gradient(45deg, #0099ff, #00cc88);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: all 0.3s ease;
+}
+
+.rgb-border-card:hover .shortcut-title {
+  background: linear-gradient(45deg, #00cc88, #0099ff);
+}
+
+.rgb-border-card .shortcut-desc {
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.rgb-border-card:hover .shortcut-desc {
+  color: #444;
+}
