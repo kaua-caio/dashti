@@ -6,11 +6,11 @@ function updateGreeting() {
   const greetingElement = document.getElementById('dynamic-greeting');
   
   if (hour >= 5 && hour < 12) {
-    greetingElement.textContent = 'Bom dia,';
+    greetingElement.textContent = 'Bom dia, Ti';
   } else if (hour >= 12 && hour < 18) {
-    greetingElement.textContent = 'Boa tarde,';
+    greetingElement.textContent = 'Boa tarde, Ti';
   } else {
-    greetingElement.textContent = 'Boa noite,';
+    greetingElement.textContent = 'Boa noite, Ti';
   }
 }
 
