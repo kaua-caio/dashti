@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal DashdoTI</title>
+    <link rel="shortcut icon" href="dash.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Cores modernas */
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3f37c9;
+            --secondary: #3a0ca3;
+            --dark: #1a1a2e;
+            --darker: #0d0d1a;
+            --light: #f8f9fa;
+            --lighter: #ffffff;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f72585;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen (Desktop Only) - Efeitos aprimorados */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--lighter);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.active {
+            opacity: 1;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+        }
+
+        @media (min-width: 1024px) {
+            .loading-screen {
+                display: flex;
+            }
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(67, 97, 238, 0.1);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 3px solid rgba(67, 97, 238, 0.05);
+            border-radius: 50%;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-text::after {
+            content: '...';
+            position: absolute;
+            animation: dots 1.5s infinite steps(4);
+        }
+
+        @keyframes dots {
+            0%, 25% { content: '.'; }
+            50% { content: '..'; }
+            75%, 100% { content: '...'; }
+        }
+
+        /* Header - Responsivo */
+        .header {
+            background: var(--lighter);
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                padding: 1.2rem 2rem;
+            }
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo {
+                gap: 1rem;
+            }
+        }
+
+        .header-logo img {
+            height: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo img {
+                height: 40px;
+            }
+        }
+
+        .header-logo h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .greeting p {
+            color: var(--gray);
+            font-size: 0.75rem;
+            font-weight: 400;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .greeting p {
+                font-size: 0.875rem;
+                display: block;
+            }
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .user-profile {
+                gap: 1rem;
+            }
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .user-avatar {
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 1rem;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .main-wrapper {
+                grid-template-columns: 300px 1fr;
+                padding: 2rem;
+                gap: 2rem;
+            }
+        }
+
+        /* Notes Section - Visível apenas no desktop */
+        .notes-section {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .notes-section {
+                display: block;
+                position: sticky;
+                top: 2rem;
+                height: fit-content;
+            }
+        }
+
+        .notes-panel {
+            background: var(--lighter);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .notes-panel:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .notes-panel h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notes-panel h3 i {
+            color: var(--primary);
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            resize: none;
+            margin-bottom: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .notes-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+            border-color: var(--gray);
+            transform: translateY(-2px);
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .shortcuts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        .shortcut-card {
+            background: var(--lighter);
+            border-radius: var(--border-radius);
+            padding: 1.25rem 1rem;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-card {
+                padding: 1.75rem 1.5rem;
+            }
+        }
+
+        .shortcut-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-light);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .shortcut-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .shortcut-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .shortcut-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(67, 97, 238, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.5rem;
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        .shortcut-card:hover .shortcut-icon {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .shortcut-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-title {
+                font-size: 1.05rem;
+            }
+        }
+
+        .shortcut-desc {
+            font-size: 0.7rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-desc {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Estilo especial para cards de novidades */
+        .new-feature-card {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            animation: pulseBorder 2s infinite;
+        }
+
+        .new-feature-card::before {
+            content: 'NOVO';
+            position: absolute;
+            top: 8px;
+            right: -25px;
+            background: var(--danger);
+            color: white;
+            padding: 0.2rem 1.5rem;
+            font-size: 0.6rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .new-feature-card::before {
+                top: 10px;
+                right: -30px;
+                font-size: 0.7rem;
+                padding: 0.25rem 2rem;
+            }
+        }
+
+        @keyframes pulseBorder {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+
+        /* Efeito RGB para cards especiais */
+        .rgb-border-card {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .rgb-border-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                #ff0000, #ff7300, #fffb00, 
+                #48ff00, #00ffd5, #002bff, 
+                #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            border-radius: var(--border-radius);
+            z-index: -1;
+            animation: rgbBorder 20s linear infinite;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .rgb-border-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--lighter);
+            border-radius: calc(var(--border-radius) - 2px);
+            z-index: -1;
+        }
+        
+        .rgb-border-card:hover::before {
+            opacity: 0.9;
+        }
+        
+        @keyframes rgbBorder {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* Banner de atualizações */
+        .update-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-md);
+            animation: slideIn 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .update-banner {
+                padding: 1rem;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .update-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 45%,
+                rgba(255,255,255,0.15) 48%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .update-banner i {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .update-banner i {
+                font-size: 1.5rem;
+            }
+        }
+
+        .update-content {
+            flex-grow: 1;
+        }
+
+        .update-title {
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .update-title {
+                font-size: 1rem;
+                margin-bottom: 0.25rem;
+            }
+        }
+
+        .update-text {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        @media (min-width: 768px) {
+            .update-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        .close-update {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .close-update {
+                font-size: 1.2rem;
+            }
+        }
+
+        .close-update:hover {
+            opacity: 1;
+        }
+
+        /* Botão de anotações mobile */
+        .mobile-notes-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            border: none;
+            z-index: 1000;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            .mobile-notes-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        .mobile-notes-btn:hover {
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Modal de anotações mobile */
+        .mobile-notes-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-notes-modal.active {
+            opacity: 1;
+        }
+
+        .mobile-notes-content {
+            background: var(--lighter);
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-notes-content {
+                padding: 1.75rem;
+            }
+        }
+
+        .mobile-notes-modal.active .mobile-notes-content {
+            transform: translateY(0);
+        }
+
+        /* Efeito de flutuação para cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-card {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--lighter);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            z-index: 1000;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .toolbar-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.7rem;
+            border-radius: var(--border-radius-sm);
+            transition: all 0.2s ease;
+            min-width: 60px;
+        }
+
+        .toolbar-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+
+        .toolbar-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .toolbar-btn:hover i {
+            color: var(--primary-dark);
+        }
+
+        /* Modais de IA */
+        .ai-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ai-modal.active {
+            opacity: 1;
+        }
+
+        .ai-modal-content {
+            background: var(--lighter);
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-modal.active .ai-modal-content {
+            transform: translateY(0);
+        }
+
+        .ai-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .ai-modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-ai-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-ai-modal:hover {
+            color: var(--danger);
+        }
+
+        .ai-iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            background: var(--light);
+        }
+
+        @media (min-width: 768px) {
+            .toolbar {
+                padding: 0.75rem 0;
+            }
+            
+            .toolbar-btn {
+                min-width: 80px;
+                font-size: 0.8rem;
+            }
+            
+            .toolbar-btn i {
+                font-size: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Loading Screen com efeitos aprimorados -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando Portal DashdoTI</div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header Responsivo -->
+        <header class="header">
+            <div class="header-logo">
+                <img src="logo.png" alt="DashdoTI Logo">
+                <h1>Portal DashdoTI</h1>
+            </div>
+            <div class="user-profile">
+                <span id="dynamic-greeting">Bem-vindo</span>
+                <div class="user-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <div class="main-wrapper">
+            <!-- Seção de Anotações (visível apenas no desktop) -->
+            <aside class="notes-section">
+                <div class="notes-panel">
+                    <h3><i class="fas fa-edit"></i> Anotações Rápidas</h3>
+                    <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..."></textarea>
+                    <div class="notes-actions">
+                        <button class="btn btn-primary" id="saveNotes">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button class="btn btn-outline" id="clearNotes">
+                            <i class="fas fa-trash-alt"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-section">
+                <!-- Banner de atualizações -->
+                <div class="update-banner" id="updateBanner">
+                    <i class="fas fa-bell"></i>
+                    <div class="update-content">
+                        <div class="update-title">Novidades no Portal!</div>
+                        <div class="update-text">Confira as últimas atualizações e melhorias que implementamos para você.</div>
+                    </div>
+                    <button class="close-update" id="closeUpdateBanner">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="shortcuts-grid">
+                    <!-- Cards de atalhos (mantive apenas os essenciais para mobile) -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="shortcut-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fa-solid fa-laptop-file"></i>
+                        </div>
+                        <h3 class="shortcut-title">Entrega</h3>
+                        <p class="shortcut-desc">Equipamentos</p>
+                    </a>
+                    
+                    <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="shortcut-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                        <h3 class="shortcut-title">Devolução</h3>
+                        <p class="shortcut-desc">Equipamentos</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="shortcut-title">Suporte</h3>
+                        <p class="shortcut-desc">Tasks</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 class="shortcut-title">Acessos</h3>
+                        <p class="shortcut-desc">Controle</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="shortcut-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h3 class="shortcut-title">Estoque</h3>
+                        <p class="shortcut-desc">Inventário</p>
+                    </a>
+
+                    <a href="novidades.html" class="shortcut-card rgb-border-card new-feature-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+                        <h3 class="shortcut-title">Novidades</h3>
+                        <p class="shortcut-desc">Atualizações</p>
+                    </a>
+
+                    <a href="feature/hub.html" class="shortcut-card rgb-border-card new-feature-card floating-card" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fa-solid fa-newspaper"></i>
+                        </div>
+                        <h3 class="shortcut-title">Meu Hub</h3>
+                        <p class="shortcut-desc">Dashboard Personalizada</p>
+                    </a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <!-- Botão de anotações mobile (sempre visível em mobile) -->
+    <button class="mobile-notes-btn" id="mobileNotesBtn">
+        <i class="fas fa-edit"></i>
+    </button>
+
+    <!-- Modal de anotações mobile -->
+    <div class="mobile-notes-modal" id="mobileNotesModal">
+        <div class="mobile-notes-content">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-edit" style="color: var(--primary);"></i> Anotações Rápidas
+            </h3>
+            <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..." style="min-height: 200px;"></textarea>
+            <div class="notes-actions" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="saveMobileNotes">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+                <button class="btn btn-outline" id="closeMobileNotes">
+                    <i class="fas fa-times"></i> Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Loading Screen com efeitos aprimorados
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            // Mostra a tela de carregamento com fade-in
+            setTimeout(() => {
+                loadingScreen.classList.add('active');
+            }, 50);
+            
+            // Esconde a tela de carregamento com fade-out
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    loadingScreen.classList.add('fade-out');
+                    
+                    // Remove completamente após a animação
+                    setTimeout(() => {
+                        if (window.innerWidth >= 1024) {
+                            loadingScreen.style.display = 'none';
+                        }
+                    }, 500);
+                }, 1500); // 1.5 segundos de delay
+            });
+        });
+
+        // Controle do modal mobile com transições suaves
+        const mobileNotesBtn = document.getElementById('mobileNotesBtn');
+        const mobileNotesModal = document.getElementById('mobileNotesModal');
+        const closeMobileNotes = document.getElementById('closeMobileNotes');
+
+        mobileNotesBtn.addEventListener('click', () => {
+            mobileNotesModal.style.display = 'flex';
+            setTimeout(() => {
+                mobileNotesModal.classList.add('active');
+            }, 10);
+            
+            const savedNotes = localStorage.getItem('quickNotes');
+            if (savedNotes) {
+                document.querySelector('#mobileNotesModal .notes-textarea').value = savedNotes;
+            }
+        });
+
+        closeMobileNotes.addEventListener('click', () => {
+            mobileNotesModal.classList.remove('active');
+            setTimeout(() => {
+                mobileNotesModal.style.display = 'none';
+            }, 300);
+        });
+
+        // Banner de atualizações
+        const updateBanner = document.getElementById('updateBanner');
+        const closeUpdateBanner = document.getElementById('closeUpdateBanner');
+        
+        // Verifica se o usuário já fechou o banner antes
+        if (!localStorage.getItem('updateBannerClosed')) {
+            updateBanner.style.display = 'flex';
+        }
+        
+        closeUpdateBanner.addEventListener('click', () => {
+            updateBanner.style.opacity = '0';
+            setTimeout(() => {
+                updateBanner.style.display = 'none';
+                localStorage.setItem('updateBannerClosed', 'true');
+            }, 300);
+        });
+
+        // Salvar anotações como arquivo .txt com feedback melhorado
+        function saveNotesToFile(notes, isMobile = false) {
+            const date = new Date().toLocaleString('pt-BR');
+            const content = `Nome: [Seu Nome Aqui]\nTime de TI\nData: ${date}\n\n${notes}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Anotacoes_TI_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            // Feedback visual melhorado
+            const btn = document.getElementById(isMobile ? 'saveMobileNotes' : 'saveNotes');
+            const originalHtml = btn.innerHTML;
+            const originalBg = btn.style.backgroundColor;
+            
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> Salvo com sucesso!';
+            btn.style.backgroundColor = 'var(--success)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.style.backgroundColor = originalBg;
+                if (isMobile) {
+                    mobileNotesModal.classList.remove('active');
+                    setTimeout(() => {
+                        mobileNotesModal.style.display = 'none';
+                    }, 300);
+                }
+            }, 2000);
+        }
+
+        // Salvar anotações desktop
+        document.getElementById('saveNotes').addEventListener('click', function() {
+            const notes = document.querySelector('.notes-textarea').value;
+            if (notes.trim()) {
+                saveNotesToFile(notes);
+                localStorage.setItem('quickNotes', notes);
+            } else {
+                showAlert('Por favor, digite alguma anotação antes de salvar.', 'warning');
+            }
+        });
+
+        // Salvar anotações mobile
+        document.getElementById('saveMobileNotes').addEventListener('click', function() {
+            const notes = document.querySelector('#mobileNotesModal .notes-textarea').value;
+            if (notes.trim()) {
+                saveNotesToFile(notes, true);
+                localStorage.setItem('quickNotes', notes);
+            } else {
+                showAlert('Por favor, digite alguma anotação antes de salvar.', 'warning');
+            }
+        });
+
+        // Função para mostrar alertas estilizados
+        function showAlert(message, type = 'info') {
+            const colors = {
+                info: 'var(--primary)',
+                warning: 'var(--warning)',
+                error: 'var(--danger)'
+            };
+            
+            const alert = document.createElement('div');
+            alert.style.position = 'fixed';
+            alert.style.bottom = '20px';
+            alert.style.right = '20px';
+            alert.style.padding = '1rem 1.5rem';
+            alert.style.backgroundColor = colors[type] || colors.info;
+            alert.style.color = 'white';
+            alert.style.borderRadius = 'var(--border-radius-sm)';
+            alert.style.boxShadow = 'var(--shadow-lg)';
+            alert.style.zIndex = '3000';
+            alert.style.transform = 'translateY(100px)';
+            alert.style.opacity = '0';
+            alert.style.transition = 'all 0.3s ease';
+            alert.textContent = message;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.transform = 'translateY(0)';
+                alert.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+                alert.style.transform = 'translateY(100px)';
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(alert);
+                }, 300);
+            }, 3000);
+        }
+
+        // Carregar notas ao iniciar (desktop)
+        window.addEventListener('load', function() {
+            const savedNotes = localStorage.getItem('quickNotes');
+            if (savedNotes) {
+                const desktopTextarea = document.querySelector('.notes-textarea');
+                const mobileTextarea = document.querySelector('#mobileNotesModal .notes-textarea');
+                
+                if (desktopTextarea) desktopTextarea.value = savedNotes;
+                if (mobileTextarea) mobileTextarea.value = savedNotes;
+            }
+        });
+
+        // Limpar anotações com confirmação
+        document.getElementById('clearNotes').addEventListener('click', function() {
+            showAlert('Tem certeza que deseja limpar todas as anotações?', 'warning');
+            
+            const confirmBtn = document.createElement('button');
+            confirmBtn.textContent = 'Confirmar';
+            confirmBtn.style.marginLeft = '1rem';
+            confirmBtn.style.padding = '0.25rem 0.5rem';
+            confirmBtn.style.border = 'none';
+            confirmBtn.style.borderRadius = '4px';
+            confirmBtn.style.backgroundColor = 'var(--danger)';
+            confirmBtn.style.color = 'white';
+            confirmBtn.style.cursor = 'pointer';
+            
+            const alert = document.querySelector('[style*="position: fixed; bottom: 20px; right: 20px;"]');
+            if (alert) {
+                alert.appendChild(confirmBtn);
+                
+                confirmBtn.addEventListener('click', () => {
+                    document.querySelector('.notes-textarea').value = '';
+                    document.querySelector('#mobileNotesModal .notes-textarea').value = '';
+                    localStorage.removeItem('quickNotes');
+                    alert.textContent = 'Anotações limpas com sucesso!';
+                    alert.style.backgroundColor = 'var(--success)';
+                    
+                    // Remove o botão de confirmação
+                    if (confirmBtn.parentNode === alert) {
+                        alert.removeChild(confirmBtn);
+                    }
+                    
+                    setTimeout(() => {
+                        alert.style.transform = 'translateY(100px)';
+                        alert.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(alert);
+                        }, 300);
+                    }, 1500);
+                });
+            }
+        });
+
+        // Atualizar saudação conforme horário
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            const greeting = document.getElementById('dynamic-greeting');
+            
+            if (hour >= 5 && hour < 12) {
+                greeting.textContent = 'Bom dia';
+            } else if (hour >= 12 && hour < 18) {
+                greeting.textContent = 'Boa tarde';
+            } else {
+                greeting.textContent = 'Boa noite';
+            }
+        }
+
+        updateGreeting();
+
+        // Verifica se há atualizações recentes (simulação)
+        function checkForUpdates() {
+            // Simula uma verificação de atualizações
+            const lastUpdate = localStorage.getItem('lastUpdateCheck');
+            const now = new Date().getTime();
+            
+            if (!lastUpdate || (now - lastUpdate) > 86400000) { // 24 horas
+                localStorage.setItem('lastUpdateCheck', now);
+                
+                // Simula que há uma nova atualização 30% das vezes
+                if (Math.random() < 0.3) {
+                    const updateBanner = document.getElementById('updateBanner');
+                    if (updateBanner && !localStorage.getItem('updateBannerClosed')) {
+                        updateBanner.style.display = 'flex';
+                        setTimeout(() => {
+                            updateBanner.style.opacity = '1';
+                        }, 10);
+                    }
+                }
+            }
+        }
+
+        // Verifica atualizações ao carregar a página
+        window.addEventListener('load', checkForUpdates);
+
+        // Adiciona um listener para o evento de resize para ajustar o layout
+        window.addEventListener('resize', function() {
+            // Atualiza a exibição da tela de carregamento em desktop
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (window.innerWidth >= 1024 && loadingScreen.style.display === 'none') {
+                loadingScreen.style.display = 'flex';
+            } else if (window.innerWidth < 1024) {
+                loadingScreen.style.display = 'none';
+            }
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHORTI HUB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .draggable-card {
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+    .dragging {
+      opacity: 0.7;
+      transform: scale(0.95);
+    }
+    .drop-zone {
+      border: 2px dashed #3b82f6;
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Temas */
+    .theme-dark {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      color: #f1f5f9;
+    }
+    .theme-light {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      color: #1e293b;
+    }
+    .theme-blue {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      color: white;
+    }
+    .theme-purple {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: white;
+    }
+    
+    .header-dark { background: rgba(30, 41, 59, 0.9); }
+    .header-light { background: rgba(248, 250, 252, 0.9); }
+    .header-blue { background: rgba(30, 64, 175, 0.9); }
+    .header-purple { background: rgba(124, 58, 237, 0.9); }
+    
+    .floating-button {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 40;
+      transition: all 0.3s ease;
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .floating-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      background: #2563eb;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+    }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .group-card {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .group-card::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .group-expanded {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      width: 80vw;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .group-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+
+    .group-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .group-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .group-item:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body id="mainBody" class="min-h-screen theme-dark">
+  <!-- Header -->
+  <header id="mainHeader" class="w-full px-6 py-4 backdrop-blur-md shadow-lg header-dark sticky top-0 z-30">
+    <div class="flex items-center justify-between max-w-7xl mx-auto">
+      <div class="flex items-center space-x-4">
+        <h1 id="appTitle" class="text-3xl font-bold">
+          SHORTI HUB
+        </h1>
+      </div>
+      <div class="flex space-x-3">
+        <button id="openModalBtn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold flex items-center space-x-2 transition-all shadow-lg">
+          <i class="fas fa-plus"></i>
+          <span>Novo Card</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Botão Flutuante de Personalização -->
+  <button id="customizeBtn" class="floating-button">
+    <i class="fas fa-cog text-xl"></i>
+  </button>
+
+  <!-- Painel de Personalização -->
+  <div id="customizePanel" class="fixed top-0 right-0 h-full w-80 bg-gray-900/95 backdrop-blur-xl transform translate-x-full transition-transform z-50 overflow-y-auto">
+    <div class="p-6 space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-bold text-white">Personalização</h3>
+        <button id="closeCustomizeBtn" class="text-white hover:text-red-400 p-2 rounded-lg">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Tema -->
+      <div class="space-y-3">
+        <h4 class="text-lg font-semibold text-white">Tema</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="theme-btn p-3 rounded-lg border-2 border-transparent hover:border-white/50 transition-all" data-theme="dark">
+            <div class="w-full h-8 bg-slate-700 rounded mb-2"></div>
+            <span class="text-white text-sm font-semibold">Escuro</span>
+          </button>
+          <button class="theme-btn p-3 rounded-lg border-2 border-transparent hover:border-white/50 transition-all" data-theme="light">
+            <div class="w-full h-8 bg-slate-100 rounded mb-2"></div>
+            <span class="text-white text-sm font-semibold">Claro</span>
+          </button>
+          <button class="theme-btn p-3 rounded-lg border-2 border-transparent hover:border-white/50 transition-all" data-theme="blue">
+            <div class="w-full h-8 bg-blue-500 rounded mb-2"></div>
+            <span class="text-white text-sm font-semibold">Azul</span>
+          </button>
+          <button class="theme-btn p-3 rounded-lg border-2 border-transparent hover:border-white/50 transition-all" data-theme="purple">
+            <div class="w-full h-8 bg-purple-500 rounded mb-2"></div>
+            <span class="text-white text-sm font-semibold">Roxo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layout -->
+      <div class="space-y-3">
+        <h4 class="text-lg font-semibold text-white">Layout</h4>
+        <div class="space-y-2">
+          <label class="flex items-center justify-between text-white">
+            <span class="font-medium">Colunas</span>
+            <input type="range" id="columnsSlider" min="2" max="6" value="4" class="w-24">
+            <span id="columnsValue" class="font-bold bg-blue-600 px-2 py-1 rounded text-sm">4</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Título -->
+      <div class="space-y-3">
+        <h4 class="text-lg font-semibold text-white">Título</h4>
+        <input type="text" id="titleInput" placeholder="Nome do seu hub" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/70 border border-white/30 focus:border-blue-400 focus:outline-none">
+      </div>
+
+      <!-- Dica sobre Grupos -->
+      <div class="bg-blue-600/20 border border-blue-400/30 rounded-lg p-3">
+        <h5 class="text-sm font-semibold text-blue-300 mb-1">💡 Dica: Grupos</h5>
+        <p class="text-xs text-blue-200">Arraste um card em cima de outro para criar um grupo! Clique no grupo para expandir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center z-50 p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="relative z-10 bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold text-white">Novo Card</h2>
+          <button id="closeModalBtn" class="text-white hover:text-red-300 text-2xl">&times;</button>
+        </div>
+      </div>
+      
+      <div class="p-6">
+        <form id="addCardForm" class="space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700">Nome do Card</label>
+            <input type="text" id="cardTitle" placeholder="Ex: YouTube, GitHub..." class="w-full p-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none" required>
+          </div>
+          
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700">Link</label>
+            <input type="url" id="cardLink" placeholder="https://..." class="w-full p-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none" required>
+          </div>
+          
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700">Ícone</label>
+            <div class="grid grid-cols-6 gap-2 max-h-48 overflow-y-auto" id="iconSelector">
+              <!-- Ícones Gerais -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-link">
+                <i class="fas fa-link text-lg text-gray-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-home">
+                <i class="fas fa-home text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-envelope">
+                <i class="fas fa-envelope text-lg text-gray-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-phone">
+                <i class="fas fa-phone text-lg text-green-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-calendar">
+                <i class="fas fa-calendar text-lg text-purple-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-clock">
+                <i class="fas fa-clock text-lg text-orange-600"></i>
+              </button>
+
+              <!-- Redes Sociais -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-youtube">
+                <i class="fab fa-youtube text-lg text-red-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-instagram">
+                <i class="fab fa-instagram text-lg text-pink-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-twitter">
+                <i class="fab fa-twitter text-lg text-blue-400"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-facebook">
+                <i class="fab fa-facebook text-lg text-blue-700"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-linkedin">
+                <i class="fab fa-linkedin text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-tiktok">
+                <i class="fab fa-tiktok text-lg text-black"></i>
+              </button>
+
+              <!-- Desenvolvimento -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-github">
+                <i class="fab fa-github text-lg text-gray-800"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-code">
+                <i class="fas fa-code text-lg text-green-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-database">
+                <i class="fas fa-database text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-server">
+                <i class="fas fa-server text-lg text-gray-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-terminal">
+                <i class="fas fa-terminal text-lg text-black"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-docker">
+                <i class="fab fa-docker text-lg text-blue-500"></i>
+              </button>
+
+              <!-- E-commerce -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-shopping-cart">
+                <i class="fas fa-shopping-cart text-lg text-green-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-store">
+                <i class="fas fa-store text-lg text-orange-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-credit-card">
+                <i class="fas fa-credit-card text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-amazon">
+                <i class="fab fa-amazon text-lg text-orange-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-shopify">
+                <i class="fab fa-shopify text-lg text-green-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-paypal">
+                <i class="fab fa-paypal text-lg text-blue-500"></i>
+              </button>
+
+              <!-- Produtividade -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-file-alt">
+                <i class="fas fa-file-alt text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-tasks">
+                <i class="fas fa-tasks text-lg text-green-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-chart-bar">
+                <i class="fas fa-chart-bar text-lg text-purple-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-google-drive">
+                <i class="fab fa-google-drive text-lg text-yellow-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-dropbox">
+                <i class="fab fa-dropbox text-lg text-blue-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-trello">
+                <i class="fab fa-trello text-lg text-blue-600"></i>
+              </button>
+
+              <!-- Entretenimento -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-play">
+                <i class="fas fa-play text-lg text-red-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-music">
+                <i class="fas fa-music text-lg text-purple-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-gamepad">
+                <i class="fas fa-gamepad text-lg text-green-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-spotify">
+                <i class="fab fa-spotify text-lg text-green-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-netflix">
+                <i class="fab fa-netflix text-lg text-red-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-twitch">
+                <i class="fab fa-twitch text-lg text-purple-500"></i>
+              </button>
+
+              <!-- Google Services -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-google">
+                <i class="fab fa-google text-lg text-red-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-search">
+                <i class="fas fa-search text-lg text-gray-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-map-marker-alt">
+                <i class="fas fa-map-marker-alt text-lg text-red-600"></i>
+              </button>
+
+              <!-- Microsoft -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-microsoft">
+                <i class="fab fa-microsoft text-lg text-blue-600"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fab fa-windows">
+                <i class="fab fa-windows text-lg text-blue-500"></i>
+              </button>
+
+              <!-- Outros -->
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-star">
+                <i class="fas fa-star text-lg text-yellow-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-heart">
+                <i class="fas fa-heart text-lg text-red-500"></i>
+              </button>
+              <button type="button" class="icon-btn p-2 rounded-lg border-2 border-gray-200 hover:border-blue-500 transition-colors" data-icon="fas fa-bookmark">
+                <i class="fas fa-bookmark text-lg text-blue-600"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700">Cor do Card</label>
+            <input type="color" id="cardColor" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-200">
+          </div>
+          
+          <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all">
+            Adicionar Card
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="p-8">
+    <div class="max-w-7xl mx-auto">
+      <div id="draggable-area" class="grid grid-cols-4 gap-6">
+        <!-- Cards serão adicionados aqui -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Variáveis globais
+    const area = document.getElementById('draggable-area');
+    const modal = document.getElementById('modal');
+    const customizePanel = document.getElementById('customizePanel');
+    const mainBody = document.getElementById('mainBody');
+    const mainHeader = document.getElementById('mainHeader');
+    const appTitle = document.getElementById('appTitle');
+    const customizeBtn = document.getElementById('customizeBtn');
+    
+    let draggedItem = null;
+    let selectedIcon = 'fas fa-link';
+    let dragStartPos = { x: 0, y: 0 };
+    let settings = {
+      theme: 'dark',
+      columns: '4',
+      title: 'SHORTI HUB',
+      cards: [],
+      groups: []
+    };
+
+    // Salvar configurações no localStorage
+    function saveSettings() {
+      try {
+        // Atualizar lista de cards e grupos
+        const currentCards = [];
+        const currentGroups = [];
+        
+        document.querySelectorAll('.draggable-card').forEach(card => {
+          if (card.classList.contains('group-card')) {
+            // É um grupo
+            const groupData = {
+              id: card.getAttribute('data-group-id'),
+              title: card.getAttribute('data-title'),
+              color: card.getAttribute('data-color'),
+              items: JSON.parse(card.getAttribute('data-items') || '[]')
+            };
+            currentGroups.push(groupData);
+          } else {
+            // É um card individual
+            const cardData = {
+              title: card.getAttribute('data-title'),
+              link: card.getAttribute('data-link'), 
+              color: card.getAttribute('data-color'),
+              icon: card.getAttribute('data-icon')
+            };
+            currentCards.push(cardData);
+          }
+        });
+        
+        settings.cards = currentCards;
+        settings.groups = currentGroups;
+        localStorage.setItem('shortiHubSettings', JSON.stringify(settings));
+        console.log('Configurações salvas:', settings);
+      } catch (error) {
+        console.error('Erro ao salvar configurações:', error);
+      }
+    }
+
+    // Carregar configurações do localStorage
+    function loadSettings() {
+      try {
+        const saved = localStorage.getItem('shortiHubSettings');
+        if (saved) {
+          const parsedSettings = JSON.parse(saved);
+          settings = { ...settings, ...parsedSettings };
+          console.log('Configurações carregadas:', settings);
+        }
+        applySettings();
+        loadCards();
+      } catch (error) {
+        console.error('Erro ao carregar configurações:', error);
+        applySettings();
+      }
+    }
+
+    // Aplicar configurações
+    function applySettings() {
+      // Aplicar tema
+      applyTheme(settings.theme);
+      
+      // Aplicar título
+      appTitle.textContent = settings.title;
+      document.getElementById('titleInput').value = settings.title;
+      
+      // Aplicar layout
+      area.className = `grid grid-cols-${settings.columns} gap-6`;
+      document.getElementById('columnsSlider').value = settings.columns;
+      document.getElementById('columnsValue').textContent = settings.columns;
+      
+      // Destacar tema ativo
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('border-white', 'bg-white/20');
+        if (btn.dataset.theme === settings.theme) {
+          btn.classList.add('border-white', 'bg-white/20');
+        }
+      });
+    }
+
+    // Aplicar tema
+    function applyTheme(theme) {
+      mainBody.className = 'min-h-screen';
+      mainHeader.className = 'w-full px-6 py-4 backdrop-blur-md shadow-lg sticky top-0 z-30';
+      
+      switch (theme) {
+        case 'dark':
+          mainBody.classList.add('theme-dark');
+          mainHeader.classList.add('header-dark');
+          break;
+        case 'light':
+          mainBody.classList.add('theme-light');
+          mainHeader.classList.add('header-light');
+          break;
+        case 'blue':
+          mainBody.classList.add('theme-blue');
+          mainHeader.classList.add('header-blue');
+          break;
+        case 'purple':
+        mainBody.classList.add('theme-purple');
+          mainHeader.classList.add('header-purple');
+          break;
+      }
+      
+      settings.theme = theme;
+      saveSettings();
+    }
+
+    // Carregar cards salvos
+    function loadCards() {
+      // Limpar área
+      area.innerHTML = '';
+      
+      // Carregar cards individuais
+      if (settings.cards && settings.cards.length > 0) {
+        settings.cards.forEach(card => {
+          createCardElement(card.title, card.link, card.icon, card.color);
+        });
+      }
+      
+      // Carregar grupos
+      if (settings.groups && settings.groups.length > 0) {
+        settings.groups.forEach(group => {
+          createGroupElement(group.id, group.title, group.color, group.items);
+        });
+      }
+    }
+
+    // Criar elemento de card
+    function createCardElement(title, link, icon, color) {
+      const card = document.createElement('div');
+      card.className = 'draggable-card bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg flex flex-col items-center justify-center cursor-move transition-all duration-300 card-hover glass-effect';
+      card.setAttribute('draggable', 'true');
+      card.setAttribute('data-title', title);
+      card.setAttribute('data-link', link);
+      card.setAttribute('data-icon', icon);
+      card.setAttribute('data-color', color);
+      
+      // Aplicar cor personalizada
+      card.style.borderColor = color;
+      card.style.boxShadow = `0 4px 15px ${color}40`;
+      
+      card.innerHTML = `
+        <div class="text-3xl mb-3" style="color: ${color}">
+          <i class="${icon}"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-center">${title}</h3>
+      `;
+      
+      // Adicionar eventos de drag
+      addDragEvents(card);
+      
+      // Adicionar evento de clique para abrir link
+      card.addEventListener('click', (e) => {
+        // Verificar se não estamos arrastando
+        if (!draggedItem) {
+          window.open(link, '_blank');
+        }
+      });
+      
+      area.appendChild(card);
+      return card;
+    }
+
+    // Criar elemento de grupo
+    function createGroupElement(id, title, color, items) {
+      const group = document.createElement('div');
+      group.className = 'draggable-card group-card bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg flex flex-col items-center justify-center cursor-move transition-all duration-300 card-hover glass-effect';
+      group.setAttribute('draggable', 'true');
+      group.setAttribute('data-group-id', id || Date.now().toString());
+      group.setAttribute('data-title', title);
+      group.setAttribute('data-color', color);
+      group.setAttribute('data-items', JSON.stringify(items || []));
+      
+      // Aplicar cor personalizada
+      group.style.borderColor = color;
+      group.style.boxShadow = `0 4px 15px ${color}40`;
+      
+      group.innerHTML = `
+        <div class="text-3xl mb-3" style="color: ${color}">
+          <i class="fas fa-folder"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-center">${title}</h3>
+        <span class="text-xs mt-1 opacity-70">${items.length} itens</span>
+      `;
+      
+      // Adicionar eventos de drag
+      addDragEvents(group);
+      
+      // Adicionar evento de clique para expandir grupo
+      group.addEventListener('click', (e) => {
+        if (!draggedItem) {
+          expandGroup(group);
+        }
+      });
+      
+      area.appendChild(group);
+      return group;
+    }
+
+    // Expandir grupo
+    function expandGroup(group) {
+      const groupId = group.getAttribute('data-group-id');
+      const title = group.getAttribute('data-title');
+      const color = group.getAttribute('data-color');
+      const items = JSON.parse(group.getAttribute('data-items') || []);
+      
+      // Criar overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'group-overlay';
+      
+      // Criar modal de grupo expandido
+      const expandedGroup = document.createElement('div');
+      expandedGroup.className = 'group-expanded bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl glass-effect';
+      expandedGroup.style.borderColor = color;
+      
+      expandedGroup.innerHTML = `
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold" style="color: ${color}">
+              <i class="fas fa-folder mr-2"></i>${title}
+            </h3>
+            <button class="close-group-btn text-white hover:text-red-400 p-2 rounded-lg">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          <div class="group-items"></div>
+          <div class="mt-4 flex justify-end">
+            <button class="delete-group-btn px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-medium">
+              Excluir Grupo
+            </button>
+          </div>
+        </div>
+      `;
+      
+      // Adicionar itens ao grupo
+      const groupItems = expandedGroup.querySelector('.group-items');
+      items.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'group-item';
+        itemElement.innerHTML = `
+          <div class="text-2xl mb-2" style="color: ${item.color}">
+            <i class="${item.icon}"></i>
+          </div>
+          <h4 class="text-sm font-medium">${item.title}</h4>
+        `;
+        
+        itemElement.addEventListener('click', () => {
+          window.open(item.link, '_blank');
+        });
+        
+        groupItems.appendChild(itemElement);
+      });
+      
+      // Adicionar ao DOM
+      document.body.appendChild(overlay);
+      document.body.appendChild(expandedGroup);
+      
+      // Evento para fechar grupo
+      expandedGroup.querySelector('.close-group-btn').addEventListener('click', () => {
+        overlay.remove();
+        expandedGroup.remove();
+      });
+      
+      // Evento para deletar grupo
+      expandedGroup.querySelector('.delete-group-btn').addEventListener('click', () => {
+        if (confirm(`Tem certeza que deseja excluir o grupo "${title}"?`)) {
+          group.remove();
+          overlay.remove();
+          expandedGroup.remove();
+          saveSettings();
+        }
+      });
+    }
+
+    // Adicionar eventos de drag
+    function addDragEvents(element) {
+      element.addEventListener('dragstart', dragStart);
+      element.addEventListener('dragend', dragEnd);
+      element.addEventListener('dragover', dragOver);
+      element.addEventListener('dragenter', dragEnter);
+      element.addEventListener('dragleave', dragLeave);
+      element.addEventListener('drop', drop);
+    }
+
+    // Funções de drag and drop
+    function dragStart(e) {
+      draggedItem = this;
+      this.classList.add('dragging');
+      dragStartPos.x = e.clientX;
+      dragStartPos.y = e.clientY;
+      
+      // Definir efeito de arrastar
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function dragEnd() {
+      this.classList.remove('dragging');
+      
+      // Verificar se houve movimento significativo
+      const dx = Math.abs(dragStartPos.x - event.clientX);
+      const dy = Math.abs(dragStartPos.y - event.clientY);
+      
+      if (dx > 5 || dy > 5) {
+        saveSettings();
+      }
+      
+      draggedItem = null;
+    }
+
+    function dragOver(e) {
+      e.preventDefault();
+      return false;
+    }
+
+    function dragEnter(e) {
+      e.preventDefault();
+      if (this !== draggedItem) {
+        this.classList.add('drop-zone');
+      }
+    }
+
+    function dragLeave() {
+      this.classList.remove('drop-zone');
+    }
+
+    function drop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      
+      this.classList.remove('drop-zone');
+      
+      // Verificar se estamos soltando em outro card para criar grupo
+      if (draggedItem !== this && draggedItem) {
+        // Se ambos são grupos, não permitir
+        if (draggedItem.classList.contains('group-card') && this.classList.contains('group-card')) {
+          return;
+        }
+        
+        // Se um deles é grupo, adicionar ao grupo
+        if (this.classList.contains('group-card')) {
+          addToGroup(draggedItem, this);
+        } else if (draggedItem.classList.contains('group-card')) {
+          addToGroup(this, draggedItem);
+        } else {
+          // Criar novo grupo com os dois cards
+          createGroupFromCards(draggedItem, this);
+        }
+      }
+      
+      return false;
+    }
+
+    // Adicionar card a um grupo existente
+    function addToGroup(card, group) {
+      const groupId = group.getAttribute('data-group-id');
+      const title = group.getAttribute('data-title');
+      const color = group.getAttribute('data-color');
+      let items = JSON.parse(group.getAttribute('data-items') || []);
+      
+      // Se o card já estiver em um grupo, remover do grupo antigo primeiro
+      if (card.parentElement && card.parentElement.classList.contains('group-items')) {
+        return; // Não permitir arrastar itens de dentro de um grupo
+      }
+      
+      // Se o card for um grupo, não permitir
+      if (card.classList.contains('group-card')) {
+        return;
+      }
+      
+      // Adicionar card ao grupo
+      items.push({
+        title: card.getAttribute('data-title'),
+        link: card.getAttribute('data-link'),
+        icon: card.getAttribute('data-icon'),
+        color: card.getAttribute('data-color')
+      });
+      
+      // Atualizar grupo
+      group.setAttribute('data-items', JSON.stringify(items));
+      
+      // Atualizar visualização do grupo
+      const countElement = group.querySelector('span');
+      if (countElement) {
+        countElement.textContent = `${items.length} itens`;
+      }
+      
+      // Remover card original
+      card.remove();
+      
+      saveSettings();
+    }
+
+    // Criar novo grupo a partir de dois cards
+    function createGroupFromCards(card1, card2) {
+      // Obter dados dos cards
+      const card1Data = {
+        title: card1.getAttribute('data-title'),
+        link: card1.getAttribute('data-link'),
+        icon: card1.getAttribute('data-icon'),
+        color: card1.getAttribute('data-color')
+      };
+      
+      const card2Data = {
+        title: card2.getAttribute('data-title'),
+        link: card2.getAttribute('data-link'),
+        icon: card2.getAttribute('data-icon'),
+        color: card2.getAttribute('data-color')
+      };
+      
+      // Criar grupo
+      const groupId = Date.now().toString();
+      const groupTitle = `Grupo ${groupId.slice(-4)}`;
+      const groupColor = card1Data.color; // Usar cor do primeiro card
+      
+      const group = createGroupElement(groupId, groupTitle, groupColor, [card1Data, card2Data]);
+      
+      // Posicionar grupo onde estava o primeiro card
+      const rect = card1.getBoundingClientRect();
+      group.style.position = 'absolute';
+      group.style.left = `${rect.left}px`;
+      group.style.top = `${rect.top}px`;
+      
+      // Remover cards originais
+      card1.remove();
+      card2.remove();
+      
+      // Animação para posição final
+      setTimeout(() => {
+        group.style.position = '';
+        group.style.left = '';
+        group.style.top = '';
+      }, 10);
+      
+      saveSettings();
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Carregar configurações
+      loadSettings();
+      
+      // Modal
+      const openModalBtn = document.getElementById('openModalBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const addCardForm = document.getElementById('addCardForm');
+      
+      openModalBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+      
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+      
+      // Fechar modal ao clicar no overlay
+      modal.querySelector('.absolute').addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+      
+      // Formulário de novo card
+      addCardForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const title = document.getElementById('cardTitle').value;
+        const link = document.getElementById('cardLink').value;
+        const color = document.getElementById('cardColor').value;
+        
+        createCardElement(title, link, selectedIcon, color);
+        
+        // Resetar formulário
+        addCardForm.reset();
+        selectedIcon = 'fas fa-link';
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        
+        saveSettings();
+      });
+      
+      // Selecionar ícone
+      document.querySelectorAll('.icon-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedIcon = btn.getAttribute('data-icon');
+          document.querySelectorAll('.icon-btn').forEach(b => {
+            b.classList.remove('border-blue-500', 'bg-blue-100');
+          });
+          btn.classList.add('border-blue-500', 'bg-blue-100');
+        });
+      });
+      
+      // Personalização
+      const customizeBtn = document.getElementById('customizeBtn');
+      const closeCustomizeBtn = document.getElementById('closeCustomizeBtn');
+      const customizePanel = document.getElementById('customizePanel');
+      
+      customizeBtn.addEventListener('click', () => {
+        customizePanel.classList.toggle('translate-x-full');
+      });
+      
+      closeCustomizeBtn.addEventListener('click', () => {
+        customizePanel.classList.add('translate-x-full');
+      });
+      
+      // Tema
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.getAttribute('data-theme');
+          applyTheme(theme);
+        });
+      });
+      
+      // Colunas
+      const columnsSlider = document.getElementById('columnsSlider');
+      const columnsValue = document.getElementById('columnsValue');
+      
+      columnsSlider.addEventListener('input', () => {
+        const value = columnsSlider.value;
+        columnsValue.textContent = value;
+        area.className = `grid grid-cols-${value} gap-6`;
+        settings.columns = value;
+        saveSettings();
+      });
+      
+      // Título
+      const titleInput = document.getElementById('titleInput');
+      titleInput.addEventListener('change', () => {
+        const newTitle = titleInput.value || 'SHORTI HUB';
+        appTitle.textContent = newTitle;
+        settings.title = newTitle;
+        saveSettings();
+      });
+    });
+
+    // Permitir arrastar para a área principal
+    area.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    area.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (draggedItem) {
+        // Se estiver arrastando de dentro de um grupo, não permitir
+        if (draggedItem.parentElement && draggedItem.parentElement.classList.contains('group-items')) {
+          return;
+        }
+        
+        // Reposicionar o item na área
+        area.appendChild(draggedItem);
+        saveSettings();
+      }
+    });
+  </script>
+</body>
+</html>

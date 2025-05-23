@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal DashdoTI</title>
+    <link rel="shortcut icon" href="dash.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Paleta de cores leve e moderna */
+            --primary: #2563eb; /* Azul claro */
+            --primary-light: #60a5fa; /* Azul mais claro */
+            --primary-dark: #1e40af; /* Azul profundo */
+            --secondary: #22c55e; /* Verde suave */
+            --accent: #f97316; /* Laranja (destaque) */
+            --dark: #374151; /* Cinza escuro */
+            --darker: #1f2937; /* Cinza mais escuro */
+            --light: #f3f4f6; /* Cinza muito claro */
+            --lighter: #ffffff; /* Branco puro */
+            --gray: #6b7280; /* Cinza médio */
+            --light-gray: #e5e7eb; /* Cinza claro */
+            --success: #22c55e; /* Verde sucesso */
+            --warning: #f59e0b; /* Âmbar alerta */
+            --danger: #ef4444; /* Vermelho erro */
+
+            /* Sombras modernas */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+            /* Bordas e transições */
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: var(--lighter);
+        }
+
+        /* Mobile Loading - Simples */
+        @media (max-width: 1023px) {
+            .loading-screen {
+                background: var(--light);
+            }
+            
+            .loading-spinner {
+                width: 40px;
+                height: 40px;
+                border: 3px solid var(--light-gray);
+                border-top: 3px solid var(--primary);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            .loading-text {
+                color: var(--dark);
+                font-weight: 500;
+                font-size: 1rem;
+            }
+        }
+
+        /* Desktop Loading - Elaborado */
+        @media (min-width: 1024px) {
+            .loading-screen {
+                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            }
+            
+            .loading-spinner {
+                width: 80px;
+                height: 80px;
+                border: 6px solid rgba(255, 255, 255, 0.2);
+                border-top: 6px solid white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                position: relative;
+            }
+            
+            .loading-spinner::after {
+                content: '';
+                position: absolute;
+                top: -12px;
+                left: -12px;
+                right: -12px;
+                bottom: -12px;
+                border: 3px solid rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                animation: spin 2s linear infinite reverse;
+            }
+            
+            .loading-text {
+                color: white;
+                font-weight: 600;
+                font-size: 1.5rem;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+            
+            .loading-text::after {
+                content: '...';
+                animation: dots 1.5s infinite;
+            }
+
+            /* Frase de Marketing */
+            .marketing-text {
+                color: white;
+                font-size: 1.25rem;
+                font-weight: 500;
+                text-align: center;
+                margin-top: 1rem;
+                opacity: 0.9;
+                max-width: 80%;
+                line-height: 1.5;
+            }
+
+            .marketing-text span {
+                font-weight: 700;
+                color: var (--secondary);
+            }
+        }
+
+        .loading-screen.active {
+            opacity: 1;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes dots {
+            0%, 25% { content: '.'; }
+            50% { content: '..'; }
+            75%, 100% { content: '...'; }
+        }
+
+        /* Header - Mobile First */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-logo img {
+            height: 32px;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            .header-logo img {
+                height: 48px;
+            }
+        }
+
+        .header-logo h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        #dynamic-greeting {
+            font-size: 0.875rem;
+            color: var(--gray);
+            font-weight: 500;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #dynamic-greeting {
+                display: block;
+                font-size: 1rem;
+            }
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var (--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .user-avatar {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar - Apenas Desktop */
+        .sidebar {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                display: block;
+                width: 320px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                padding: 2rem;
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+                overflow-y: auto;
+            }
+        }
+
+        .notes-panel {
+            background: var(--lighter);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .notes-panel:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .notes-panel h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notes-panel h3 i {
+            color: var(--primary);
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            font-family: inherit;
+            font-size: 0.875rem;
+            resize: none;
+            margin-bottom: 1rem;
+            transition: var (--transition);
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .notes-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 768px) {
+            .content-area {
+                padding: 2rem;
+            }
+        }
+
+        /* Update Banner - Apenas Desktop */
+        .update-banner {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .update-banner {
+                display: flex;
+                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+                color: white;
+                padding: 1.25rem;
+                border-radius: var(--border-radius);
+                margin-bottom: 2rem;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: var(--shadow-lg);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .update-banner::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+                animation: shine 3s infinite;
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .update-content {
+            flex: 1;
+        }
+
+        .update-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .update-text {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .close-update {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition-fast);
+        }
+
+        .close-update:hover {
+            opacity: 1;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        /* Shortcut Cards */
+        .shortcut-card {
+            background: var(--lighter);
+            border-radius: var(--border-radius);
+            padding: 1.5rem 1rem;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .shortcut-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .shortcut-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .shortcut-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .shortcut-icon {
+            width: 64px; /* Tamanho consistente */
+            height: 64px;
+            border-radius: var(--border-radius-sm);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(34, 197, 94, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem; /* Centraliza o ícone */
+            color: var(--primary);
+            font-size: 2rem; /* Tamanho do ícone */
+            transition: var(--transition);
+        }
+
+        .shortcut-card:hover .shortcut-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .shortcut-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-title {
+                font-size: 1rem;
+            }
+        }
+
+        .shortcut-desc {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        @media (min-width: 768px) {
+            .shortcut-desc {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Special Cards - Apenas Desktop */
+        .special-card {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .special-card {
+                display: flex;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .special-card::after {
+                content: 'NOVO';
+                position: absolute;
+                top: 8px;
+                right: -25px;
+                background: var(--danger);
+                color: white;
+                padding: 0.25rem 2rem;
+                font-size: 0.625rem;
+                font-weight: 700;
+                transform: rotate(45deg);
+                box-shadow: var(--shadow-md);
+            }
+        }
+
+        /* Bottom Modal */
+        .bottom-modal {
+            display: block;
+        }
+
+        @media (min-width: 1024px) {
+            .bottom-modal {
+                display: none;
+            }
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+            box-shadow: var(--shadow-2xl);
+            z-index: 1000;
+            transform: translateY(calc(100% - 80px));
+            transition: var(--transition);
+        }
+
+        .modal-backdrop.expanded {
+            transform: translateY(0);
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            margin: 1rem auto 0.5rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .modal-handle:hover {
+            background: var(--gray);
+        }
+
+        .modal-header {
+            padding: 1rem 1.5rem 0.5rem;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-content {
+            padding: 1rem 1.5rem 2rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-action {
+            background: var(--light);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-action:hover {
+            background: var(--lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-action i {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .quick-action span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6); /* Azul claro */
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Utility Classes */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Utilities */
+        .mobile-only {
+            display: block;
+        }
+
+        .desktop-only {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-only {
+                display: none;
+            }
+            
+            .desktop-only {
+                display: block;
+            }
+        }
+
+         /* Estilos para o modal de atalhos rápidos no desktop */
+    .desktop-quick-actions-modal {
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        right: 0;
+        height: auto;
+        max-height: 80vh;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-top-left-radius: var(--border-radius-lg);
+        border-top-right-radius: var (--border-radius-lg);
+        box-shadow: var(--shadow-2xl);
+        z-index: 1000;
+        transition: var(--transition);
+        padding: 1.5rem;
+        transform: translateY(100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .desktop-quick-actions-modal.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        bottom: 0;
+    }
+    
+    .quick-actions-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .quick-actions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .quick-actions-header h3 {
+        font-size: 1.25rem;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .quick-actions-header h3 i {
+        color: var(--primary);
+    }
+    
+    .close-quick-actions {
+        background: none;
+        border: none;
+        font-size: 1.25rem;
+        color: var(--gray);
+        cursor: pointer;
+        transition: var(--transition-fast);
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .close-quick-actions:hover {
+        background: var(--light-gray);
+        color: var(--dark);
+    }
+    
+    .quick-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .quick-action-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--dark);
+        transition: var(--transition);
+        padding: 1rem;
+        border-radius: var(--border-radius-sm);
+    }
+    
+    .quick-action-card:hover {
+        background: var(--light);
+        transform: translateY(-5px);
+    }
+    
+    .quick-action-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+        border-radius: var(--border-radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: var(--primary);
+        transition: var (--transition);
+    }
+    
+    .quick-action-card:hover .quick-action-icon {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .quick-action-card span {
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    /* Botão flutuante */
+    .floating-action-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-xl);
+        cursor: pointer;
+        z-index: 999;
+        transition: var(--transition);
+    }
+    
+    .floating-action-button:hover {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: var(--shadow-2xl);
+    }
+    
+    /* Overlay para o modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        box-shadow: var(--shadow-2xl);
+        z-index: 1000;
+        transform: translateY(calc(100% - 80px));
+        transition: var(--transition);
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Overlay do Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Container do Modal */
+    .modal-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 500px;
+        background: var(--lighter);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-xl);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-container.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Cabeçalho do Modal */
+    .modal-header {
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.25rem;
+        cursor: pointer;
+        transition: var(--transition-fast);
+    }
+
+    .close-modal:hover {
+        opacity: 0.8;
+    }
+
+    /* Conteúdo do Modal */
+    .modal-content {
+        padding: 1.5rem;
+        font-size: 1rem;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    /* Grid de Cards */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Estilo dos Cards de Pastas */
+    .folder-card {
+        background: linear-gradient(135deg, var(--primary-light), var(--primary));
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .folder-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Ícone da Pasta */
+    .folder-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        transition: color 0.3s ease;
+    }
+
+    .folder-card:hover .folder-icon {
+        color: rgba(255, 255, 255, 1);
+    }
+
+    /* Título da Pasta */
+    .folder-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Notificação */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.notification.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando Portal</div>
+        <p class="marketing-text">
+            <span>Mudamos!</span> Uma nova interface está disponível. <br> 
+            Explore novas ideias e funcionalidades incríveis.
+        </p>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-logo">
+                <img src="logo.png" alt="DashdoTI Logo">
+                <h1>DashdoTI</h1>
+            </div>
+            <div class="user-profile">
+                <span id="dynamic-greeting">Bem-vindo</span>
+                <div class="user-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Sidebar - Apenas Desktop -->
+            <aside class="sidebar desktop-only">
+                <div class="notes-panel">
+                    <h3><i class="fas fa-edit"></i> Anotações Rápidas</h3>
+                    <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..."></textarea>
+                    <div class="notes-actions">
+                        <button class="btn btn-primary" id="saveNotes">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button class="btn btn-outline" id="clearNotes">
+                            <i class="fas fa-trash-alt"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <!-- Update Banner - Apenas Desktop -->
+                <div class="update-banner desktop-only" id="updateBanner">
+                    <i class="fas fa-bell"></i>
+                    <div class="update-content">
+                        <div class="update-title">Novidades no Portal!</div>
+                        <div class="update-text">Confira as últimas atualizações e melhorias que implementamos para você.</div>
+                    </div>
+                    <button class="close-update" id="closeUpdateBanner">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="cards-grid">
+                    <!-- Cards Principais -->
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="shortcut-card floating" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fa-solid fa-laptop-file"></i>
+                        </div>
+                        <h3 class="shortcut-title">Entrega</h3>
+                        <p class="shortcut-desc">Equipamentos</p>
+                    </a>
+                    
+                    <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="shortcut-card floating" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                        <h3 class="shortcut-title">Devolução</h3>
+                        <p class="shortcut-desc">Equipamentos</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card floating" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="shortcut-title">Suporte</h3>
+                        <p class="shortcut-desc">Tasks</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 class="shortcut-title">Acessos</h3>
+                        <p class="shortcut-desc">Controle</p>
+                    </a>
+                    
+                    <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="shortcut-card floating" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h3 class="shortcut-title">Estoque</h3>
+                        <p class="shortcut-desc">Inventário</p>
+                    </a>
+
+                
+                    <!-- Card Meu Hub - Apenas Desktop -->
+                    <a href="feature/hub.html" class="shortcut-card special-card floating desktop-only" target="_blank">
+                        <div class="shortcut-icon">
+                            <i class="fa-solid fa-tachometer-alt"></i>
+                        </div>
+                        <h3 class="shortcut-title">Meu Hub</h3>
+                        <p class="shortcut-desc">Dashboard</p>
+                    </a>
+
+
+                    <!-- Card que abre o modal -->
+                    <a href="#" class="shortcut-card floating" id="openFoldersModal">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3 class="shortcut-title">Pastas</h3>
+                        <p class="shortcut-desc">Acesse suas pastas</p>
+                    </a>
+                </div>
+
+               
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bottom Modal - Apenas Mobile -->
+    <div class="bottom-modal mobile-only">
+        <div class="modal-backdrop" id="bottomModal">
+            <div class="modal-handle" id="modalHandle"></div>
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-tools"></i>
+                    Ferramentas Rápidas
+                </h3>
+            </div>
+            <div class="modal-content">
+                <div class="quick-actions">
+                    <button class="quick-action" id="quickNotes">
+                        <i class="fas fa-edit"></i>
+                        <span>Anotações</span>
+                    </button>
+                    <a href="novidades.html" class="quick-action" target="_blank">
+                        <i class="fas fa-newspaper"></i>
+                        <span>Novidades</span>
+                    </a>
+                    <button class="quick-action" id="quickSettings">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </button>
+                </div>
+                
+                <div class="modal-section">
+                    <h4 style="margin-bottom: 1rem; color: var(--dark); font-size: 0.875rem; font-weight: 600;">Anotações Rápidas</h4>
+                    <textarea class="notes-textarea" id="mobileNotes" placeholder="Digite suas anotações aqui..." style="min-height: 100px; margin-bottom: 1rem;"></textarea>
+                    <div class="notes-actions">
+                        <button class="btn btn-primary" id="saveMobileNotes">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button class="btn btn-outline" id="clearMobileNotes">
+                            <i class="fas fa-trash-alt"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Desktop Quick Actions Modal -->
+<div class="desktop-quick-actions-modal" id="desktopQuickActions">
+    <div class="quick-actions-container">
+        <div class="quick-actions-header">
+            <h3><i class="fas fa-bolt"></i> Atalhos Rápidos</h3>
+            <button class="close-quick-actions" id="closeQuickActions">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="quick-actions-grid">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fa-solid fa-laptop-file"></i>
+                </div>
+                <span>Entrega</span>
+            </a>
+            
+            <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fas fa-undo-alt"></i>
+                </div>
+                <span>Devolução</span>
+            </a>
+            
+            <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <span>Suporte</span>
+            </a>
+            
+            <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <span>Acessos</span>
+            </a>
+            
+            <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <span>Estoque</span>
+            </a>
+            
+            <a href="novidades.html" class="quick-action-card" target="_blank">
+                <div class="quick-action-icon">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <span>Novidades</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Botão flutuante para abrir o modal -->
+<div class="floating-action-button desktop-only" id="openQuickActions">
+    <i class="fas fa-bolt"></i>
+</div>
+
+<!-- Modal com as pastas -->
+<div class="modal-overlay" id="foldersModalOverlay"></div>
+<div class="modal-container" id="foldersModal">
+    <div class="modal-header">
+        <h3 class="modal-title">
+            <i class="fas fa-folder"></i> Pastas
+        </h3>
+        <button class="close-modal" id="closeFoldersModal">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="modal-content">
+        <div class="cards-grid">
+            <!-- Pasta 1 -->
+            <a href="https://example.com/pasta1" class="folder-card">
+                <div class="folder-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h3 class="folder-title">Documentos</h3>
+            </a>
+
+            <!-- Pasta 2 -->
+            <a href="https://example.com/pasta2" class="folder-card">
+                <div class="folder-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h3 class="folder-title">Projetos</h3>
+            </a>
+
+            <!-- Pasta 3 -->
+            <a href="https://example.com/pasta3" class="folder-card">
+                <div class="folder-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h3 class="folder-title">Relatórios</h3>
+            </a>
+
+            <!-- Pasta 4 -->
+            <a href="https://example.com/pasta4" class="folder-card">
+                <div class="folder-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h3 class="folder-title">Recursos</h3>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="notification" class="notification hidden">
+    <p id="notificationMessage"></p>
+</div>
+
+    <script>
+        // Loading Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            setTimeout(() => {
+                loadingScreen.classList.add('active');
+            }, 100);
+            
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    loadingScreen.classList.add('fade-out');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }, 1000);
+            });
+        });
+
+        // Bottom Modal Control
+        const bottomModal = document.getElementById('bottomModal');
+        const modalHandle = document.getElementById('modalHandle');
+        
+        let isModalExpanded = false;
+        
+        modalHandle.addEventListener('click', function() {
+            isModalExpanded = !isModalExpanded;
+            if (isModalExpanded) {
+                bottomModal.classList.add('expanded');
+            } else {
+                bottomModal.classList.remove('expanded');
+            }
+        });
+
+        // Dynamic Greeting
+        function updateGreeting() {
+            const greetingElement = document.getElementById('dynamic-greeting');
+            const hour = new Date().getHours();
+            let greeting;
+            
+            if (hour >= 5 && hour < 12) {
+                greeting = 'Bom dia';
+            } else if (hour >= 12 && hour < 18) {
+                greeting = 'Boa tarde';
+            } else {
+                greeting = 'Boa noite';
+            }
+            
+            if (greetingElement) {
+                greetingElement.textContent = greeting;
+            }
+        }
+        
+        updateGreeting();
+        
+        // Notes functionality
+        function setupNotes() {
+            const desktopNotes = document.querySelector('.notes-textarea');
+            const saveNotesBtn = document.getElementById('saveNotes');
+            const clearNotesBtn = document.getElementById('clearNotes');
+            const mobileNotes = document.getElementById('mobileNotes');
+            const saveMobileNotesBtn = document.getElementById('saveMobileNotes');
+            const clearMobileNotesBtn = document.getElementById('clearMobileNotes');
+            
+            // Load saved notes from localStorage
+            const savedNotes = localStorage.getItem('dashdoti_notes');
+            if (savedNotes) {
+                if (desktopNotes) desktopNotes.value = savedNotes;
+                if (mobileNotes) mobileNotes.value = savedNotes;
+            }
+            
+            // Save notes
+            function saveNotes() {
+                const notes = desktopNotes ? desktopNotes.value : mobileNotes.value;
+                localStorage.setItem('dashdoti_notes', notes);
+                alert('Anotações salvas com sucesso!');
+            }
+            
+            // Clear notes
+            function clearNotes() {
+                if (confirm('Tem certeza que deseja limpar todas as anotações?')) {
+                    if (desktopNotes) desktopNotes.value = '';
+                    if (mobileNotes) mobileNotes.value = '';
+                    localStorage.removeItem('dashdoti_notes');
+                }
+            }
+            
+            // Event listeners
+            if (saveNotesBtn) saveNotesBtn.addEventListener('click', saveNotes);
+            if (clearNotesBtn) clearNotesBtn.addEventListener('click', clearNotes);
+            if (saveMobileNotesBtn) saveMobileNotesBtn.addEventListener('click', saveNotes);
+            if (clearMobileNotesBtn) clearMobileNotesBtn.addEventListener('click', clearNotes);
+        }
+        
+        setupNotes();
+        
+        // Close update banner
+        const closeUpdateBanner = document.getElementById('closeUpdateBanner');
+        if (closeUpdateBanner) {
+            closeUpdateBanner.addEventListener('click', function() {
+                const updateBanner = document.getElementById('updateBanner');
+                updateBanner.style.display = 'none';
+            });
+        }
+        
+        // Quick actions
+        const quickNotesBtn = document.getElementById('quickNotes');
+        if (quickNotesBtn) {
+            quickNotesBtn.addEventListener('click', function() {
+                isModalExpanded = true;
+                bottomModal.classList.add('expanded');
+                document.getElementById('mobileNotes').focus();
+            });
+        }
+        
+        const quickSettingsBtn = document.getElementById('quickSettings');
+        if (quickSettingsBtn) {
+            quickSettingsBtn.addEventListener('click', function() {
+                alert('Configurações serão implementadas em breve!');
+            });
+        }
+
+         // Controle do modal de atalhos rápidos no desktop
+    document.addEventListener('DOMContentLoaded', function() {
+        const quickActionsModal = document.getElementById('desktopQuickActions');
+        const openQuickActions = document.getElementById('openQuickActions');
+        const closeQuickActions = document.getElementById('closeQuickActions');
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'modal-overlay';
+        document.body.appendChild(modalOverlay);
+        
+        // Abrir modal
+        openQuickActions.addEventListener('click', function() {
+            quickActionsModal.classList.add('active');
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Fechar modal
+        function closeModal() {
+            quickActionsModal.classList.remove('active');
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        closeQuickActions.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+        
+        // Fechar ao pressionar ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    });
+
+    // Controle do Novo Modal
+    document.addEventListener('DOMContentLoaded', function () {
+        const openNewModal = document.getElementById('openNewModal');
+        const newModal = document.getElementById('newModal');
+        const newModalOverlay = document.getElementById('newModalOverlay');
+        const closeNewModal = document.getElementById('closeNewModal');
+
+        // Abrir o modal
+        openNewModal.addEventListener('click', function (e) {
+            e.preventDefault();
+            newModal.classList.add('active');
+            newModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Evita rolagem da página
+        });
+
+        // Fechar o modal
+        function closeModal() {
+            newModal.classList.remove('active');
+            newModalOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restaura a rolagem da página
+        }
+
+        closeNewModal.addEventListener('click', closeModal);
+        newModalOverlay.addEventListener('click', closeModal);
+
+        // Fechar ao pressionar ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    });
+
+    // Controle do Modal de Pastas
+    document.addEventListener('DOMContentLoaded', function () {
+        const openFoldersModal = document.getElementById('openFoldersModal');
+        const foldersModal = document.getElementById('foldersModal');
+        const foldersModalOverlay = document.getElementById('foldersModalOverlay');
+        const closeFoldersModal = document.getElementById('closeFoldersModal');
+
+        // Abrir o modal
+        openFoldersModal.addEventListener('click', function (e) {
+            e.preventDefault();
+            foldersModal.classList.add('active');
+            foldersModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Evita rolagem da página
+        });
+
+        // Fechar o modal
+        function closeModal() {
+            foldersModal.classList.remove('active');
+            foldersModalOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restaura a rolagem da página
+        }
+
+        closeFoldersModal.addEventListener('click', closeModal);
+        foldersModalOverlay.addEventListener('click', closeModal);
+
+        // Fechar ao pressionar ESC
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    });
+
+    // Exibir Notificação
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notificationMessage');
+        notificationMessage.textContent = message;
+        notification.classList.add('visible');
+
+        setTimeout(() => {
+            notification.classList.remove('visible');
+        }, 3000); // Notificação desaparece após 3 segundos
+    }
+
+    // Salvar Notas como Arquivo .txt
+    function saveNotesAsFile() {
+        const notes = document.querySelector('.notes-textarea').value || document.getElementById('mobileNotes').value;
+        if (!notes.trim()) {
+            showNotification('Não há nada para salvar.');
+            return;
+        }
+
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('pt-BR').replace(/\//g, '-');
+        const formattedTime = now.toLocaleTimeString('pt-BR').replace(/:/g, '-');
+        const fileName = `anotacoes-${formattedDate}-${formattedTime}.txt`;
+
+        const blob = new Blob([notes], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+
+        showNotification('Sua anotação foi salva com sucesso!');
+    }
+
+    // Limpar Notas com Confirmação
+    function clearNotes() {
+        if (confirm('Tem certeza que deseja limpar todas as anotações?')) {
+            const desktopNotes = document.querySelector('.notes-textarea');
+            const mobileNotes = document.getElementById('mobileNotes');
+            if (desktopNotes) desktopNotes.value = '';
+            if (mobileNotes) mobileNotes.value = '';
+            localStorage.removeItem('dashdoti_notes');
+            showNotification('As anotações foram apagadas.');
+        }
+    }
+
+    // Adicionar eventos aos botões
+    document.getElementById('saveNotes').addEventListener('click', saveNotesAsFile);
+    document.getElementById('saveMobileNotes').addEventListener('click', saveNotesAsFile);
+    document.getElementById('clearNotes').addEventListener('click', clearNotes);
+    document.getElementById('clearMobileNotes').addEventListener('click', clearNotes);
+
+    </script>
+</body>
+</html>

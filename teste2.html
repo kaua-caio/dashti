@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arraiá do Tio Paulinho - 2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;900&family=Poppins:wght@300;400;700;900&display=swap');
+        
+        :root {
+            --primary: #FF7700;
+            --secondary: #FF3D00;
+            --dark: #0A0914;
+            --light: #FFFFFF;
+            --accent: #FFCC00;
+            --bg-gradient: linear-gradient(135deg, #0A0914 0%, #1A1A2E 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Teaser Section */
+        .teaser {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease-out;
+        }
+        
+        .teaser.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        
+        .teaser-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 90%;
+        }
+        
+        .teaser-logo {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.5rem, 12vw, 6rem);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+        
+        .teaser-text {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.8s;
+        }
+        
+        .teaser-button {
+            padding: 16px 48px;
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--accent);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 1.2s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .teaser-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.4s ease;
+            z-index: -1;
+        }
+        
+        .teaser-button:hover {
+            color: var(--dark);
+            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+        }
+        
+        .teaser-button:hover::before {
+            width: 100%;
+        }
+        
+        /* Animated shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            opacity: 0.1;
+            filter: blur(40px);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -100px;
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -50px;
+            animation: float 18s ease-in-out infinite 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -15px) rotate(5deg); }
+            50% { transform: translate(-5px, 10px) rotate(-5deg); }
+            75% { transform: translate(15px, 5px) rotate(3deg); }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-in, transform 1s ease-in;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .main-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .festa-container {
+            position: relative;
+            background: rgba(10, 9, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 800px;
+        }
+        
+        .festa-card {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .glass-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
+            z-index: 1;
+        }
+        
+        .glass-highlight {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 80% 20%, rgba(255,204,0,0.15) 0%, transparent 60%);
+            z-index: 0;
+        }
+        
+        .main-title {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 10vw, 5rem);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            line-height: 0,15;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-family: 'Epilogue', sans-serif;
+            font-size: clamp(1.8rem, 7vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            line-height: 1;
+        }
+        
+        .divider {
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 1.5rem auto;
+        }
+        
+        .slogan {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            font-weight: 300;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .countdown-container {
+            margin-top: 3.5rem;
+            position: relative;
+        }
+        
+        .countdown-title {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .countdown-number {
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            font-weight: 900;
+            font-family: 'Epilogue', sans-serif;
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .countdown-number:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .countdown-number::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08), transparent);
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+        }
+        
+        /* Confetti Particles */
+        .confetti {
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .festa-container {
+                padding: 3rem 1.5rem;
+            }
+            
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 300px;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- Teaser Section -->
+    <section class="teaser" id="teaser">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="teaser-content">
+            <h1 class="teaser-logo">ARRAIÁ DO<br>TIO PAULINHO</h1>
+            <p class="teaser-text">A tradição que vence tudo</p>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <div class="festa-container">
+            <div class="glass-effect"></div>
+            <div class="glass-highlight"></div>
+            <div class="festa-card">
+                <h1 class="main-title">ARRAIÁ DO</h1>
+                <h2 class="subtitle">TIO PAULINHO</h2>
+                <div class="divider"></div>
+                <p class="slogan">A TRADIÇÃO QUE VENCE TUDO!</p>
+                
+                <div class="countdown-container">
+                    <h3 class="countdown-title">Contagem regressiva para a festa</h3>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">00</div>
+                            <div class="countdown-label">Dias</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">00</div>
+                            <div class="countdown-label">Horas</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">00</div>
+                            <div class="countdown-label">Minutos</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">00</div>
+                            <div class="countdown-label">Segundos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Teaser Animation
+        const teaser = document.getElementById('teaser');
+        const teaserButton = document.getElementById('teaserButton');
+        const mainContent = document.getElementById('mainContent');
+        
+        teaserButton.addEventListener('click', () => {
+            teaser.classList.add('hidden');
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                startCountdown();
+                createConfetti();
+            }, 1000);
+        });
+        
+        // Countdown Function
+        function startCountdown() {
+            function updateCountdown() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                let targetDate = new Date(currentYear, 5, 14); // 14 de junho
+                
+                if (now > targetDate) {
+                    targetDate = new Date(currentYear + 1, 5, 14);
+                }
+                
+                const diff = targetDate - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').innerHTML = String(days).padStart(2, '0');
+                document.getElementById('hours').innerHTML = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerHTML = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerHTML = String(seconds).padStart(2, '0');
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+        
+        // Modern Confetti Effect
+        function createConfetti() {
+            const colors = ['#FFCC00', '#FF7700', '#FF3D00', '#FFFFFF'];
+            const shapes = ['circle', 'square', 'triangle', 'line'];
+            
+            function createConfettiParticle() {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random properties
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * window.innerWidth;
+                const posY = -20;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const opacity = Math.random() * 0.7 + 0.3;
+                const duration = Math.random() * 8 + 4;
+                const delay = Math.random() * 4;
+                const rotateSpeed = Math.random() * 100 - 50;
+                const endPosX = posX + (Math.random() * 200 - 100);
+                
+                // Set initial styles
+                confetti.style.position = 'fixed';
+                confetti.style.width = `${size}px`;
+                confetti.style.height = shape === 'line' ? `${size/4}px` : `${size}px`;
+                confetti.style.left = `${posX}px`;
+                confetti.style.top = `${posY}px`;
+                confetti.style.opacity = opacity;
+                
+                if (shape === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.background = color;
+                } else if (shape === 'triangle') {
+                    confetti.style.width = '0';
+                    confetti.style.height = '0';
+                    confetti.style.borderLeft = `${size/2}px solid transparent`;
+                    confetti.style.borderRight = `${size/2}px solid transparent`;
+                    confetti.style.borderBottom = `${size}px solid ${color}`;
+                    confetti.style.background = 'transparent';
+                } else if (shape === 'line') {
+                    confetti.style.background = color;
+                    confetti.style.borderRadius = '4px';
+                } else {
+                    confetti.style.background = color;
+                }
+                
+                // Create animation
+                const animation = confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: opacity },
+                    { transform: `translate(${endPosX - posX}px, ${window.innerHeight + 100}px) rotate(${rotateSpeed}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    delay: delay * 1000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+                    fill: 'both'
+                });
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                animation.onfinish = () => confetti.remove();
+            }
+            
+            // Initial confetti
+            for (let i = 0; i < 40; i++) {
+                createConfettiParticle();
+            }
+            
+            // Continuous confetti at a slower rate
+            setInterval(createConfettiParticle, 800);
+        }
+        
+        // Skip teaser if user prefers reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            teaser.classList.add('hidden');
+            mainContent.classList.add('visible');
+            startCountdown();
+            createConfetti();
+        }
+    </script>
+</body>
+</html>

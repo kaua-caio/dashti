@@ -9,14 +9,114 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Banner de Marketing */
+        .marketing-banner {
+            background: linear-gradient(135deg, #0553c9, #3b82f6); /* Gradiente azul escuro e moderno */
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1000;
+            animation: fadeIn 1s ease-out, slideDown 1s ease-out;
+            border-bottom: 3px solid rgba(29, 19, 19, 0.185);
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 90%;
+        }
+
+        /* Texto do Banner */
+        .marketing-banner p {
+            margin: 0;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .marketing-banner strong {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #60a5fa, #0b91ff, #60a5fa); /* Efeito de brilho */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s infinite;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200%;
+            }
+            100% {
+                background-position: 200%;
+            }
+        }
+
+        /* Notificação */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); /* Gradiente azul vibrante */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px; /* Bordas mais arredondadas */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px); /* Efeito de deslizamento */
+        }
+
+        .notification.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0); /* Aparece suavemente */
+        }
+
+        .notification p {
+            margin: 0;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .notification strong {
+            color: #ffdd57; /* Destaque em amarelo suave */
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
     
-  <div id="notificacao-politica" class="notificacao">
-     Quer saber o que mudou? A tela de novidades está pronta! ✨ <a href="novidades.html">Clique aqui</a>
-    <button onclick="fecharNotificacao()">✖</button>
+
+  <div id="notification" class="notification hidden">
+    <p><strong></strong> Estamos preparando algo novo para você. Aguarde novidades!</p>
   </div>
-  
 
   <div class="app-container">
     <!-- Header -->
@@ -181,5 +281,20 @@
         </div>
       </div>
     <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const notification = document.getElementById('notification');
+
+            // Exibir a notificação após 2 segundos
+            setTimeout(() => {
+                notification.classList.add('visible');
+            }, 2000);
+
+            // Ocultar a notificação após 8 segundos
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 10000);
+        });
+    </script>
 </body>
 </html>
