@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuração de Equipamentos</title>
+    <title>Checklist de Equipamentos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -160,7 +160,7 @@
             <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-2xl mb-6 pulse-shadow">
                 <i class="fas fa-cogs text-3xl gradient-text"></i> </div>
             <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
-                Sistema de Configuração
+                Checklist de Configuração
             </h1>
             <p class="text-xl text-white opacity-90 font-light">
                 Gerencie equipamentos com elegância e eficiência
@@ -188,7 +188,7 @@
                             <input type="radio" name="os_choice" value="linux" class="sr-only" onchange="handleOsSelection();">
                             <div class="text-center">
                                 <i class="fab fa-linux text-4xl text-blue-600 mb-4"></i> <h3 class="text-xl font-semibold text-gray-800">Linux</h3>
-                                <p class="text-gray-600 text-sm mt-2">Sistema robusto e seguro</p>
+                                <p class="text-gray-600 text-sm mt-2"></p>
                             </div>
                         </label>
                         
@@ -196,7 +196,7 @@
                             <input type="radio" name="os_choice" value="windows" class="sr-only" onchange="handleOsSelection();">
                             <div class="text-center">
                                 <i class="fab fa-windows text-4xl text-green-600 mb-4"></i> <h3 class="text-xl font-semibold text-gray-800">Windows</h3>
-                                <p class="text-gray-600 text-sm mt-2">Interface amigável</p>
+                                <p class="text-gray-600 text-sm mt-2"></p>
                             </div>
                         </label>
                         
@@ -204,7 +204,7 @@
                             <input type="radio" name="os_choice" value="mac" class="sr-only" onchange="handleOsSelection();">
                             <div class="text-center">
                                 <i class="fab fa-apple text-4xl text-purple-600 mb-4"></i> <h3 class="text-xl font-semibold text-gray-800">macOS</h3>
-                                <p class="text-gray-600 text-sm mt-2">Design elegante</p>
+                                <p class="text-gray-600 text-sm mt-2"></p>
                             </div>
                         </label>
                     </div>
@@ -263,7 +263,7 @@
                                 <input type="checkbox" value="Formatação" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-hdd text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Formatação</span>
+                                    <span class="text-gray-700 font-medium">1- Formatação</span>
                                 </div>
                             </label>
                             
@@ -271,7 +271,7 @@
                                 <input type="checkbox" value="Criptografia" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-shield-alt text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Criptografia</span>
+                                    <span class="text-gray-700 font-medium">2- Criptografia</span>
                                 </div>
                             </label>
                             
@@ -279,7 +279,7 @@
                                 <input type="checkbox" value="Senhas" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-key text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Senhas</span>
+                                    <span class="text-gray-700 font-medium">3- Senhas</span>
                                 </div>
                             </label>
                             
@@ -287,7 +287,7 @@
                                 <input type="checkbox" value="Rodar script da L2TP" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-network-wired text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Script L2TP</span>
+                                    <span class="text-gray-700 font-medium">4- Script L2TP</span>
                                 </div>
                             </label>
                             
@@ -295,7 +295,7 @@
                                 <input type="checkbox" value="Rodar script de Criptografia" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-lock text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Script Criptografia</span>
+                                    <span class="text-gray-700 font-medium">5- Script Criptografia</span>
                                 </div>
                             </label>
                             
@@ -303,7 +303,7 @@
                                 <input type="checkbox" value="Rodar Script de Instalação da JumpCloud" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-cloud text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">JumpCloud</span>
+                                    <span class="text-gray-700 font-medium">6- JumpCloud</span>
                                 </div>
                             </label>
                             
@@ -311,7 +311,7 @@
                                 <input type="checkbox" value="Instalar aplicativos (Google …)" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-download text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Aplicativos</span>
+                                    <span class="text-gray-700 font-medium">7- Aplicativos</span>
                                 </div>
                             </label>
                             
@@ -319,7 +319,7 @@
                                 <input type="checkbox" value="Vincular Usuário" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-user-plus text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Vincular Usuário</span>
+                                    <span class="text-gray-700 font-medium">8- Vincular Usuário</span>
                                 </div>
                             </label>
                             
@@ -327,7 +327,7 @@
                                 <input type="checkbox" value="Cadastrar o equipamento" class="checkbox-custom form-checkbox h-5 w-5 text-blue-600 rounded focus:ring-blue-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-clipboard-list text-blue-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">Cadastrar Equipamento</span>
+                                    <span class="text-gray-700 font-medium">9- Cadastrar Equipamento</span>
                                 </div>
                             </label>
                         </div>
@@ -437,7 +437,7 @@
                                 <input type="checkbox" value="Configuração de iCloud" class="checkbox-custom form-checkbox h-5 w-5 text-purple-600 rounded focus:ring-purple-500 mr-4" onchange="updateProgress()">
                                 <div class="flex items-center">
                                     <i class="fas fa-cloud text-purple-500 mr-3"></i>
-                                    <span class="text-gray-700 font-medium">iCloud</span>
+                                    <span class="text-gray-700 font-medium">iD Apple - t.i@greenn.com.br</span>
                                 </div>
                             </label>
                             
@@ -479,7 +479,7 @@
                 <div class="text-center">
                     <button onclick="saveCertificate()" class="group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300">
                         <span class="flex items-center z-10 relative"> <i class="fas fa-save mr-3 text-xl"></i>
-                            Salvar Certificado de Conclusão
+                            Salvar Informações de Conclusão
                         </span>
                         <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
@@ -499,7 +499,7 @@
         <div class="bg-white p-10 rounded-2xl shadow-2xl text-center max-w-md mx-auto transform scale-95 completion-message-card">
             <i class="fas fa-check-circle text-6xl text-green-500 mb-6 animate-bounce"></i>
             <h3 class="text-3xl font-bold text-gray-800 mb-4">Configuração Concluída!</h3>
-            <p class="text-lg text-gray-600 mb-6">O certificado de conclusão foi salvo com sucesso.</p>
+            <p class="text-lg text-gray-600 mb-6">As informações de conclusão foram salvas com sucesso.</p>
             <button onclick="hideCompletionMessage()" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300">
                 Fechar
             </button>
@@ -660,7 +660,7 @@
 
             // Construct the certificate content
             let certificateContent = `
-CERTIFICADO DE CONCLUSÃO DE CONFIGURAÇÃO DE EQUIPAMENTO
+INFORMÇÔES DE CONCLUSÃO DE CONFIGURAÇÃO DE EQUIPAMENTO
 
 Data de Conclusão: ${new Date().toLocaleDateString('pt-BR')}
 
@@ -683,7 +683,7 @@ ${checklistItems.length > 0 ? checklistItems.map(item => `  - ${item}`).join('\n
 
 ---
 
-Este certificado atesta a conclusão da configuração do equipamento conforme as etapas indicadas.
+Estas Informações atesta a conclusão da configuração do equipamento conforme as etapas indicadas.
 `;
 
             // Create a Blob from the content

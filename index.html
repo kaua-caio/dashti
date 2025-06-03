@@ -114,187 +114,349 @@
 <body>
     
 
-  <div id="notification" class="notification hidden">
-    <p><strong></strong> Estamos preparando algo novo para você. Aguarde novidades!</p>
-  </div>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando...</div>
+        <div class="marketing-text desktop-only">
+            <span>DashdoTI</span> - Sua plataforma de produtividade
+        </div>
+    </div>
 
-  <div class="app-container">
     <!-- Header -->
     <header class="header">
-      <div class="greeting">
-        <h1 id="dynamic-greeting">Bom dia,</h1>
-        <p>Selecione o serviço necessário no painel abaixo</p>
-      </div>
-      
-      <div class="user-profile">
-        <div class="user-avatar" id="user-avatar">
-          <i class="fas fa-rocket desktop-icon"></i>
-          <span class="mobile-text">TI</span>
+        <div class="header-logo">
+            <!--<img src="logo.png" alt="Logo DashdoTI"> -->
+            <h1>DashdoTI</h1>
         </div>
-      </div>
+        <div class="user-profile">
+            <span id="dynamic-greeting"></span>
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
     </header>
-    
 
-        <!-- Grid de Atalhos -->
-        <main class="shortcuts-grid">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fa-solid fa-laptop-file"></i>
-            </div>
-            <h3 class="shortcut-title">Entrega de Equipamentos</h3>
-            <p class="shortcut-desc">Formulário para entrega de equipamentos</p>
-          </a>
-          
-          <a href="https://forms.gle/HZzXQTh5tADD8zmK8" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-undo-alt"></i>
-            </div>
-            <h3 class="shortcut-title">Devolução de Equipamentos</h3>
-            <p class="shortcut-desc">Formulário de devolução de equipamentos</p>
-          </a>
-          
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-people-arrows"></i>
-            </div>
-            <h3 class="shortcut-title">Transferência</h3>
-            <p class="shortcut-desc">Formulário de transferência entre Unidades</p>
-          </a>
-          
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-times-circle"></i>
-            </div>
-            <h3 class="shortcut-title">Equipamento Danificado</h3>
-            <p class="shortcut-desc">Reportar equipamento com defeito</p>
-          </a>
-          
-          <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-headset"></i>
-            </div>
-            <h3 class="shortcut-title">Task de Suporte</h3>
-            <p class="shortcut-desc">Verificar Tasks de Suporte</p>
-          </a>
-          
-          <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-key"></i>
-            </div>
-            <h3 class="shortcut-title">Controle de Acesso</h3>
-            <p class="shortcut-desc">Gerenciar acessos e permissões</p>
-          </a>
-          
-          <a href="https://app.clickup.com/9011833817/v/f/90115920326" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-boxes"></i>
-            </div>
-            <h3 class="shortcut-title">Estoque</h3>
-            <p class="shortcut-desc">Verificar inventário disponível</p>
-          </a>
-          
-          <a href="https://app.clickup.com/9011833817/v/li/901110205399" class="shortcut-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fas fa-user-plus"></i>
-            </div>
-            <h3 class="shortcut-title">Onboarding</h3>
-            <p class="shortcut-desc">Processos de integração</p>
-          </a>
 
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScIc7A9f-Aa9y34ilQqtDZ_JroG-8-bwXtrRBZoeJVK87zB3g/viewform?fbzx=7347643064307232537"
-            class="shortcut-card" 
-            target="_blank" 
-            id="desligamento-link">
-            <div class="shortcut-icon">
-              <i class="fa-solid fa-power-off"></i>            </div>
-            <h3 class="shortcut-title">Desligamento</h3>
-            <p class="shortcut-desc">Marcar encerramento de acessos</p>
-          </a>
-
-          <!-- MODAL -->
-          <div id="confirmModal" class="modal">
-            <div class="modal-content">
-              <h2> Atenção</h2>
-              <p>Antes de enviar este formulário, confirme a criticidade dos acessos.<br>Em caso de dúvidas, converse com o time.</p>
-              <div class="modal-buttons">
-                <button id="cancelBtn">Cancelar</button>
-                <button id="confirmBtn">Continuar</button>
-              </div>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar (Desktop only) -->
+        <aside class="sidebar desktop-only">
+            <div class="notes-panel">
+                <h3><i class="fas fa-edit"></i> Anotações Rápidas</h3>
+                <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..."></textarea>
+                <div class="notes-actions">
+                    <button class="btn btn-primary" id="saveNotes">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                    <button class="btn btn-outline" id="clearNotes">
+                        <i class="fas fa-trash-alt"></i> Limpar
+                    </button>
+                </div>
             </div>
-          </div>
+
+            <div class="news-card">
+                <h3><i class="fas fa-newspaper"></i> Notícias de TI</h3>
+                <div id="newsCarousel" class="news-carousel">
+                    <div class="news-item">
+                        <img id="newsImage" src="https://via.placeholder.com/64" alt="Imagem da notícia">
+                        <div>
+                            <a id="newsTitle" href="#" target="_blank">Carregando notícia...</a>
+                            <p id="newsDate" class="news-date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
           
-          <div class="shortcut-card" id="reportsBtn">
-            <div class="shortcut-icon">
-              <i class="fas fa-chart-pie"></i>
-            </div>
-            <h3 class="shortcut-title">Relatórios</h3>
-            <p class="shortcut-desc">Boletins</p>
-          </div>
 
-          <a href="novidades.html" class="shortcut-card rgb-border-card" target="_blank">
-            <div class="shortcut-icon">
-              <i class="fa-solid fa-newspaper"></i>
-            </div>
-            <h3 class="shortcut-title">Novidades</h3>
-            <p class="shortcut-desc">Atualizações do Setor</p>
-          </a>
-         
+        </aside>
 
+        <!-- Content Area -->
+        <main class="content-area">
+            <!-- Update Banner (Desktop only) -->
+            <div class="update-banner desktop-only" id="updateBanner">
+                <div class="update-content">
+                    <div class="update-title">🎉 Bem-vindo à Nova DashdoTI!</div>
+                    <div class="update-text">
+                        Apresentamos um novo design: moderno, elegante e pensado para maximizar sua produtividade. Descubra as novidades e aproveite uma experiência ainda mais fluida                    </div>
+                </div>
+                <button class="close-update" id="closeUpdateBanner">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Container para o iframe (apenas para desktops) -->
+            <div id="iframeContainer" class="iframe-container desktop-only hidden">
+                <iframe id="contentIframe" src="" frameborder="0"></iframe>
+                <button id="closeIframe" class="close-iframe">Fechar</button>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="cards-grid">
+                <!-- Cards Principais -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-laptop-file"></i>
+                    </div>
+                    <h3 class="shortcut-title">Entrega</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://forms.gle/HZzXQTh5tADD8zmK8" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://forms.gle/HZzXQTh5tADD8zmK8">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h3 class="shortcut-title">Devolução</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+                    <h3 class="shortcut-title">Danificado</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-truck"></i>
+                    </div>
+                    <h3 class="shortcut-title">Transferência</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+                
+                <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="shortcut-title">Suporte</h3>
+                    <p class="shortcut-desc">Tasks</p>
+                </a>
+
+                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="shortcut-title">Onboarding</h3>
+                    <p class="shortcut-desc">Novos Colaboradores</p>
+                </a>
+                
+                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="shortcut-title">Acessos</h3>
+                    <p class="shortcut-desc">Controle</p>
+                </a>
+                
+            
+
+                <!-- Card que abre o modal -->
+                <a href="#" class="shortcut-card floating" id="openFoldersModal">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="shortcut-title">Pastas</h3>
+                    <p class="shortcut-desc">Acesse suas pastas</p>
+                </a>
+
+                <!-- Card Estoque -->
+                <a href="#" class="shortcut-card floating" id="openStockModal">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3 class="shortcut-title">Estoque</h3>
+                    <p class="shortcut-desc">Inventário</p>
+                </a>
+
+                  <!-- Card Meu Hub - Apenas Desktop -->
+                  <a href="#" class="shortcut-card special-card floating desktop-only" id="openHubModal">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-solar-panel"></i>
+                    </div>
+                    <h3 class="shortcut-title">Meu Hub</h3>
+                    <p class="shortcut-desc">Organize tudo em um só lugar</p>
+                </a>
+            </div>
         </main>
-      </div>
-      
-      <!-- Modal de Relatórios -->
-      <div class="modal" id="reportsModal">
-        <div class="modal-content">
-          <button class="close-modal" id="closeModal">&times;</button>
-          <h2>Relatórios e Boletins</h2>
-          <div class="modal-grid">
-            <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=drive_link" class="shortcut-card" target="_blank">
-              <div class="shortcut-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h3 class="shortcut-title">Entregas</h3>
-              <p class="shortcut-desc">Relatório de entregas</p>
-            </a>
-            <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="shortcut-card" target="_blank">
-              <div class="shortcut-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <h3 class="shortcut-title">Devoluções</h3>
-              <p class="shortcut-desc">Relatório de devoluções</p>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="shortcut-card" target="_blank">
-              <div class="shortcut-icon">
-                <i class="fas fa-exchange-alt"></i>
-              </div>
-              <h3 class="shortcut-title">Transferências</h3>
-              <p class="shortcut-desc">Relatório de transferências</p>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="shortcut-card" target="_blank">
-              <div class="shortcut-icon">
-                <i class="fas fa-times-circle"></i>
-              </div>
-              <h3 class="shortcut-title">Danificados</h3>
-              <p class="shortcut-desc">Relatório de equipamentos danificados</p>
-            </a>
-          </div>
+    </div>
+
+    <!-- Bottom Modal - Apenas Mobile -->
+    <div class="bottom-modal mobile-only">
+
+            <div class="modal-handle" id="modalHandle"></div>
+           
+    </div>
+
+    <!-- Desktop Quick Actions Modal -->
+    <div class="desktop-quick-actions-modal" id="desktopQuickActions">
+        <div class="quick-actions-container">
+            <div class="quick-actions-header">
+                <h3><i class="fas fa-bolt"></i> Atalhos Rápidos</h3>
+                <button class="close-quick-actions" id="closeQuickActions">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quick-actions-grid">
+                <a href="https://app.clickup.com/9011833817/time?via=sidebar" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <span>Registro de horas</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1mNHHrlj0Fg9nDqnNsuU22fqUgVplvzxu?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                    </div>
+                    <span>Custos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1NfBh4BV81hKIrWG7bgHklI7owt0wAXpx?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-file-shield"></i>
+                    </div>
+                    <span>Documentação</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/14OUwmt9weLJTEUXjTvIsl4QMScv0T8-g?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-paste"></i>
+                    </div>
+                    <span>PlayBook</span>
+                </a>
+                <a href="feature/pomodoro.html" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <span>Pomodoro</span>
+                </a>
+                <a href="feature/checklisti.html" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-house-laptop"></i>
+                    </div>
+                    <span>Configuração</span>
+                </a>
+            </div>
         </div>
-      </div>
-    <script src="main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const notification = document.getElementById('notification');
+    </div>
 
-            // Exibir a notificação após 2 segundos
-            setTimeout(() => {
-                notification.classList.add('visible');
-            }, 2000);
+    <!-- Botão flutuante para abrir o modal -->
+    <div class="floating-action-button desktop-only" id="openQuickActions">
+        <i class="fas fa-bolt"></i>
+    </div>
 
-            // Ocultar a notificação após 8 segundos
-            setTimeout(() => {
-                notification.classList.remove('visible');
-            }, 10000);
-        });
-    </script>
-</body>
+    <!-- Modal com as pastas -->
+    <div class="modal-overlay" id="foldersModalOverlay"></div>
+    <div class="modal-container" id="foldersModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-folder"></i> Pastas
+            </h3>
+            <button class="close-modal" id="closeFoldersModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="cards-grid">
+                <!-- Pasta 1 -->
+                <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=sharing" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Entrega de Equipamentos</h3>
+                </a>
+
+                <!-- Pasta 2 -->
+                <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Devolução de Equipamentos</h3>
+                </a>
+
+                <!-- Pasta 3 -->
+                <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Equipamemto Danificado</h3>
+                </a>
+
+                <!-- Pasta 4 -->
+                <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Trasnferencia de Equipamento</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estoque -->
+    <div class="modal-overlay" id="stockModalOverlay"></div>
+    <div class="modal-container" id="stockModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-boxes"></i> Estoque
+            </h3>
+            <button class="close-modal" id="closeStockModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="stock-buttons">
+                <a href="https://app.clickup.com/9011833817/v/li/901109183201" class="btn btn-primary">Notebook</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109183299" class="btn btn-primary">Periféricos</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109423985" class="btn btn-primary">Desktops</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109444167" class="btn btn-primary">Celulares</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109547128" class="btn btn-primary">MacBook</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Meu Hub -->
+    <div class="modal-overlay" id="hubModalOverlay"></div>
+    <div class="modal-container" id="hubModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fa-solid fa-solar-panel"></i> Meu Hubples e eficiente.
+            </h3>
+            <button class="close-modal" id="closeHubModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <p>
+                <strong>Bem-vindo ao Meu Hub!</strong><br>
+                Esta é uma visão de testes e estamos em desenvolvimento para trazer a melhor experiência para você.
+            </p>
+            <p>
+                Fique atento às próximas atualizações e novidades. Estamos trabalhando para criar algo incrível!
+            </p>
+            <p style="text-align: center; font-weight: bold; color: var(--primary);">
+                DashdoTI - Sua plataforma de produtividade 🚀
+            </p>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div id="notification" class="notification hidden">
+        <i id="notificationIcon" class="fas"></i>
+        <p id="notificationMessage"></p>
+    </div>
+
+    <div id="notificationCard" class="notification-card hidden">
+        <div class="notification-card-content">
+            <i id="notificationCardIcon" class="fas"></i>
+            <p id="notificationCardMessage"></p>
+        </div>
+    </div>
+    
+    <script src="main.js"></script></body>
 </html>

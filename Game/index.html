@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenn Protocol - Cybersecurity Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ffcc;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Landing Page Styles */
+        .landing-page {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.1) 0%, transparent 50%);
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ffcc, #00c2a8, #00ffcc);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #00ffcc, #00c2a8);
+            border: none;
+            color: #000;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.5);
+        }
+
+        /* Game Container Styles */
+        .game-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin: 0 20px;
+            overflow: hidden;
+            border: 1px solid #00ffcc;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffcc, #00c2a8);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        .phase-info {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.2);
+        }
+
+        .phase-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #00ffcc;
+        }
+
+        .phase-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .terminal-container {
+            background: #000;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 150px;
+            box-shadow: inset 0 0 20px rgba(0, 255, 204, 0.1);
+        }
+
+        .terminal-header {
+            color: #00ffcc;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .terminal-content {
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff00;
+            white-space: pre-wrap;
+            animation: typewriter 2s steps(40, end);
+        }
+
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option-button {
+            background: linear-gradient(45deg, rgba(0, 255, 204, 0.1), rgba(0, 194, 168, 0.1));
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Share Tech Mono', monospace;
+            flex: 1;
+            min-width: 200px;
+            font-size: 1rem;
+        }
+
+        .option-button:hover {
+            background: linear-gradient(45deg, rgba(0, 255, 204, 0.2), rgba(0, 194, 168, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .command-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .command-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+
+        .code-editor {
+            background: #1a1a1a;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff00;
+            min-height: 200px;
+            margin: 20px 0;
+        }
+
+        .game-over, .victory {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .victory {
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .game-over {
+            border-color: #ff0066;
+            box-shadow: 0 0 30px rgba(255, 0, 102, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes matrix {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ffcc;
+            font-size: 12px;
+            animation: matrix 10s linear infinite;
+            opacity: 0.3;
+        }
+
+        .difficulty-indicator {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .difficulty-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 255, 204, 0.2);
+            border: 1px solid #00ffcc;
+        }
+
+        .difficulty-dot.active {
+            background: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .options-container {
+                flex-direction: column;
+            }
+            
+            .option-button {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background Effect -->
+    <div class="matrix-bg" id="matrixBg"></div>
+
+    <!-- Landing Page -->
+    <div class="landing-page" id="landingPage">
+        <h1 class="main-title">GREENN PROTOCOL</h1>
+        <p class="subtitle">Sistema de Defesa Cibernética Avançado</p>
+        <button class="start-button" id="startButton">INICIAR MISSÃO</button>
+    </div>
+
+    <!-- Game Container -->
+    <div class="game-container" id="gameContainer">
+        <div class="game-header">
+            <div>
+                <h2 id="currentPhase">FASE 1/10</h2>
+                <div class="difficulty-indicator" id="difficultyIndicator"></div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+            </div>
+            <div id="gameStats">
+                <div>SCORE: <span id="score">0</span></div>
+                <div>TEMPO: <span id="timer">00:00</span></div>
+            </div>
+        </div>
+
+        <div class="phase-info" id="phaseContent">
+            <!-- Phase content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const gameState = {
+            currentPhase: 1,
+            score: 0,
+            gameTime: 0,
+            gameTimer: null,
+            gameStarted: false,
+            selectedSequence: []
+        };
+
+        // Phase Data
+        const phases = [
+            {
+                id: 1,
+                title: "DETECÇÃO DE INTRUSÃO",
+                difficulty: 1,
+                description: "Um processo suspeito foi detectado no sistema. Analise os logs e tome a decisão correta.",
+                terminal: `[INFO] Sistema de monitoramento ativo
+[WARN] Processo anômalo detectado: PID 4432
+[WARN] Consumo de CPU: 98%
+[ERROR] Tentativa de acesso não autorizado detectada`,
+                type: "choice",
+                options: [
+                    { text: "Encerrar processo imediatamente", correct: true, points: 100 },
+                    { text: "Monitorar por mais tempo", correct: false, points: 0 },
+                    { text: "Isolar o processo", correct: true, points: 80 }
+                ]
+            },
+            {
+                id: 2,
+                title: "ANÁLISE DE MALWARE",
+                difficulty: 2,
+                description: "Um arquivo suspeito foi encontrado. Use comandos do terminal para investigar.",
+                terminal: `root@greenn:~$ ls -la /tmp/
+total 12
+drwxrwxrwt  3 root root 4096 Dec 15 14:30 .
+drwxr-xr-x 23 root root 4096 Dec 15 12:00 ..
+-rwxr-xr-x  1 user user 2048 Dec 15 14:29 suspicious.sh`,
+                type: "command",
+                correctCommands: ["cat suspicious.sh", "file suspicious.sh", "strings suspicious.sh"],
+                points: 150
+            },
+            {
+                id: 3,
+                title: "FIREWALL CONFIGURATION",
+                difficulty: 2,
+                description: "Configure o firewall para bloquear uma tentativa de ataque DDoS.",
+                terminal: `Ataques detectados nas seguintes portas:
+Port 80: 10,000 requests/sec
+Port 443: 8,500 requests/sec  
+Port 22: 500 requests/sec
+Source IPs: 192.168.1.100-200`,
+                type: "choice",
+                options: [
+                    { text: "Bloquear todas as portas", correct: false, points: 0 },
+                    { text: "Bloquear range de IPs suspeitos", correct: true, points: 200 },
+                    { text: "Limitar rate de conexões", correct: true, points: 180 },
+                    { text: "Ignorar o ataque", correct: false, points: 0 }
+                ]
+            },
+            {
+                id: 4,
+                title: "CRIPTOGRAFIA DE EMERGÊNCIA",
+                difficulty: 3,
+                description: "Dados sensíveis foram comprometidos. Implemente criptografia de emergência.",
+                terminal: `ALERT: Data breach detected
+Compromised files:
+- /etc/passwd
+- /etc/shadow  
+- /home/users/financial_data.db
+- /var/log/access.log`,
+                type: "code",
+                task: "Digite o comando para criptografar todos os arquivos comprometidos:",
+                correctAnswer: "openssl enc -aes-256-cbc -salt -in",
+                points: 250
+            },
+            {
+                id: 5,
+                title: "ENGENHARIA SOCIAL",
+                difficulty: 2,
+                description: "Você recebeu um email suspeito. Analise e tome a decisão correta.",
+                terminal: `From: admin@greenn-protocol.com
+Subject: URGENT: System Update Required
+Body: Click here to update your credentials immediately: 
+http://greenn-protocol-update.suspicious-domain.ru/login`,
+                type: "choice",
+                options: [
+                    { text: "Clicar no link para verificar", correct: false, points: 0 },
+                    { text: "Reportar como phishing", correct: true, points: 300 },
+                    { text: "Encaminhar para outros usuários", correct: false, points: 0 },
+                    { text: "Bloquear domínio suspeito", correct: true, points: 280 }
+                ]
+            },
+            {
+                id: 6,
+                title: "ANÁLISE DE TRÁFEGO",
+                difficulty: 4,
+                description: "Analise o tráfego de rede e identifique atividades maliciosas.",
+                terminal: `Network Traffic Analysis:
+TCP 192.168.1.50:445 -> 10.0.0.100:1234 [SYN FLOOD]
+UDP 192.168.1.75:53 -> 8.8.8.8:53 [DNS Tunneling]
+HTTP 192.168.1.100:80 -> 185.243.115.84:80 [C&C Communication]
+ICMP 192.168.1.25 -> 192.168.1.1 [Normal Ping]`,
+                type: "multiple_choice",
+                question: "Quais conexões são maliciosas?",
+                options: [
+                    { text: "SYN FLOOD e DNS Tunneling", correct: false, points: 100 },
+                    { text: "SYN FLOOD, DNS Tunneling e C&C", correct: true, points: 350 },
+                    { text: "Apenas C&C Communication", correct: false, points: 50 },
+                    { text: "Todas as conexões", correct: false, points: 0 }
+                ]
+            },
+            {
+                id: 7,
+                title: "RECUPERAÇÃO DE SISTEMA",
+                difficulty: 4,
+                description: "O sistema foi comprometido. Execute os comandos corretos para recuperação.",
+                terminal: `System Status: COMPROMISED
+Services Down:
+- Apache Web Server  
+- MySQL Database
+- SSH Daemon
+- Network Manager`,
+                type: "command_sequence",
+                commands: [
+                    { command: "systemctl restart apache2", description: "Reiniciar Apache" },
+                    { command: "systemctl restart mysql", description: "Reiniciar MySQL" },
+                    { command: "systemctl restart ssh", description: "Reiniciar SSH" },
+                    { command: "systemctl restart NetworkManager", description: "Reiniciar Network" }
+                ],
+                points: 400
+            },
+            {
+                id: 8,
+                title: "INVESTIGAÇÃO FORENSE",
+                difficulty: 5,
+                description: "Conduza uma investigação forense para encontrar evidências do ataque.",
+                terminal: `Forensic Analysis Required:
+Timeline: Dec 15, 2024 14:00-16:00
+Suspected breach: Financial database
+Available evidence:
+- System logs (/var/log/)
+- Network captures (pcap files)
+- File system timestamps`,
+                type: "investigation",
+                evidence: [
+                    { file: "auth.log", content: "Dec 15 14:32 Failed login: user 'admin' from 192.168.1.200" },
+                    { file: "apache.log", content: "Dec 15 14:35 SQL injection attempt detected" },
+                    { file: "network.pcap", content: "Dec 15 14:40 Data exfiltration to external IP" }
+                ],
+                question: "Qual foi a sequência do ataque?",
+                correct_sequence: ["Failed login", "SQL injection", "Data exfiltration"],
+                points: 500
+            },
+            {
+                id: 9,
+                title: "CONTRAMEDIDAS AVANÇADAS",
+                difficulty: 5,
+                description: "Configure contramedidas avançadas para prevenir futuros ataques.",
+                terminal: `Advanced Security Configuration:
+1. Implement IDS/IPS rules
+2. Configure honeypots  
+3. Set up SIEM monitoring
+4. Deploy threat intelligence feeds`,
+                type: "configuration",
+                tasks: [
+                    { task: "Configure Snort rule for SQL injection", points: 100 },
+                    { task: "Set up honeypot on port 2222", points: 100 },
+                    { task: "Configure OSSEC monitoring", points: 100 },
+                    { task: "Import threat intelligence feeds", points: 100 }
+                ],
+                totalPoints: 600
+            },
+            {
+                id: 10,
+                title: "MISSÃO FINAL: NEUTRALIZAÇÃO TOTAL",
+                difficulty: 5,
+                description: "Um ataque coordenado está em andamento. Use todas as suas habilidades para defender o sistema.",
+                terminal: `CRITICAL ALERT: Multi-vector attack detected
+- DDoS on ports 80, 443
+- Brute force on SSH (port 22)  
+- SQL injection on web application
+- Malware propagation via email
+- Data exfiltration attempt
+All systems compromised. Full response required.`,
+                type: "final_challenge",
+                challenges: [
+                    { type: "ddos_mitigation", points: 200 },
+                    { type: "ssh_protection", points: 200 },
+                    { type: "sql_prevention", points: 200 },
+                    { type: "malware_removal", points: 200 },
+                    { type: "data_protection", points: 200 }
+                ],
+                totalPoints: 1000
+            }
+        ];
+
+        // Game Functions
+        const gameFunctions = {
+            // Initialize Matrix Background
+            initMatrix() {
+                const matrixBg = document.getElementById('matrixBg');
+                const chars = '0123456789ABCDEF';
+                
+                for (let i = 0; i < 50; i++) {
+                    const char = document.createElement('div');
+                    char.className = 'matrix-char';
+                    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                    char.style.left = Math.random() * 100 + 'vw';
+                    char.style.animationDelay = Math.random() * 10 + 's';
+                    char.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                    matrixBg.appendChild(char);
+                }
+            },
+
+            // Start Game
+            startGame() {
+                document.getElementById('landingPage').style.display = 'none';
+                document.getElementById('gameContainer').style.display = 'block';
+                gameState.gameStarted = true;
+                this.startTimer();
+                this.loadPhase(1);
+            },
+
+            // Start Timer
+            startTimer() {
+                gameState.gameTimer = setInterval(() => {
+                    gameState.gameTime++;
+                    const minutes = Math.floor(gameState.gameTime / 60).toString().padStart(2, '0');
+                    const seconds = (gameState.gameTime % 60).toString().padStart(2, '0');
+                    document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+                }, 1000);
+            },
+
+            // Load Phase
+            loadPhase(phaseNumber) {
+                const phase = phases[phaseNumber - 1];
+                if (!phase) {
+                    this.showVictory();
+                    return;
+                }
+
+                gameState.currentPhase = phaseNumber;
+                this.updateProgress();
+                this.updateDifficulty(phase.difficulty);
+
+                const content = document.getElementById('phaseContent');
+                content.innerHTML = `
+                    <div class="phase-title">${phase.title}</div>
+                    <div class="phase-description">${phase.description}</div>
+                    <div class="terminal-container">
+                        <div class="terminal-header">SISTEMA DE MONITORAMENTO</div>
+                        <div class="terminal-content">${phase.terminal}</div>
+                    </div>
+                    <div id="phaseInterface"></div>
+                `;
+
+                this.loadPhaseInterface(phase);
+            },
+
+            // Load Phase Interface
+            loadPhaseInterface(phase) {
+                const interfaceDiv = document.getElementById('phaseInterface');
+                
+                switch (phase.type) {
+                    case 'choice':
+                        this.loadChoiceInterface(phase, interfaceDiv);
+                        break;
+                    case 'command':
+                        this.loadCommandInterface(phase, interfaceDiv);
+                        break;
+                    case 'code':
+                        this.loadCodeInterface(phase, interfaceDiv);
+                        break;
+                    case 'multiple_choice':
+                        this.loadMultipleChoiceInterface(phase, interfaceDiv);
+                        break;
+                    case 'command_sequence':
+                        this.loadCommandSequenceInterface(phase, interfaceDiv);
+                        break;
+                    case 'investigation':
+                        this.loadInvestigationInterface(phase, interfaceDiv);
+                        break;
+                    case 'configuration':
+                        this.loadConfigurationInterface(phase, interfaceDiv);
+                        break;
+                    case 'final_challenge':
+                        this.loadFinalChallengeInterface(phase, interfaceDiv);
+                        break;
+                }
+            },
+
+            // Choice Interface
+            loadChoiceInterface(phase, container) {
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+
+                phase.options.forEach((option) => {
+                    const button = document.createElement('button');
+                    button.className = 'option-button';
+                    button.textContent = option.text;
+                    button.onclick = () => this.handleChoice(option, phase);
+                    optionsContainer.appendChild(button);
+                });
+
+                container.appendChild(optionsContainer);
+            },
+
+            // Command Interface
+            loadCommandInterface(phase, container) {
+                const input = document.createElement('input');
+                input.className = 'command-input';
+                input.placeholder = 'Digite um comando (ex: cat filename)';
+                input.onkeydown = (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleCommand(input.value, phase);
+                    }
+                };
+                container.appendChild(input);
+            },
+
+            // Code Interface
+            loadCodeInterface(phase, container) {
+                const taskDiv = document.createElement('div');
+                taskDiv.innerHTML = `<p><strong>${phase.task}</strong></p>`;
+                
+                const input = document.createElement('input');
+                input.className = 'command-input';
+                input.placeholder = 'Digite o comando de criptografia...';
+                input.onkeydown = (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleCodeAnswer(input.value, phase);
+                    }
+                };
+                
+                container.appendChild(taskDiv);
+                container.appendChild(input);
+            },
+
+            // Handle Choice
+            handleChoice(option, phase) {
+                if (option.correct) {
+                    this.addScore(option.points);
+                    this.showSuccess(`Correto! +${option.points} pontos`);
+                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                } else {
+                    this.showError('Decisão incorreta. Tente novamente!');
+                    setTimeout(() => this.loadPhase(gameState.currentPhase), 2000);
+                }
+            },
+
+            // Handle Command
+            handleCommand(command, phase) {
+                const isCorrect = phase.correctCommands.some(cmd => 
+                    command.toLowerCase().includes(cmd.toLowerCase())
+                );
+
+                if (isCorrect) {
+                    this.addScore(phase.points);
+                    this.showSuccess(`Comando executado com sucesso! +${phase.points} pontos`);
+                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                } else {
+                    this.showError('Comando incorreto. Tente outro comando.');
+                }
+            },
+
+            // Handle Code Answer
+            handleCodeAnswer(answer, phase) {
+                if (answer.toLowerCase().includes(phase.correctAnswer.toLowerCase())) {
+                    this.addScore(phase.points);
+                    this.showSuccess(`Criptografia implementada com sucesso! +${phase.points} pontos`);
+                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                } else {
+                    this.showError('Comando de criptografia incorreto. Tente novamente.');
+                }
+            },
+
+            // Update Progress
+            updateProgress() {
+                const progress = (gameState.currentPhase / 10) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('currentPhase').textContent = `FASE ${gameState.currentPhase}/10`;
+            },
+
+            // Update Difficulty
+            updateDifficulty(level) {
+                const indicator = document.getElementById('difficultyIndicator');
+                indicator.innerHTML = '';
+                
+                for (let i = 0; i < 5; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'difficulty-dot';
+                    if (i < level) dot.classList.add('active');
+                    indicator.appendChild(dot);
+                }
+            },
+
+            // Add Score
+            addScore(points) {
+                gameState.score += points;
+                document.getElementById('score').textContent = gameState.score;
+            },
+
+            // Show Success
+            showSuccess(message) {
+                const successDiv = document.createElement('div');
+                successDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(45deg, #00ff00, #00cc00);
+                    color: #000;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    z-index: 1000;
+                    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+                `;
+                successDiv.textContent = message;
+                document.body.appendChild(successDiv);
+                
+                setTimeout(() => successDiv.remove(), 3000);
+            },
+
+            // Show Error
+            showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(45deg, #ff0066, #cc0044);
+                    color: #fff;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    z-index: 1000;
+                    box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
+                `;
+                errorDiv.textContent = message;
+                document.body.appendChild(errorDiv);
+                
+                setTimeout(() => errorDiv.remove(), 3000);
+            },
+
+            // Show Victory
+            showVictory() {
+                clearInterval(gameState.gameTimer);
+                const content = document.getElementById('phaseContent');
+                content.innerHTML = `
+                    <div class="victory">
+                        <h2>🎉 MISSÃO CONCLUÍDA COM SUCESSO! 🎉</h2>
+                        <p>Parabéns, Especialista em Cybersecurity!</p>
+                        <p><strong>Score Final:</strong> ${gameState.score} pontos</p>
+                        <p><strong>Tempo Total:</strong> ${Math.floor(gameState.gameTime / 60)}:${(gameState.gameTime % 60).toString().padStart(2, '0')}</p>
+                        <button class="start-button" onclick="location.reload()">JOGAR NOVAMENTE</button>
+                    </div>
+                `;
+            },
+
+            // Multiple Choice Interface
+            loadMultipleChoiceInterface(phase, container) {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `<p><strong>${phase.question}</strong></p>`;
+                
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+
+                phase.options.forEach((option) => {
+                    const button = document.createElement('button');
+                    button.className = 'option-button';
+                    button.textContent = option.text;
+                    button.onclick = () => this.handleChoice(option, phase);
+                    optionsContainer.appendChild(button);
+                });
+
+                container.appendChild(questionDiv);
+                container.appendChild(optionsContainer);
+            },
+
+            // Command Sequence Interface
+            loadCommandSequenceInterface(phase, container) {
+                const commandsDiv = document.createElement('div');
+                let completedCommands = 0;
+                
+                phase.commands.forEach((cmd, index) => {
+                    const cmdDiv = document.createElement('div');
+                    cmdDiv.style.marginBottom = '15px';
+                    
+                    const input = document.createElement('input');
+                    input.className = 'command-input';
+                    input.placeholder = `${cmd.description}`;
+                    input.dataset.expectedCommand = cmd.command;
+                    input.dataset.index = index;
+                    
+                    input.onkeydown = (e) => {
+                        if (e.key === 'Enter') {
+                            if (input.value.toLowerCase().includes(cmd.command.toLowerCase())) {
+                                input.style.borderColor = '#00ff00';
+                                input.disabled = true;
+                                completedCommands++;
+                                
+                                if (completedCommands === phase.commands.length) {
+                                    this.addScore(phase.points);
+                                    this.showSuccess(`Todos os serviços restaurados! +${phase.points} pontos`);
+                                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                                }
+                            } else {
+                                input.style.borderColor = '#ff0066';
+                                setTimeout(() => input.style.borderColor = '#00ffcc', 1000);
+                            }
+                        }
+                    };
+                    
+                    cmdDiv.appendChild(input);
+                    commandsDiv.appendChild(cmdDiv);
+                });
+                
+                container.appendChild(commandsDiv);
+            },
+
+            // Investigation Interface
+            loadInvestigationInterface(phase, container) {
+                const evidenceDiv = document.createElement('div');
+                evidenceDiv.innerHTML = '<h3>Evidências Disponíveis:</h3>';
+                
+                phase.evidence.forEach((evidence) => {
+                    const evidenceItem = document.createElement('div');
+                    evidenceItem.style.cssText = `
+                        background: rgba(0, 0, 0, 0.8);
+                        border: 1px solid #00ffcc;
+                        border-radius: 5px;
+                        padding: 10px;
+                        margin: 10px 0;
+                        cursor: pointer;
+                    `;
+                    evidenceItem.innerHTML = `
+                        <strong>${evidence.file}</strong><br>
+                        <span style="opacity: 0.8;">${evidence.content}</span>
+                    `;
+                    evidenceDiv.appendChild(evidenceItem);
+                });
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `<p><strong>${phase.question}</strong></p>`;
+                
+                const sequenceDiv = document.createElement('div');
+                sequenceDiv.innerHTML = `
+                    <p>Organize a sequência do ataque:</p>
+                    <div id="sequenceButtons" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;"></div>
+                    <button class="option-button" id="confirmSequenceBtn" style="margin-top: 20px;">Confirmar Sequência</button>
+                `;
+                
+                container.appendChild(evidenceDiv);
+                container.appendChild(questionDiv);
+                container.appendChild(sequenceDiv);
+                
+                // Create draggable sequence buttons
+                const sequenceButtons = document.getElementById('sequenceButtons');
+                const shuffledSequence = [...phase.correct_sequence].sort(() => Math.random() - 0.5);
+                
+                shuffledSequence.forEach(item => {
+                    const button = document.createElement('button');
+                    button.className = 'option-button';
+                    button.textContent = item;
+                    button.style.minWidth = 'auto';
+                    button.onclick = () => this.selectSequenceItem(button, item);
+                    sequenceButtons.appendChild(button);
+                });
+
+                // Add event listener to confirm button
+                document.getElementById('confirmSequenceBtn').addEventListener('click', () => {
+                    this.checkInvestigation(phase);
+                });
+            },
+
+            selectSequenceItem(button, item) {
+                if (button.style.opacity === '0.5') return;
+                
+                gameState.selectedSequence.push(item);
+                button.style.opacity = '0.5';
+                button.style.pointerEvents = 'none';
+                
+                // Visual feedback
+                button.textContent = `${gameState.selectedSequence.length}. ${item}`;
+            },
+
+            checkInvestigation(phase) {
+                const isCorrect = JSON.stringify(gameState.selectedSequence) === JSON.stringify(phase.correct_sequence);
+                
+                if (isCorrect) {
+                    this.addScore(phase.points);
+                    this.showSuccess(`Investigação concluída com sucesso! +${phase.points} pontos`);
+                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                } else {
+                    this.showError('Sequência incorreta. Tente novamente!');
+                    gameState.selectedSequence = [];
+                    // Reset buttons
+                    document.querySelectorAll('#sequenceButtons button').forEach(btn => {
+                        btn.style.opacity = '1';
+                        btn.style.pointerEvents = 'auto';
+                        btn.textContent = btn.textContent.replace(/^\d+\.\s/, '');
+                    });
+                }
+            },
+
+            // Configuration Interface
+            loadConfigurationInterface(phase, container) {
+                const tasksDiv = document.createElement('div');
+                tasksDiv.innerHTML = '<h3>Tarefas de Configuração:</h3>';
+                
+                let completedTasks = 0;
+                
+                phase.tasks.forEach((task, index) => {
+                    const taskDiv = document.createElement('div');
+                    taskDiv.style.cssText = `
+                        background: rgba(0, 0, 0, 0.8);
+                        border: 1px solid #00ffcc;
+                        border-radius: 5px;
+                        padding: 15px;
+                        margin: 10px 0;
+                    `;
+                    
+                    taskDiv.innerHTML = `
+                        <p><strong>${task.task}</strong> (${task.points} pontos)</p>
+                        <button class="option-button" data-task-index="${index}" data-task-points="${task.points}" 
+                                style="margin-top: 10px;">
+                            Configurar
+                        </button>
+                    `;
+                    
+                    tasksDiv.appendChild(taskDiv);
+                });
+                
+                container.appendChild(tasksDiv);
+
+                // Add event listeners to all task buttons
+                document.querySelectorAll('[data-task-index]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const index = e.target.getAttribute('data-task-index');
+                        const points = parseInt(e.target.getAttribute('data-task-points'));
+                        this.completeConfigTask(index, points, phase.tasks.length);
+                    });
+                });
+            },
+
+            completeConfigTask(taskIndex, points, totalTasks) {
+                const button = document.querySelector(`[data-task-index="${taskIndex}"]`);
+                button.textContent = 'Configurado ✓';
+                button.style.background = '#00ff00';
+                button.style.color = '#000';
+                button.disabled = true;
+                
+                this.addScore(points);
+                this.showSuccess(`Tarefa configurada! +${points} pontos`);
+                
+                // Check if all tasks completed
+                const allButtons = document.querySelectorAll('[data-task-index]');
+                const completedTasks = Array.from(allButtons).filter(btn => btn.disabled).length;
+                
+                if (completedTasks === totalTasks) {
+                    setTimeout(() => this.loadPhase(gameState.currentPhase + 1), 2000);
+                }
+            },
+
+            // Final Challenge Interface
+            loadFinalChallengeInterface(phase, container) {
+                const challengeDiv = document.createElement('div');
+                challengeDiv.innerHTML = '<h3>🚨 RESPOSTA DE EMERGÊNCIA ATIVADA 🚨</h3>';
+                
+                let completedChallenges = 0;
+                
+                phase.challenges.forEach((challenge, index) => {
+                    const challengeItem = document.createElement('div');
+                    challengeItem.style.cssText = `
+                        background: rgba(255, 0, 102, 0.1);
+                        border: 2px solid #ff0066;
+                        border-radius: 10px;
+                        padding: 20px;
+                        margin: 15px 0;
+                        animation: pulse 2s infinite;
+                    `;
+                    
+                    const challengeTitle = this.getChallengeTitle(challenge.type);
+                    challengeItem.innerHTML = `
+                        <h4>${challengeTitle}</h4>
+                        <div class="options-container">
+                            <button class="option-button" data-challenge-type="${challenge.type}" 
+                                    data-challenge-points="${challenge.points}" 
+                                    data-challenge-index="${index}">
+                                Neutralizar Ameaça
+                            </button>
+                        </div>
+                    `;
+                    
+                    challengeDiv.appendChild(challengeItem);
+                });
+                
+                // Add CSS for pulse animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes pulse {
+                        0% { box-shadow: 0 0 20px rgba(255, 0, 102, 0.3); }
+                        50% { box-shadow: 0 0 40px rgba(255, 0, 102, 0.6); }
+                        100% { box-shadow: 0 0 20px rgba(255, 0, 102, 0.3); }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(challengeDiv);
+
+                // Add event listeners to all challenge buttons
+                document.querySelectorAll('[data-challenge-type]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const type = e.target.getAttribute('data-challenge-type');
+                        const points = parseInt(e.target.getAttribute('data-challenge-points'));
+                        const index = e.target.getAttribute('data-challenge-index');
+                        this.solveFinalChallenge(type, points, index, phase.challenges.length);
+                    });
+                });
+            },
+
+            getChallengeTitle(type) {
+                const titles = {
+                    'ddos_mitigation': '🛡️ Mitigação de DDoS',
+                    'ssh_protection': '🔐 Proteção SSH',
+                    'sql_prevention': '💉 Prevenção SQL Injection',
+                    'malware_removal': '🦠 Remoção de Malware',
+                    'data_protection': '🔒 Proteção de Dados'
+                };
+                return titles[type] || 'Desafio Desconhecido';
+            },
+
+            solveFinalChallenge(type, points, index, totalChallenges) {
+                const button = document.querySelector(`[data-challenge-index="${index}"]`);
+                button.textContent = 'NEUTRALIZADO ✓';
+                button.style.background = '#00ff00';
+                button.style.color = '#000';
+                button.disabled = true;
+                
+                // Remove pulse animation from parent
+                button.closest('div').style.animation = 'none';
+                button.closest('div').style.borderColor = '#00ff00';
+                button.closest('div').style.background = 'rgba(0, 255, 0, 0.1)';
+                
+                this.addScore(points);
+                this.showSuccess(`${this.getChallengeTitle(type)} neutralizado! +${points} pontos`);
+                
+                // Check if all challenges completed
+                const allFinalButtons = document.querySelectorAll('[data-challenge-index]');
+                const completedChallenges = Array.from(allFinalButtons).filter(btn => btn.disabled).length;
+                
+                if (completedChallenges === totalChallenges) {
+                    // Bonus for completing final challenge
+                    this.addScore(500);
+                    this.showSuccess('🏆 BÔNUS DE CONCLUSÃO: +500 pontos!');
+                    setTimeout(() => this.showVictory(), 3000);
+                }
+            },
+
+            // Cheat Detection (Easter Egg)
+            initKonamiCode() {
+                let konamiCode = [];
+                const konamiSequence = [
+                    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+                    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+                    'KeyB', 'KeyA'
+                ];
+
+                document.addEventListener('keydown', (e) => {
+                    konamiCode.push(e.code);
+                    if (konamiCode.length > konamiSequence.length) {
+                        konamiCode.shift();
+                    }
+                    
+                    if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+                        this.addScore(1000);
+                        this.showSuccess('🎮 CÓDIGO KONAMI ATIVADO! +1000 pontos de bônus!');
+                        konamiCode = [];
+                    }
+                });
+            },
+
+            // Initialize game
+            init() {
+                this.initMatrix();
+                this.initKonamiCode();
+                
+                // Add event listener to start button
+                document.getElementById('startButton').addEventListener('click', () => {
+                    this.startGame();
+                });
+            }
+        };
+
+        // Initialize the game when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            gameFunctions.init();
+        });
+    </script>
+</body>
+</html>
