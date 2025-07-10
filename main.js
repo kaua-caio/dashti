@@ -366,3 +366,12 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const migrationBanner = document.getElementById('migrationBanner');
+
+    // Remover o banner após o fundo desaparecer
+    setTimeout(() => {
+        migrationBanner.style.display = 'none';
+    }, 10000); // 10 segundos para desaparecer completamente
+});
+
