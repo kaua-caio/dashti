@@ -3,471 +3,661 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal DashdoTI</title>
-    <link rel="shortcut icon" href="dash.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="stylesheet" href="style.css">
+    <title>Até logo, DashdoTI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* Banner de Marketing */
-        .marketing-banner {
-            background: linear-gradient(135deg, #0553c9, #3b82f6); /* Gradiente azul escuro e moderno */
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 1000;
-            animation: fadeIn 1s ease-out, slideDown 1s ease-out;
-            border-bottom: 3px solid rgba(29, 19, 19, 0.185);
-            border-radius: 8px;
-            margin: 1rem auto;
-            max-width: 90%;
-        }
-
-        /* Texto do Banner */
-        .marketing-banner p {
+        * {
             margin: 0;
-            line-height: 1.6;
-            letter-spacing: 0.5px;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        .marketing-banner strong {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, #60a5fa, #0b91ff, #60a5fa); /* Efeito de brilho */
+        
+        body {
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #fafbfc, #f1f3f5, #e9ecf0, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientShift 25s ease infinite;
+            color: #0d1117;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle floating elements */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .float-element {
+            position: absolute;
+            background: linear-gradient(45deg, #e1e5e9, #c1c8cd);
+            border-radius: 50%;
+            animation: floatUp 18s infinite ease-in-out;
+            opacity: 0.15;
+            filter: blur(0.8px);
+        }
+        
+        .container {
+            max-width: 560px;
+            padding: 4rem 2.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: containerFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+        
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #0d1117 0%, #21262d 40%, #30363d 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 4s infinite;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards;
+            letter-spacing: -0.05em;
+            line-height: 1.1;
+            font-family: 'Satoshi', sans-serif;
         }
-
-        /* Animações */
-        @keyframes fadeIn {
-            from {
+        
+        p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #656d76;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        p:nth-of-type(1) {
+            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.2s forwards;
+        }
+        
+        p:nth-of-type(2) {
+            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.5s forwards;
+        }
+        
+        .date {
+            font-weight: 600;
+            color: #0d1117;
+            position: relative;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+        }
+        
+        .date::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border-radius: 1px;
+            animation: underlineGrow 1s cubic-bezier(0.23, 1, 0.32, 1) 2.5s forwards;
+        }
+        
+        .links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 3.5rem 0;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.8s forwards;
+        }
+        
+        .link {
+            text-decoration: none;
+            color: #21262d;
+            padding: 1rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            border: 1px solid transparent;
+            border-radius: 16px;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+        
+        .link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translateX(-50%);
+        }
+        
+        .link:hover {
+            color: #0d1117;
+            border-color: rgba(124, 58, 237, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .link:hover::before {
+            left: 100%;
+        }
+        
+        .link:hover::after {
+            width: 100%;
+        }
+        
+        .signature {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: #7d8590;
+            margin-top: 3.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 2.1s forwards;
+            font-style: italic;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .signature:hover {
+            color: #21262d;
+            background: rgba(248, 250, 252, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        /* Impactful transition overlay */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, #0d1117 0%, #000000 100%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 2.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        /* Glitch-inspired future message */
+        .future-message {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 3s cubic-bezier(0.23, 1, 0.32, 1) 2.5s;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            font-family: 'Satoshi', sans-serif;
+            text-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+        }
+        
+        .future-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+            animation: textReveal 2s ease-out forwards, textGlow 4s ease-in-out 3s infinite alternate;
+        }
+        
+        .future-message span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px) rotateX(90deg);
+            animation: letterDrop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        
+        .future-message.show span:nth-child(1) { animation-delay: 0.1s; }
+        .future-message.show span:nth-child(2) { animation-delay: 0.15s; }
+        .future-message.show span:nth-child(3) { animation-delay: 0.2s; }
+        .future-message.show span:nth-child(4) { animation-delay: 0.25s; }
+        .future-message.show span:nth-child(5) { animation-delay: 0.3s; }
+        .future-message.show span:nth-child(6) { animation-delay: 0.35s; }
+        .future-message.show span:nth-child(7) { animation-delay: 0.4s; }
+        .future-message.show span:nth-child(8) { animation-delay: 0.45s; }
+        .future-message.show span:nth-child(9) { animation-delay: 0.5s; }
+        .future-message.show span:nth-child(10) { animation-delay: 0.55s; }
+        .future-message.show span:nth-child(11) { animation-delay: 0.6s; }
+        .future-message.show span:nth-child(12) { animation-delay: 0.65s; }
+        
+        /* Mysterious subtitle */
+        .mystery-text {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #7c3aed;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 400;
+            text-align: center;
+            opacity: 0;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.1em;
+            transition: all 2s cubic-bezier(0.23, 1, 0.32, 1) 5s;
+        }
+        
+        .mystery-text.show {
+            opacity: 1;
+            animation: typewriter 3s steps(40) 1s forwards, blinkCursor 1s step-end infinite;
+        }
+        
+        .mystery-text::after {
+            content: '|';
+            color: #7c3aed;
+            animation: blinkCursor 1s step-end infinite;
+        }
+        
+        /* Morphing particles */
+        .impact-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .morph-particle {
+            position: absolute;
+            background: linear-gradient(45deg, #7c3aed, #a855f7, #c084fc);
+            border-radius: 50%;
+            animation: morphRise 25s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            filter: blur(1px);
+        }
+        
+        .morph-particle:nth-child(even) {
+            background: linear-gradient(45deg, #ffffff, #f0f6fc);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Holographic grid overlay */
+        .holo-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            background-image: 
+                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridFade 5s ease-in-out 6s forwards;
+        }
+        
+        /* Scanning line effect */
+        .scan-line {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
+            opacity: 0;
+            animation: scanMove 8s ease-in-out 4s infinite;
+            box-shadow: 0 0 20px #7c3aed;
+        }
+        
+        /* Floating code fragments */
+        .code-fragments {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(124, 58, 237, 0.2);
+            opacity: 0;
+            animation: codeFloat 10s ease-in-out 7s infinite;
+        }
+        
+        .code-fragments::before {
+            content: 'const future = await newBeginning();\nif (future.ready) {\n  launch.execute();\n}';
+            white-space: pre;
+        }
+        
+        /* Animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes floatUp {
+            0% {
                 opacity: 0;
+                transform: translateY(0px) rotate(0deg);
             }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120vh) rotate(180deg);
+            }
+        }
+        
+        @keyframes containerFadeIn {
             to {
                 opacity: 1;
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50%);
-            }
-            to {
                 transform: translateY(0);
             }
         }
-
-        @keyframes shimmer {
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes underlineGrow {
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes textReveal {
             0% {
-                background-position: -200%;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+                filter: blur(5px);
             }
             100% {
-                background-position: 200%;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+                filter: blur(0px);
             }
         }
-
-        /* Notificação */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #4f46e5, #3b82f6); /* Gradiente azul vibrante */
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px; /* Bordas mais arredondadas */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
-            font-size: 0.9rem;
-            font-weight: 600;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
-            transform: translateY(20px); /* Efeito de deslizamento */
+        
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+            }
+            to {
+                text-shadow: 0 0 80px rgba(124, 58, 237, 0.6), 0 0 120px rgba(168, 85, 247, 0.3);
+            }
         }
-
-        .notification.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0); /* Aparece suavemente */
+        
+        @keyframes letterDrop {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotateX(90deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-5px) rotateX(15deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg);
+            }
         }
-
-        .notification p {
-            margin: 0;
-            line-height: 1.5;
-            text-align: center;
+        
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
         }
-
-        .notification strong {
-            color: #ffdd57; /* Destaque em amarelo suave */
-            font-weight: 700;
+        
+        @keyframes blinkCursor {
+            from, to {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
         }
-
+        
+        @keyframes morphRise {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+            20% {
+                opacity: 0.8;
+                border-radius: 30%;
+            }
+            40% {
+                border-radius: 0%;
+                transform: translateY(60vh) scale(1) rotate(180deg);
+            }
+            60% {
+                border-radius: 50%;
+                transform: translateY(40vh) scale(0.7) rotate(270deg);
+            }
+            80% {
+                opacity: 0.8;
+                border-radius: 20%;
+            }
+            100% {
+                transform: translateY(-20vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+        }
+        
+        @keyframes gridFade {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.1;
+            }
+        }
+        
+        @keyframes scanMove {
+            0% {
+                top: -2px;
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+        
+        @keyframes codeFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0) translateX(0);
+            }
+            20% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(-20px) translateX(10px);
+            }
+            80% {
+                opacity: 0.3;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 3rem 2rem;
+            }
+            
+            .links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .link {
+                width: 200px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="floating-bg" id="floatingBg"></div>
     
-
-  <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Em breve Vamos nos trasnfortmar</div>
-        <div class="marketing-text desktop-only">
-            <span>DashdoTI Digital </span> - 
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="holo-grid"></div>
+        <div class="scan-line"></div>
+        <div class="impact-particles" id="impactParticles"></div>
+        <div class="future-message" id="futureMessage">
+            <span>R</span><span>E</span><span>I</span><span>N</span><span>I</span><span>C</span><span>I</span><span>A</span><span>N</span><span>D</span><span>O</span><span>.</span><span>.</span><span>.</span>
         </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="header-logo">
-            <!--<img src="logo.png" alt="Logo DashdoTI"> -->
-            <h1>DashdoTI</h1>
+        <div class="mystery-text" id="mysteryText">
+            > carregando_o_(FUTURO)
         </div>
-        <div class="user-profile">
-            <span id="dynamic-greeting"></span>
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-    </header>
-
-
-
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Sidebar (Desktop only) -->
-        <aside class="sidebar desktop-only">
-            <div class="notes-panel">
-                <h3><i class="fas fa-edit"></i> Anotações Rápidas</h3>
-                <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..."></textarea>
-                <div class="notes-actions">
-                    <button class="btn btn-primary" id="saveNotes">
-                        <i class="fas fa-save"></i> Salvar
-                    </button>
-                    <button class="btn btn-outline" id="clearNotes">
-                        <i class="fas fa-trash-alt"></i> Limpar
-                    </button>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <h3><i class="fas fa-newspaper"></i> Notícias de TI</h3>
-                <div id="newsCarousel" class="news-carousel">
-                    <div class="news-item">
-                        <img id="newsImage" src="https://via.placeholder.com/64" alt="Imagem da notícia">
-                        <div>
-                            <a id="newsTitle" href="#" target="_blank">Carregando notícia...</a>
-                            <p id="newsDate" class="news-date"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-          
-
-        </aside>
-
-        <!-- Content Area -->
-        <main class="content-area">
-            <!-- Update Banner (Desktop only) -->
-            <div class="update-banner desktop-only" id="updateBanner">
-                <div class="update-content">
-                    <div class="update-title">🚀 Em breve, uma nova plataforma!</div>
-                    <div class="update-text">
-                        Estamos preparando uma versão do DashdoTI ainda mais <strong>estruturada</strong>, <strong>profissional</strong> e <strong>eficiente</strong> para você.<br>
-                        Fique atento! Em breve teremos novidades.
-                    </div>
-                </div>
-                <button class="close-update" id="closeUpdateBanner">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            
-            <!-- Container para o iframe (apenas para desktops) -->
-            <div id="iframeContainer" class="iframe-container desktop-only hidden">
-                <iframe id="contentIframe" src="" frameborder="0"></iframe>
-                <button id="closeIframe" class="close-iframe">Fechar</button>
-            </div>
-
-            <!-- Cards Grid -->
-            <div class="cards-grid">
-                <!-- Cards Principais -->
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" 
-                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header">
-                    <div class="shortcut-icon">
-                        <i class="fa-solid fa-laptop-file"></i>
-                    </div>
-                    <h3 class="shortcut-title">Entrega</h3>
-                    <p class="shortcut-desc">Equipamentos</p>
-                </a>
-
-                <a href="https://forms.gle/HZzXQTh5tADD8zmK8" 
-                   class="shortcut-card floating" target="_blank" data-iframe="https://forms.gle/HZzXQTh5tADD8zmK8">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-undo-alt"></i>
-                    </div>
-                    <h3 class="shortcut-title">Devolução</h3>
-                    <p class="shortcut-desc">Equipamentos</p>
-                </a>
-
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header" 
-                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header">
-                    <div class="shortcut-icon">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                    </div>
-                    <h3 class="shortcut-title">Danificado</h3>
-                    <p class="shortcut-desc">Equipamentos</p>
-                </a>
-
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" 
-                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header">
-                    <div class="shortcut-icon">
-                        <i class="fa-solid fa-truck"></i>
-                    </div>
-                    <h3 class="shortcut-title">Transferência</h3>
-                    <p class="shortcut-desc">Equipamentos</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card floating" target="_blank">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 class="shortcut-title">Suporte</h3>
-                    <p class="shortcut-desc">Tasks</p>
-                </a>
-
-                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3 class="shortcut-title">Onboarding</h3>
-                    <p class="shortcut-desc">Novos Colaboradores</p>
-                </a>
-                
-                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3 class="shortcut-title">Acessos</h3>
-                    <p class="shortcut-desc">Controle</p>
-                </a>
-                
-            
-
-                <!-- Card que abre o modal -->
-                <a href="#" class="shortcut-card floating" id="openFoldersModal">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-folder-open"></i>
-                    </div>
-                    <h3 class="shortcut-title">Pastas</h3>
-                    <p class="shortcut-desc">Acesse suas pastas</p>
-                </a>
-
-                <!-- Card Estoque -->
-                <a href="#" class="shortcut-card floating" id="openStockModal">
-                    <div class="shortcut-icon">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                    <h3 class="shortcut-title">Estoque</h3>
-                    <p class="shortcut-desc">Inventário</p>
-                </a>
-
-                  <!-- Card Meu Hub - Apenas Desktop -->
-                  <a href="#" class="shortcut-card special-card floating desktop-only" id="openHubModal">
-                    <div class="shortcut-icon">
-                        <i class="fa-solid fa-solar-panel"></i>
-                    </div>
-                    <h3 class="shortcut-title">Meu Hub</h3>
-                    <p class="shortcut-desc">Organize tudo em um só lugar</p>
-                </a>
-            </div>
-        </main>
-    </div>
-
-    <!-- Bottom Modal - Apenas Mobile -->
-    <div class="bottom-modal mobile-only">
-
-            <div class="modal-handle" id="modalHandle"></div>
-           
-    </div>
-
-    <!-- Desktop Quick Actions Modal -->
-    <div class="desktop-quick-actions-modal" id="desktopQuickActions">
-        <div class="quick-actions-container">
-            <div class="quick-actions-header">
-                <h3><i class="fas fa-bolt"></i> Atalhos Rápidos</h3>
-                <button class="close-quick-actions" id="closeQuickActions">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="quick-actions-grid">
-                <a href="https://app.clickup.com/9011833817/time?via=sidebar" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-stopwatch"></i>
-                    </div>
-                    <span>Registro de horas</span>
-                </a>
-                <a href="https://drive.google.com/drive/folders/1mNHHrlj0Fg9nDqnNsuU22fqUgVplvzxu?usp=drive_link" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-comments-dollar"></i>
-                    </div>
-                    <span>Custos</span>
-                </a>
-                <a href="https://drive.google.com/drive/folders/1NfBh4BV81hKIrWG7bgHklI7owt0wAXpx?usp=drive_link" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-file-shield"></i>
-                    </div>
-                    <span>Documentação</span>
-                </a>
-                <a href="https://drive.google.com/drive/folders/14OUwmt9weLJTEUXjTvIsl4QMScv0T8-g?usp=drive_link" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-paste"></i>
-                    </div>
-                    <span>PlayBook</span>
-                </a>
-                <a href="feature/pomodoro.html" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <span>Pomodoro</span>
-                </a>
-                <a href="feature/checklisti.html" class="quick-action-card" target="_blank">
-                    <div class="quick-action-icon">
-                        <i class="fa-solid fa-house-laptop"></i>
-                    </div>
-                    <span>Configuração</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Botão flutuante para abrir o modal -->
-    <div class="floating-action-button desktop-only" id="openQuickActions">
-        <i class="fas fa-bolt"></i>
-    </div>
-
-    <!-- Modal com as pastas -->
-    <div class="modal-overlay" id="foldersModalOverlay"></div>
-    <div class="modal-container" id="foldersModal">
-        <div class="modal-header">
-            <h3 class="modal-title">
-                <i class="fas fa-folder"></i> Pastas
-            </h3>
-            <button class="close-modal" id="closeFoldersModal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="cards-grid">
-                <!-- Pasta 1 -->
-                <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=sharing" class="folder-card">
-                    <div class="folder-icon">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <h3 class="folder-title">Boletim de Entrega de Equipamentos</h3>
-                </a>
-
-                <!-- Pasta 2 -->
-                <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="folder-card">
-                    <div class="folder-icon">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <h3 class="folder-title">Boletim de Devolução de Equipamentos</h3>
-                </a>
-
-                <!-- Pasta 3 -->
-                <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="folder-card">
-                    <div class="folder-icon">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <h3 class="folder-title">Boletim de Equipamemto Danificado</h3>
-                </a>
-
-                <!-- Pasta 4 -->
-                <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="folder-card">
-                    <div class="folder-icon">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <h3 class="folder-title">Boletim de Trasnferencia de Equipamento</h3>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Estoque -->
-    <div class="modal-overlay" id="stockModalOverlay"></div>
-    <div class="modal-container" id="stockModal">
-        <div class="modal-header">
-            <h3 class="modal-title">
-                <i class="fas fa-boxes"></i> Estoque
-            </h3>
-            <button class="close-modal" id="closeStockModal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <div class="stock-buttons">
-                <a href="https://app.clickup.com/9011833817/v/li/901109183201" class="btn btn-primary">Notebook</a>
-                <a href="https://app.clickup.com/9011833817/v/li/901109183299" class="btn btn-primary">Periféricos</a>
-                <a href="https://app.clickup.com/9011833817/v/li/901109423985" class="btn btn-primary">Desktops</a>
-                <a href="https://app.clickup.com/9011833817/v/li/901109444167" class="btn btn-primary">Celulares</a>
-                <a href="https://app.clickup.com/9011833817/v/li/901109547128" class="btn btn-primary">MacBook</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Meu Hub -->
-    <div class="modal-overlay" id="hubModalOverlay"></div>
-    <div class="modal-container" id="hubModal">
-        <div class="modal-header">
-            <h3 class="modal-title">
-                <i class="fa-solid fa-solar-panel"></i> Meu Hubples e eficiente.
-            </h3>
-            <button class="close-modal" id="closeHubModal">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-content">
-            <p>
-                <strong>Bem-vindo ao Meu Hub!</strong><br>
-                Esta é uma visão de testes e estamos em desenvolvimento para trazer a melhor experiência para você.
-            </p>
-            <p>
-                Fique atento às próximas atualizações e novidades. Estamos trabalhando para criar algo incrível!
-            </p>
-            <p style="text-align: center; font-weight: bold; color: var(--primary);">
-                DashdoTI - Sua plataforma de produtividade 🚀
-            </p>
-        </div>
-    </div>
-
-    <!-- Notificações -->
-    <div id="notification" class="notification hidden">
-        <i id="notificationIcon" class="fas"></i>
-        <p id="notificationMessage"></p>
-    </div>
-
-    <div id="notificationCard" class="notification-card hidden">
-        <div class="notification-card-content">
-            <i id="notificationCardIcon" class="fas"></i>
-            <p id="notificationCardMessage"></p>
-        </div>
+        <div class="code-fragments"></div>
     </div>
     
-    <div class="junina-animation">
-        <div class="fire"></div>
-        <div class="ball ball-1"></div>
-        <div class="ball ball-2"></div>
+    <div class="container">
+        <h1>Até logo, DashdoTI</h1>
+        
+        <p>Nossa jornada chegou ao fim em <span class="date">[DATA]</span>.</p>
+        
+        <p>Esta plataforma será desativada para dar lugar a novas soluções.</p>
+        
+        <div class="links">
+            <a href="https://glpi.greenn.com.br/front/central.php" class="link">Nova plataforma</a>
+            
+        </div>
+        
+        <p class="signature" id="signature">Obrigado por fazer parte desta história.</p>
     </div>
     
-    <script src="main.js"></script></body>
+    <script>
+        // Create subtle floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingBg');
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.classList.add('float-element');
+                
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = '100vh';
+                element.style.animationDelay = Math.random() * 12 + 's';
+                element.style.animationDuration = (Math.random() * 8 + 15) + 's';
+                
+                const size = Math.random() * 2 + 1;
+                element.style.width = size + 'px';
+                element.style.height = size + 'px';
+                
+                container.appendChild(element);
+            }
+        }
+        
+        // Create morphing impact particles
+        function createImpactParticles() {
+            const container = document.getElementById('impactParticles');
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('morph-particle');
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 25 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
+                
+                const size = Math.random() * 6 + 3;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Initialize elements
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingElements();
+            createImpactParticles();
+        });
+        
+        // Impactful cinematic transition
+        document.getElementById('signature').addEventListener('click', function() {
+            const transitionOverlay = document.getElementById('transitionOverlay');
+            const futureMessage = document.getElementById('futureMessage');
+            const mysteryText = document.getElementById('mysteryText');
+            
+            // Dramatic fade to overlay
+            transitionOverlay.classList.add('active');
+            
+            // Reveal dramatic message with letter animation
+            setTimeout(() => {
+                futureMessage.classList.add('show');
+            }, 2500);
+            
+            // Show mysterious code text
+            setTimeout(() => {
+                mysteryText.classList.add('show');
+            }, 5000);
+        });
+        
+        // Subtle mouse interaction
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.container');
+            if (container) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 3;
+                const y = (e.clientY / window.innerHeight - 0.5) * 3;
+                
+                container.style.transform = `translateY(0) translateX(${x * 0.2}px) rotateY(${x * 0.1}deg) rotateX(${-y * 0.05}deg)`;
+            }
+        });
+    </script>
+</body>
 </html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal DashdoTI</title>
+    <link rel="shortcut icon" href="dash.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Banner de Marketing */
+        .marketing-banner {
+            background: linear-gradient(135deg, #0553c9, #3b82f6); /* Gradiente azul escuro e moderno */
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1000;
+            animation: fadeIn 1s ease-out, slideDown 1s ease-out;
+            border-bottom: 3px solid rgba(29, 19, 19, 0.185);
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 90%;
+        }
+
+        /* Texto do Banner */
+        .marketing-banner p {
+            margin: 0;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .marketing-banner strong {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #60a5fa, #0b91ff, #60a5fa); /* Efeito de brilho */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s infinite;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200%;
+            }
+            100% {
+                background-position: 200%;
+            }
+        }
+
+        /* Notificação */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); /* Gradiente azul vibrante */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px; /* Bordas mais arredondadas */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px); /* Efeito de deslizamento */
+        }
+
+        .notification.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0); /* Aparece suavemente */
+        }
+
+        .notification p {
+            margin: 0;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .notification strong {
+            color: #ffdd57; /* Destaque em amarelo suave */
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+    
+
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Em breve Vamos nos trasnfortmar</div>
+        <div class="marketing-text desktop-only">
+            <span>DashdoTI Digital </span> - 
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <!--<img src="logo.png" alt="Logo DashdoTI"> -->
+            <h1>DashdoTI</h1>
+        </div>
+        <div class="user-profile">
+            <span id="dynamic-greeting"></span>
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar (Desktop only) -->
+        <aside class="sidebar desktop-only">
+            <div class="notes-panel">
+                <h3><i class="fas fa-edit"></i> Anotações Rápidas</h3>
+                <textarea class="notes-textarea" placeholder="Digite suas anotações aqui..."></textarea>
+                <div class="notes-actions">
+                    <button class="btn btn-primary" id="saveNotes">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                    <button class="btn btn-outline" id="clearNotes">
+                        <i class="fas fa-trash-alt"></i> Limpar
+                    </button>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <h3><i class="fas fa-newspaper"></i> Notícias de TI</h3>
+                <div id="newsCarousel" class="news-carousel">
+                    <div class="news-item">
+                        <img id="newsImage" src="https://via.placeholder.com/64" alt="Imagem da notícia">
+                        <div>
+                            <a id="newsTitle" href="#" target="_blank">Carregando notícia...</a>
+                            <p id="newsDate" class="news-date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <!-- Update Banner (Desktop only) -->
+            <div class="update-banner desktop-only" id="updateBanner">
+                <div class="update-content">
+                    <div class="update-title">🚀 Em breve, uma nova plataforma!</div>
+                    <div class="update-text">
+                        Estamos preparando uma versão do DashdoTI ainda mais <strong>estruturada</strong>, <strong>profissional</strong> e <strong>eficiente</strong> para você.<br>
+                        Fique atento! Em breve teremos novidades.
+                    </div>
+                </div>
+                <button class="close-update" id="closeUpdateBanner">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            
+            <!-- Container para o iframe (apenas para desktops) -->
+            <div id="iframeContainer" class="iframe-container desktop-only hidden">
+                <iframe id="contentIframe" src="" frameborder="0"></iframe>
+                <button id="closeIframe" class="close-iframe">Fechar</button>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="cards-grid">
+                <!-- Cards Principais -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSe3nC3zVvO27RIiNB8CLYZ-8f8MvLSEJsEsy3Xz9MD0zbaVew/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-laptop-file"></i>
+                    </div>
+                    <h3 class="shortcut-title">Entrega</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://forms.gle/HZzXQTh5tADD8zmK8" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://forms.gle/HZzXQTh5tADD8zmK8">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h3 class="shortcut-title">Devolução</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLScce4VZD3dCTk-bptUP5EtprBiBf4z7IES21Z6ejwkQ52kHBA/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+                    <h3 class="shortcut-title">Danificado</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header" 
+                   class="shortcut-card floating" target="_blank" data-iframe="https://docs.google.com/forms/d/e/1FAIpQLSdIYQkaTB8tLkEGDparMdnveig1-9TjsbcVgcjZ0pSwBKOFWw/viewform?usp=header">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-truck"></i>
+                    </div>
+                    <h3 class="shortcut-title">Transferência</h3>
+                    <p class="shortcut-desc">Equipamentos</p>
+                </a>
+                
+                <a href="https://app.clickup.com/9011833817/v/li/901108632750" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="shortcut-title">Suporte</h3>
+                    <p class="shortcut-desc">Tasks</p>
+                </a>
+
+                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="shortcut-title">Onboarding</h3>
+                    <p class="shortcut-desc">Novos Colaboradores</p>
+                </a>
+                
+                <a href="https://app.clickup.com/9011833817/v/li/901109577794" class="shortcut-card floating" target="_blank">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="shortcut-title">Acessos</h3>
+                    <p class="shortcut-desc">Controle</p>
+                </a>
+                
+            
+
+                <!-- Card que abre o modal -->
+                <a href="#" class="shortcut-card floating" id="openFoldersModal">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="shortcut-title">Pastas</h3>
+                    <p class="shortcut-desc">Acesse suas pastas</p>
+                </a>
+
+                <!-- Card Estoque -->
+                <a href="#" class="shortcut-card floating" id="openStockModal">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3 class="shortcut-title">Estoque</h3>
+                    <p class="shortcut-desc">Inventário</p>
+                </a>
+
+                  <!-- Card Meu Hub - Apenas Desktop -->
+                  <a href="#" class="shortcut-card special-card floating desktop-only" id="openHubModal">
+                    <div class="shortcut-icon">
+                        <i class="fa-solid fa-solar-panel"></i>
+                    </div>
+                    <h3 class="shortcut-title">Meu Hub</h3>
+                    <p class="shortcut-desc">Organize tudo em um só lugar</p>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Modal - Apenas Mobile -->
+    <div class="bottom-modal mobile-only">
+
+            <div class="modal-handle" id="modalHandle"></div>
+           
+    </div>
+
+    <!-- Desktop Quick Actions Modal -->
+    <div class="desktop-quick-actions-modal" id="desktopQuickActions">
+        <div class="quick-actions-container">
+            <div class="quick-actions-header">
+                <h3><i class="fas fa-bolt"></i> Atalhos Rápidos</h3>
+                <button class="close-quick-actions" id="closeQuickActions">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quick-actions-grid">
+                <a href="https://app.clickup.com/9011833817/time?via=sidebar" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <span>Registro de horas</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1mNHHrlj0Fg9nDqnNsuU22fqUgVplvzxu?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                    </div>
+                    <span>Custos</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/1NfBh4BV81hKIrWG7bgHklI7owt0wAXpx?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-file-shield"></i>
+                    </div>
+                    <span>Documentação</span>
+                </a>
+                <a href="https://drive.google.com/drive/folders/14OUwmt9weLJTEUXjTvIsl4QMScv0T8-g?usp=drive_link" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-paste"></i>
+                    </div>
+                    <span>PlayBook</span>
+                </a>
+                <a href="feature/pomodoro.html" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <span>Pomodoro</span>
+                </a>
+                <a href="feature/checklisti.html" class="quick-action-card" target="_blank">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-house-laptop"></i>
+                    </div>
+                    <span>Configuração</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão flutuante para abrir o modal -->
+    <div class="floating-action-button desktop-only" id="openQuickActions">
+        <i class="fas fa-bolt"></i>
+    </div>
+
+    <!-- Modal com as pastas -->
+    <div class="modal-overlay" id="foldersModalOverlay"></div>
+    <div class="modal-container" id="foldersModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-folder"></i> Pastas
+            </h3>
+            <button class="close-modal" id="closeFoldersModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="cards-grid">
+                <!-- Pasta 1 -->
+                <a href="https://drive.google.com/drive/folders/11z_76LWmmLLwvlcy4D_NMFNqlpcRfLfs?usp=sharing" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Entrega de Equipamentos</h3>
+                </a>
+
+                <!-- Pasta 2 -->
+                <a href="https://drive.google.com/drive/folders/10XHQIMBUGeexTJZ5Sb6mO-_zMa0u0wzw?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Devolução de Equipamentos</h3>
+                </a>
+
+                <!-- Pasta 3 -->
+                <a href="https://drive.google.com/drive/folders/1OOHu7sar9FRNnxclQTlbLotK8nVT_UJf?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Equipamemto Danificado</h3>
+                </a>
+
+                <!-- Pasta 4 -->
+                <a href="https://drive.google.com/drive/folders/1v2MZG4mToOK8UQTrvxLGvCHpUkJI41Jm?usp=drive_link" class="folder-card">
+                    <div class="folder-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <h3 class="folder-title">Boletim de Trasnferencia de Equipamento</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Estoque -->
+    <div class="modal-overlay" id="stockModalOverlay"></div>
+    <div class="modal-container" id="stockModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-boxes"></i> Estoque
+            </h3>
+            <button class="close-modal" id="closeStockModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <div class="stock-buttons">
+                <a href="https://app.clickup.com/9011833817/v/li/901109183201" class="btn btn-primary">Notebook</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109183299" class="btn btn-primary">Periféricos</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109423985" class="btn btn-primary">Desktops</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109444167" class="btn btn-primary">Celulares</a>
+                <a href="https://app.clickup.com/9011833817/v/li/901109547128" class="btn btn-primary">MacBook</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Meu Hub -->
+    <div class="modal-overlay" id="hubModalOverlay"></div>
+    <div class="modal-container" id="hubModal">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fa-solid fa-solar-panel"></i> Meu Hubples e eficiente.
+            </h3>
+            <button class="close-modal" id="closeHubModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-content">
+            <p>
+                <strong>Bem-vindo ao Meu Hub!</strong><br>
+                Esta é uma visão de testes e estamos em desenvolvimento para trazer a melhor experiência para você.
+            </p>
+            <p>
+                Fique atento às próximas atualizações e novidades. Estamos trabalhando para criar algo incrível!
+            </p>
+            <p style="text-align: center; font-weight: bold; color: var(--primary);">
+                DashdoTI - Sua plataforma de produtividade 🚀
+            </p>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div id="notification" class="notification hidden">
+        <i id="notificationIcon" class="fas"></i>
+        <p id="notificationMessage"></p>
+    </div>
+
+    <div id="notificationCard" class="notification-card hidden">
+        <div class="notification-card-content">
+            <i id="notificationCardIcon" class="fas"></i>
+            <p id="notificationCardMessage"></p>
+        </div>
+    </div>
+    
+    <div class="junina-animation">
+        <div class="fire"></div>
+        <div class="ball ball-1"></div>
+        <div class="ball ball-2"></div>
+    </div>
+    
+    <script src="main.js"></script></body>
+</html>
