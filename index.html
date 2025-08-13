@@ -3,661 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Até logo, DashdoTI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <title>Algo novo está chegando...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color-light: #fafbfc;
+            --text-color-dark: #2d3748;
+            --secondary-text-color: #718096;
+            --accent-color: #4299e1;
+            --glow-color: rgba(220, 220, 220, 0.5); /* Cinza claro para o brilho */
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(-45deg, #fafbfc, #f1f3f5, #e9ecf0, #ffffff);
-            background-size: 400% 400%;
-            animation: gradientShift 25s ease infinite;
-            color: #0d1117;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            line-height: 1.6;
-            position: relative;
+            align-items: center;
+            text-align: center;
             overflow: hidden;
+            position: relative;
         }
-        
-        /* Subtle floating elements */
-        .floating-bg {
+
+        .background-flow {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                var(--glow-color) 20%,
+                transparent 40%,
+                transparent 60%,
+                var(--glow-color) 80%,
+                transparent 100%
+            );
+            background-size: 100% 200%;
+            animation: flow-shimmer 20s infinite ease-in-out;
         }
-        
-        .float-element {
-            position: absolute;
-            background: linear-gradient(45deg, #e1e5e9, #c1c8cd);
-            border-radius: 50%;
-            animation: floatUp 18s infinite ease-in-out;
-            opacity: 0.15;
-            filter: blur(0.8px);
+
+        @keyframes flow-shimmer {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
         }
         
         .container {
-            max-width: 560px;
-            padding: 4rem 2.5rem;
-            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
             position: relative;
-            z-index: 10;
-            transform: translateY(30px);
-            opacity: 0;
-            animation: containerFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+            z-index: 1;
         }
         
-        h1 {
-            font-size: clamp(2.2rem, 6vw, 3.5rem);
-            font-weight: 600;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #0d1117 0%, #21262d 40%, #30363d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards;
-            letter-spacing: -0.05em;
-            line-height: 1.1;
-            font-family: 'Satoshi', sans-serif;
-        }
-        
-        p {
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: #656d76;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        p:nth-of-type(1) {
-            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.2s forwards;
-        }
-        
-        p:nth-of-type(2) {
-            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.5s forwards;
-        }
-        
-        .date {
-            font-weight: 600;
-            color: #0d1117;
-            position: relative;
-            display: inline-block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95em;
-        }
-        
-        .date::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #7c3aed, #a855f7);
-            border-radius: 1px;
-            animation: underlineGrow 1s cubic-bezier(0.23, 1, 0.32, 1) 2.5s forwards;
-        }
-        
-        .links {
+        .logo-container {
+            height: 100px;
             display: flex;
-            gap: 2rem;
             justify-content: center;
-            margin: 3.5rem 0;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 1.8s forwards;
+            align-items: center;
+            margin-bottom: 3rem;
         }
-        
-        .link {
-            text-decoration: none;
-            color: #21262d;
-            padding: 1rem 2rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+        .logo-text {
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--text-color-dark);
             position: relative;
-            border: 1px solid transparent;
-            border-radius: 16px;
-            background: rgba(248, 250, 252, 0.8);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-            overflow: hidden;
-        }
-        
-        .link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.08), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #7c3aed, #a855f7);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            transform: translateX(-50%);
-        }
-        
-        .link:hover {
-            color: #0d1117;
-            border-color: rgba(124, 58, 237, 0.15);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        
-        .link:hover::before {
-            left: 100%;
-        }
-        
-        .link:hover::after {
-            width: 100%;
-        }
-        
-        .signature {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: #7d8590;
-            margin-top: 3.5rem;
+            z-index: 2;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) 2.1s forwards;
-            font-style: italic;
-            cursor: pointer;
-            padding: 1rem;
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: text-reveal 2s forwards;
+            animation-delay: 2s;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
         
-        .signature:hover {
-            color: #21262d;
-            background: rgba(248, 250, 252, 0.6);
-            transform: translateY(-2px);
-        }
-        
-        /* Impactful transition overlay */
-        .transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(ellipse at center, #0d1117 0%, #000000 100%);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transition: opacity 2.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        
-        .transition-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        /* Glitch-inspired future message */
-        .future-message {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 700;
-            text-align: center;
-            opacity: 0;
-            transition: all 3s cubic-bezier(0.23, 1, 0.32, 1) 2.5s;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            font-family: 'Satoshi', sans-serif;
-            text-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
-        }
-        
-        .future-message.show {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-            animation: textReveal 2s ease-out forwards, textGlow 4s ease-in-out 3s infinite alternate;
-        }
-        
-        .future-message span {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(30px) rotateX(90deg);
-            animation: letterDrop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
-        
-        .future-message.show span:nth-child(1) { animation-delay: 0.1s; }
-        .future-message.show span:nth-child(2) { animation-delay: 0.15s; }
-        .future-message.show span:nth-child(3) { animation-delay: 0.2s; }
-        .future-message.show span:nth-child(4) { animation-delay: 0.25s; }
-        .future-message.show span:nth-child(5) { animation-delay: 0.3s; }
-        .future-message.show span:nth-child(6) { animation-delay: 0.35s; }
-        .future-message.show span:nth-child(7) { animation-delay: 0.4s; }
-        .future-message.show span:nth-child(8) { animation-delay: 0.45s; }
-        .future-message.show span:nth-child(9) { animation-delay: 0.5s; }
-        .future-message.show span:nth-child(10) { animation-delay: 0.55s; }
-        .future-message.show span:nth-child(11) { animation-delay: 0.6s; }
-        .future-message.show span:nth-child(12) { animation-delay: 0.65s; }
-        
-        /* Mysterious subtitle */
-        .mystery-text {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #7c3aed;
-            font-size: clamp(1rem, 3vw, 1.4rem);
+        .logo-text .flow {
             font-weight: 400;
+            color: var(--secondary-text-color);
+        }
+
+        @keyframes text-reveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2.headline {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--secondary-text-color);
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fade-in-slow 1s forwards;
+            animation-delay: 3.5s;
+        }
+        
+        @keyframes fade-in-slow {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .status-footer {
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
             text-align: center;
-            opacity: 0;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.1em;
-            transition: all 2s cubic-bezier(0.23, 1, 0.32, 1) 5s;
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            opacity: 0.5;
+            z-index: 1;
         }
         
-        .mystery-text.show {
-            opacity: 1;
-            animation: typewriter 3s steps(40) 1s forwards, blinkCursor 1s step-end infinite;
-        }
-        
-        .mystery-text::after {
-            content: '|';
-            color: #7c3aed;
-            animation: blinkCursor 1s step-end infinite;
-        }
-        
-        /* Morphing particles */
-        .impact-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .morph-particle {
-            position: absolute;
-            background: linear-gradient(45deg, #7c3aed, #a855f7, #c084fc);
-            border-radius: 50%;
-            animation: morphRise 25s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
-            filter: blur(1px);
-        }
-        
-        .morph-particle:nth-child(even) {
-            background: linear-gradient(45deg, #ffffff, #f0f6fc);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Holographic grid overlay */
-        .holo-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            background-image: 
-                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridFade 5s ease-in-out 6s forwards;
-        }
-        
-        /* Scanning line effect */
-        .scan-line {
-            position: absolute;
-            top: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
-            opacity: 0;
-            animation: scanMove 8s ease-in-out 4s infinite;
-            box-shadow: 0 0 20px #7c3aed;
-        }
-        
-        /* Floating code fragments */
-        .code-fragments {
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: rgba(124, 58, 237, 0.2);
-            opacity: 0;
-            animation: codeFloat 10s ease-in-out 7s infinite;
-        }
-        
-        .code-fragments::before {
-            content: 'const future = await newBeginning();\nif (future.ready) {\n  launch.execute();\n}';
-            white-space: pre;
-        }
-        
-        /* Animations */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes floatUp {
-            0% {
-                opacity: 0;
-                transform: translateY(0px) rotate(0deg);
-            }
-            10% {
-                opacity: 0.2;
-            }
-            90% {
-                opacity: 0.2;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-120vh) rotate(180deg);
-            }
-        }
-        
-        @keyframes containerFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes underlineGrow {
-            to {
-                width: 100%;
-            }
-        }
-        
-        @keyframes textReveal {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.8);
-                filter: blur(5px);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-                filter: blur(0px);
-            }
-        }
-        
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
-            }
-            to {
-                text-shadow: 0 0 80px rgba(124, 58, 237, 0.6), 0 0 120px rgba(168, 85, 247, 0.3);
-            }
-        }
-        
-        @keyframes letterDrop {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) rotateX(90deg);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(-5px) rotateX(15deg);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-            }
-        }
-        
-        @keyframes typewriter {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
-        }
-        
-        @keyframes blinkCursor {
-            from, to {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-        }
-        
-        @keyframes morphRise {
-            0% {
-                transform: translateY(100vh) scale(0.5) rotate(0deg);
-                opacity: 0;
-                border-radius: 50%;
-            }
-            20% {
-                opacity: 0.8;
-                border-radius: 30%;
-            }
-            40% {
-                border-radius: 0%;
-                transform: translateY(60vh) scale(1) rotate(180deg);
-            }
-            60% {
-                border-radius: 50%;
-                transform: translateY(40vh) scale(0.7) rotate(270deg);
-            }
-            80% {
-                opacity: 0.8;
-                border-radius: 20%;
-            }
-            100% {
-                transform: translateY(-20vh) scale(1.2) rotate(360deg);
-                opacity: 0;
-                border-radius: 50%;
-            }
-        }
-        
-        @keyframes gridFade {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 0.1;
-            }
-        }
-        
-        @keyframes scanMove {
-            0% {
-                top: -2px;
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            80% {
-                opacity: 1;
-            }
-            100% {
-                top: 100vh;
-                opacity: 0;
-            }
-        }
-        
-        @keyframes codeFloat {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(0) translateX(0);
-            }
-            20% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.5;
-                transform: translateY(-20px) translateX(10px);
-            }
-            80% {
-                opacity: 0.3;
-            }
-        }
-        
+        /* --- RESPONSIVIDADE --- */
         @media (max-width: 768px) {
             .container {
-                margin: 1rem;
-                padding: 3rem 2rem;
+                padding: 1rem;
             }
-            
-            .links {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
+            .logo-container {
+                height: 80px;
+                margin-bottom: 2rem;
             }
-            
-            .link {
-                width: 200px;
+            .logo-text {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+            }
+            h2.headline {
+                font-size: clamp(1rem, 3vw, 1.4rem);
+                margin-top: 2rem;
+            }
+            .status-footer {
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating-bg" id="floatingBg"></div>
-    
-    <div class="transition-overlay" id="transitionOverlay">
-        <div class="holo-grid"></div>
-        <div class="scan-line"></div>
-        <div class="impact-particles" id="impactParticles"></div>
-        <div class="future-message" id="futureMessage">
-            <span>R</span><span>E</span><span>I</span><span>N</span><span>I</span><span>C</span><span>I</span><span>A</span><span>N</span><span>D</span><span>O</span><span>.</span><span>.</span><span>.</span>
-        </div>
-        <div class="mystery-text" id="mysteryText">
-            > carregando_o_(FUTURO)
-        </div>
-        <div class="code-fragments"></div>
-    </div>
-    
+    <div class="background-flow"></div>
     <div class="container">
-        <h1>Até logo, DashdoTI</h1>
-        
-        <p>Nossa jornada chegou ao fim em <span class="date">07/08/2025</span>.</p>
-        
-        <p>Esta plataforma será desativada para dar lugar a novas soluções.</p>
-        
-        <div class="links">
-            <a href="https://glpi.greenn.com.br/front/central.php" class="link">Nova plataforma</a>
-            
+        <div class="logo-container">
+            <span class="logo-text">Greenn<span class="flow">Flow</span></span>
         </div>
-        
-        <p class="signature" id="signature">Obrigado por fazer parte desta história.</p>
+        <h2 class="headline">Uma nova era para o suporte de TI está a caminho.</h2>
     </div>
-    
-    <script>
-        // Create subtle floating elements
-        function createFloatingElements() {
-            const container = document.getElementById('floatingBg');
-            
-            for (let i = 0; i < 15; i++) {
-                const element = document.createElement('div');
-                element.classList.add('float-element');
-                
-                element.style.left = Math.random() * 100 + '%';
-                element.style.top = '100vh';
-                element.style.animationDelay = Math.random() * 12 + 's';
-                element.style.animationDuration = (Math.random() * 8 + 15) + 's';
-                
-                const size = Math.random() * 2 + 1;
-                element.style.width = size + 'px';
-                element.style.height = size + 'px';
-                
-                container.appendChild(element);
-            }
-        }
-        
-        // Create morphing impact particles
-        function createImpactParticles() {
-            const container = document.getElementById('impactParticles');
-            
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('morph-particle');
-                
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 25 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
-                
-                const size = Math.random() * 6 + 3;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                
-                container.appendChild(particle);
-            }
-        }
-        
-        // Initialize elements
-        document.addEventListener('DOMContentLoaded', () => {
-            createFloatingElements();
-            createImpactParticles();
-        });
-        
-        // Impactful cinematic transition
-        document.getElementById('signature').addEventListener('click', function() {
-            const transitionOverlay = document.getElementById('transitionOverlay');
-            const futureMessage = document.getElementById('futureMessage');
-            const mysteryText = document.getElementById('mysteryText');
-            
-            // Dramatic fade to overlay
-            transitionOverlay.classList.add('active');
-            
-            // Reveal dramatic message with letter animation
-            setTimeout(() => {
-                futureMessage.classList.add('show');
-            }, 2500);
-            
-            // Show mysterious code text
-            setTimeout(() => {
-                mysteryText.classList.add('show');
-            }, 5000);
-        });
-        
-        // Subtle mouse interaction
-        document.addEventListener('mousemove', (e) => {
-            const container = document.querySelector('.container');
-            if (container) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 3;
-                const y = (e.clientY / window.innerHeight - 0.5) * 3;
-                
-                container.style.transform = `translateY(0) translateX(${x * 0.2}px) rotateY(${x * 0.1}deg) rotateX(${-y * 0.05}deg)`;
-            }
-        });
-    </script>
+    <footer class="status-footer">
+        Em desenvolvimento.
+    </footer>
 </body>
 </html>
