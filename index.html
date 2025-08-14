@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algo novo está chegando...</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <title>GreennFlow - A Revolução da TI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color-light: #fafbfc;
             --text-color-dark: #2d3748;
             --secondary-text-color: #718096;
             --accent-color: #4299e1;
-            --glow-color: rgba(220, 220, 220, 0.5); /* Cinza claro para o brilho */
+            --card-bg: #ffffff;
+            --card-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+            --font-outfit: 'Outfit', sans-serif;
+            --font-lato: 'Lato', sans-serif;
         }
 
         * {
@@ -20,144 +23,393 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-lato);
             background-color: var(--bg-color-light);
             color: var(--text-color-dark);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
+        /* Fundo com movimento sutil agora em um contêiner separado para evitar conflitos */
         .background-flow {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
-            background: linear-gradient(
-                180deg,
-                transparent 0%,
-                var(--glow-color) 20%,
-                transparent 40%,
-                transparent 60%,
-                var(--glow-color) 80%,
-                transparent 100%
-            );
-            background-size: 100% 200%;
-            animation: flow-shimmer 20s infinite ease-in-out;
+            background: radial-gradient(circle at center, rgba(220, 220, 220, 0.1) 0%, rgba(255, 255, 255, 0.1) 40%, #fafbfc 70%);
+            background-size: 200% 200%;
+            animation: soft-pulse 25s infinite ease-in-out;
         }
 
-        @keyframes flow-shimmer {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 0% 100%; }
-            100% { background-position: 0% 0%; }
+        @keyframes soft-pulse {
+            0%, 100% { background-position: 50% 50%; }
+            50% { background-position: 100% 100%; }
         }
-        
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .logo-container {
-            height: 100px;
+
+        /* --- Estilo Geral das Seções --- */
+        .section {
+            padding: 8rem 2rem;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
         }
 
-        .logo-text {
-            font-size: clamp(3rem, 7vw, 5rem);
+        .section-title {
+            font-family: var(--font-outfit);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-color-dark);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slide-in-up 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--secondary-text-color);
+            margin-bottom: 4rem;
+            max-width: 700px;
+            opacity: 0;
+            animation: slide-in-up 1s forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes slide-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Seção Hero (Capa) --- */
+        #hero {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #hero .logo {
+            font-family: var(--font-outfit);
+            font-size: clamp(4rem, 10vw, 8rem);
             font-weight: 900;
             line-height: 1;
+            letter-spacing: -3px;
             color: var(--text-color-dark);
-            position: relative;
-            z-index: 2;
+            margin-bottom: 1rem;
             opacity: 0;
-            animation: text-reveal 2s forwards;
-            animation-delay: 2s;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            animation: slide-in-up 1.5s forwards;
+        }
+
+        #hero .logo .flow {
+            font-weight: 400;
+            color: var(--secondary-text-color);
         }
         
-        .logo-text .flow {
+        #hero .headline {
+            font-family: var(--font-lato);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            margin-top: 1.5rem;
+            color: var(--secondary-text-color);
+            opacity: 0;
+            animation: slide-in-up 1s forwards;
+            animation-delay: 1s;
+        }
+        
+        /* --- Seção de Visão --- */
+        #vision .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        #vision .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            text-align: left;
+            opacity: 0;
+            animation: slide-in-up 0.8s forwards;
+        }
+        
+        #vision .card:nth-child(1) { animation-delay: 1s; }
+        #vision .card:nth-child(2) { animation-delay: 1.2s; }
+        #vision .card:nth-child(3) { animation-delay: 1.4s; }
+
+        #vision .card h3 {
+            font-family: var(--font-outfit);
+            font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        #vision .card p {
+            font-family: var(--font-lato);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
             font-weight: 400;
             color: var(--secondary-text-color);
         }
 
-        @keyframes text-reveal {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        h2.headline {
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            font-weight: 600;
-            color: var(--secondary-text-color);
-            margin-top: 3rem;
-            opacity: 0;
-            animation: fade-in-slow 1s forwards;
-            animation-delay: 3.5s;
-        }
-        
-        @keyframes fade-in-slow {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* --- Seção de Recursos --- */
+        #features .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
         }
 
+        #features .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            animation: slide-in-up 1s forwards;
+        }
+        #features .feature-item:nth-child(1) { animation-delay: 0.8s; }
+        #features .feature-item:nth-child(2) { animation-delay: 1s; }
+        #features .feature-item:nth-child(3) { animation-delay: 1.2s; }
+        
+        #features .feature-item .icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--card-bg);
+        }
+        
+        #features .feature-item .icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+        
+        #features .feature-item h3 {
+            font-family: var(--font-outfit);
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: var(--text-color-dark);
+        }
+
+        #features .feature-item p {
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            font-weight: 400;
+            color: var(--secondary-text-color);
+        }
+
+        /* --- Seção de Contato --- */
+        #contact .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--card-bg);
+            background-color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 9999px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 20px rgba(66, 153, 225, 0.2);
+            margin-top: 2rem;
+            opacity: 0;
+            animation: slide-in-up 1s forwards;
+            animation-delay: 1s;
+        }
+
+        #contact .cta-button:hover {
+            transform: translateY(-4px);
+            background-color: #3182ce;
+            border-color: #3182ce;
+            box-shadow: 0 8px 30px rgba(66, 153, 225, 0.3);
+        }
+
+        /* --- Footer --- */
         .status-footer {
-            position: absolute;
-            bottom: 1rem;
-            width: 100%;
+            padding: 1rem;
             text-align: center;
             font-size: 0.9rem;
             color: var(--secondary-text-color);
             opacity: 0.5;
+            position: relative;
             z-index: 1;
         }
         
-        /* --- RESPONSIVIDADE --- */
+        /* --- Responsividade --- */
         @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
+            .section {
+                padding: 4rem 1rem;
             }
-            .logo-container {
-                height: 80px;
+            .section-title {
+                margin-bottom: 0.5rem;
+            }
+            .section-subtitle {
                 margin-bottom: 2rem;
             }
-            .logo-text {
-                font-size: clamp(2.5rem, 8vw, 4rem);
+            #vision .card-container {
+                grid-template-columns: 1fr;
             }
-            h2.headline {
-                font-size: clamp(1rem, 3vw, 1.4rem);
-                margin-top: 2rem;
+            #features .feature-grid {
+                grid-template-columns: 1fr;
             }
-            .status-footer {
-                font-size: 0.8rem;
+        }
+        
+        @media (max-width: 480px) {
+             #hero .logo {
+                font-size: clamp(2.5rem, 10vw, 5rem);
+            }
+            .section {
+                padding: 2rem 1rem;
             }
         }
     </style>
 </head>
 <body>
+
     <div class="background-flow"></div>
-    <div class="container">
-        <div class="logo-container">
-            <span class="logo-text">Greenn<span class="flow">Flow</span></span>
+
+    <header>
+        </header>
+
+    <section id="hero" class="section">
+        <h1 class="logo animate-on-scroll">
+            Greenn<span class="flow">Flow</span>
+        </h1>
+        <p class="headline animate-on-scroll">O futuro do suporte de TI começa agora.</p>
+    </section>
+
+    <section id="vision" class="section">
+        <h2 class="section-title animate-on-scroll">A Nossa Visão</h2>
+        <p class="section-subtitle animate-on-scroll">
+            Transformamos o suporte técnico de um gargalo de produtividade em uma vantagem estratégica.
+        </p>
+        <div class="card-container">
+            <div class="card animate-on-scroll">
+                <h3>Simplicidade na Interação</h3>
+                <p>
+                    Comunicação natural por voz e texto, eliminando a burocracia do suporte tradicional.
+                </p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3>Inteligência e Eficiência</h3>
+                <p>
+                    Resolução de problemas em tempo real, automatizando tarefas e liberando sua equipe para o que realmente importa.
+                </p>
+            </div>
+            <div class="card animate-on-scroll">
+                <h3>O Crescimento está no Fluxo</h3>
+                <p>
+                    Uma plataforma que se integra perfeitamente, proporcionando uma experiência de TI fluida e sem atritos.
+                </p>
+            </div>
         </div>
-        <h2 class="headline">Uma nova era para o suporte de TI está a caminho.</h2>
-    </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2 class="section-title animate-on-scroll">O que o Flow faz por você?</h2>
+        <p class="section-subtitle animate-on-scroll">
+            Automatizamos e simplificamos as tarefas que mais consomem o tempo da sua equipe.
+        </p>
+        <div class="feature-grid">
+            <div class="feature-item animate-on-scroll">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="8" y1="13" x2="16" y2="13"></line>
+                        <line x1="8" y1="17" x2="16" y2="17"></line>
+                        <line x1="10" y1="9" x2="14" y2="9"></line>
+                    </svg>
+                </div>
+                <h3>Suporte Instantâneo</h3>
+                <p>Resolução de problemas de software e hardware em segundos, sem espera.</p>
+            </div>
+            <div class="feature-item animate-on-scroll">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="20" x2="12" y2="10"></line>
+                        <line x1="18" y1="20" x2="18" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="16"></line>
+                    </svg>
+                </div>
+                <h3>Entendimento de polticas e processos</h3>
+                <p>Seu time orientado sobre os processo da empresa de forma automatica SEM ATALHOS.</p>
+            </div>
+            <div class="feature-item animate-on-scroll">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                </div>
+                <h3>Integração por Voz</h3>
+                <p>Comande e receba soluções por voz, tornando a interação mais intuitiva e rápida.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title animate-on-scroll">Pronto para transformar sua TI?</h2>
+        <p class="section-subtitle animate-on-scroll">
+            O Flow não é apenas uma ferramenta, é a chave para uma operação mais ágil, inteligente e competitiva.
+        </p>
+        <a href="javascript:void(0)" class="cta-button animate-on-scroll">Saiba Mais</a>
+    </section>
+
     <footer class="status-footer">
-        Em desenvolvimento.
+        GreennFlow - Em desenvolvimento.
     </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const animatedElements = entry.target.querySelectorAll('.animate-on-scroll');
+                        animatedElements.forEach((el, index) => {
+                            el.style.transitionDelay = `${index * 0.2}s`;
+                            el.classList.add('animated');
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1 // 10% do elemento visível para disparar
+            });
+
+            // Seleciona todas as seções que devem ser animadas
+            const sectionsToAnimate = document.querySelectorAll('.section');
+            sectionsToAnimate.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // A animação do Hero agora é controlada pelo IntersectionObserver, como as outras seções
+        });
+    </script>
 </body>
 </html>
